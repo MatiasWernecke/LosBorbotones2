@@ -32,8 +32,12 @@ public class Movimiento {
 		return importe;
 	}
 
-	public Cuenta getCuenta() {
-		return cuenta;
+	public String getAliasDeLaCuenta() {
+		return cuenta.getAlias();
 	}
 
+	public String toString() {
+
+		return getFecha() + "," + " " + getConceptos() + "," + " " + getAliasDeLaCuenta() + "," + " " + getImporte();
+	}
 }
