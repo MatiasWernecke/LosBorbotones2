@@ -13,7 +13,7 @@ public class Movimiento {
 	public Movimiento(String conceptos, BigDecimal importe, Cuenta cuenta) {
 		
 		fecha = LocalDate.now();
-		//conceptos debe ser un alfanumerico de hasta 30 caracteres
+		//conceptos puede tener hasta 30 caracteres
 		this.conceptos = conceptos;
 		this.importe = importe;
 		this.cuenta = cuenta;
