@@ -21,10 +21,10 @@ public class ATM {
 		leerTarjeta();
 		
 		//Ingresa PIN
-		ingresarPIN();
+		//ingresarPIN(new Tarjeta(12345678, 1234));
 		
 		//Elige lo que quiere hacer
-        hacer();
+        //elegirOpcion();
 		
 		//Saca ticket
         imprimirTicket();
@@ -36,51 +36,80 @@ public class ATM {
 		cuenta = new LinkedList<Cuenta>();
 	}
 	
+	
 	private static void leerTarjeta(){
 		
         try {
             FileReader archivo = new FileReader("validacionDeTarjetas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
-            while (oneLine != null) {
+            
+            while (oneLine != null) {            	
               
             	String[] datos = oneLine.split(",");
-            	String numeroDeTarjeta = datos[0];
-            	String pin = datos[1];
+            	int numeroDeTarjeta = Integer.parseInt(datos[0]);
+            	int pin = Integer.parseInt(datos[1]);
             	String cuit = datos[2];
-            	
-            	System.out.println(numeroDeTarjeta);
-            	
-            	oneLine = lector.readLine();  
-            	
+            	//System.out.println(numeroDeTarjeta);
+            	oneLine = lector.readLine(); 
+
+            	ingresarPIN(new Tarjeta(numeroDeTarjeta, pin));
+	
             }
+            
             if (lector != null) {
                 lector.close();
             }
+           
         } catch (Exception e) {
             System.err.println("No se encontro archivo");
+            System.exit(0);
         }
-
+        
 	}
 	
-	private static void ingresarPIN(){
+	
+	
+	
+	private static void ingresarPIN(Tarjeta tarjeta){
 		
 		BufferedReader in = new BufferedReader(
                 new InputStreamReader(System.in));
+		
+		System.out.print("Ingresar numero de Tarjeta: ");
+        try {
+            int numeroDeTarjeta = Integer.parseInt(in.readLine()); 
+            
+            if(numeroDeTarjeta == tarjeta.getNumDeTarjeta() ){
+            	System.out.println("Tarjeta aprobado");
+            }
+            
+        } catch (Exception excepcion) {
+            System.err.println("Tarjeta error");
+            System.exit(0);
+        }
 
         System.out.print("Ingresar numero de PIN: ");
-
         try {
         	//Ponerle un limite de 4 digitos
-            int numeroDePIN = Integer.parseInt(in.readLine());                
-            System.out.println("El pin es: " + numeroDePIN);
+            int numeroDePIN = Integer.parseInt(in.readLine()); 
+            
+            if(numeroDePIN == tarjeta.getPin()){
+            	System.out.println("Acceso aprobado");
+            	System.exit(0);
+            }
+            
+            
+            
+            
         } catch (Exception excepcion) {
             System.err.println("Tiene que ingresar numero de cuatro digitos");
             System.exit(0);
         }
 	}
 	
-	private static void hacer(){
+	
+	private static void elegirOpcion(){
 		
 		BufferedReader in = new BufferedReader(
                 new InputStreamReader(System.in));
