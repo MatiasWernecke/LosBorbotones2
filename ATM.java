@@ -18,7 +18,7 @@ public class ATM {
 	public static void main(String[] args){
 		
 		//Lee tarjeta
-		leerTarjeta();
+		//leerTarjeta();
 		
 		//Ingresa PIN
 		//ingresarPIN(new Tarjeta(12345678, 1234));
@@ -27,7 +27,9 @@ public class ATM {
         //elegirOpcion();
 		
 		//Saca ticket
-        imprimirTicket();
+        //imprimirTicket();
+		
+		leerArchivo();
 		
 	}
 	
@@ -36,10 +38,11 @@ public class ATM {
 		cuenta = new LinkedList<Cuenta>();
 	}
 	
-	
-	private static void leerTarjeta(){
+	public static List leerArchivo(){
 		
-        try {
+		List<Tarjeta> listaDeTarjetas = new LinkedList<>();
+		
+		try {
             FileReader archivo = new FileReader("validacionDeTarjetas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
@@ -50,10 +53,25 @@ public class ATM {
             	int numeroDeTarjeta = Integer.parseInt(datos[0]);
             	int pin = Integer.parseInt(datos[1]);
             	String cuit = datos[2];
-            	//System.out.println(numeroDeTarjeta);
-            	oneLine = lector.readLine(); 
+            	//System.out.println(numeroDeTarjeta); 
+            	 
+            	
+            	listaDeTarjetas.add(new Tarjeta(numeroDeTarjeta,pin));
+            	
+            	for(int i = 0; i < listaDeTarjetas.size(); i++){
+            		if(listaDeTarjetas.get(i).getNumDeTarjeta() == numeroDeTarjeta){
+            			System.out.println("La tarjeta " + (i+1) + " es: " + listaDeTarjetas.get(i).getNumDeTarjeta()); 
+            		}
+            		
+            	}
+            	
+            	
+            	
+            	oneLine = lector.readLine();
+            	
+            	
 
-            	ingresarPIN(new Tarjeta(numeroDeTarjeta, pin));
+            	
 	
             }
             
@@ -65,13 +83,45 @@ public class ATM {
             System.err.println("No se encontro archivo");
             System.exit(0);
         }
-        
+		
+		return listaDeTarjetas;
+		
 	}
 	
+	/*
+	private static void leerTarjeta(){
+		
+		try {
+            FileReader archivo = new FileReader("validacionDeTarjetas.txt");
+            BufferedReader lector = new BufferedReader(archivo);
+            String oneLine = lector.readLine();
+            
+            while (oneLine != null) {            	
+              
+            	String[] datos = oneLine.split(",");
+            	int numeroDeTarjeta = Integer.parseInt(datos[0]);
+            	int pin = Integer.parseInt(datos[1]);
+            	String cuit = datos[2];
+            	//System.out.println(numeroDeTarjeta);            	
+            	oneLine = lector.readLine(); 
+
+            	ingresarNumeroDeTarjeta(new Tarjeta(numeroDeTarjeta, pin));
 	
+            }
+            
+            if (lector != null) {
+                lector.close();
+            }
+           
+        } catch (Exception e) {
+            System.err.println("No se encontro archivo");
+            System.exit(0);
+        }
+		
+		
+	}
 	
-	
-	private static void ingresarPIN(Tarjeta tarjeta){
+	private static void ingresarNumeroDeTarjeta(Tarjeta tarjeta){
 		
 		BufferedReader in = new BufferedReader(
                 new InputStreamReader(System.in));
@@ -82,12 +132,22 @@ public class ATM {
             
             if(numeroDeTarjeta == tarjeta.getNumDeTarjeta() ){
             	System.out.println("Tarjeta aprobado");
+            	ingresarPIN(tarjeta);
             }
             
         } catch (Exception excepcion) {
             System.err.println("Tarjeta error");
             System.exit(0);
         }
+
+	}
+	
+	
+	
+	private static void ingresarPIN(Tarjeta tarjeta){
+		
+		BufferedReader in = new BufferedReader(
+                new InputStreamReader(System.in));
 
         System.out.print("Ingresar numero de PIN: ");
         try {
@@ -149,5 +209,6 @@ public class ATM {
 	private static String imprimirTicket(){
 		return "Fecha - Hora - Cuenta: " + cuenta + " - TipoDeTransaccion: - ImporteInvolucradoEnLa Transaccion - Nuevo Saldo";
 	}
+	*/
 
 }
