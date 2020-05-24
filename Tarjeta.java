@@ -35,9 +35,9 @@ public class Tarjeta {
 	}
 
 	// Metodos privados
-	private int contarDigitos(int numeroDeTarjeta) {
+	private int contarDigitos(int num) {
 		int contador = 0;
-		int numero = numeroDeTarjeta;
+		int numero = num;
 		while (numero != 0) {
 			numero /= 10;
 			contador++;
