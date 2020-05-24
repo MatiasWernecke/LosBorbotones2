@@ -29,8 +29,60 @@ public class ATM {
 		//Saca ticket
         //imprimirTicket();
 		
-		leerArchivo();
+		//leerArchivo();
 		
+		List<Tarjeta> lista = new LinkedList<>();
+		lista = leerArchivo();
+		boolean tarjetaExiste = false;
+		boolean pinExiste = false;
+
+		BufferedReader in = new BufferedReader(
+                new InputStreamReader(System.in));
+		
+		System.out.print("Ingresar numero de Tarjeta: ");
+        try {
+            int numeroDeTarjeta = Integer.parseInt(in.readLine()); 
+            int tarjetaPinActual = 0;
+            
+            for(int i = 0; i < lista.size(); i++){
+            	if(numeroDeTarjeta == lista.get(i).getNumDeTarjeta() ){
+            		tarjetaExiste = true;
+            		tarjetaPinActual = lista.get(i).getPin();
+                } 
+            }
+            
+            if(tarjetaExiste){
+            	System.out.println("Tarjeta aprobado");
+            	
+            	System.out.print("Ingresar pin: ");
+                try {
+                    int pin = Integer.parseInt(in.readLine()); 
+                    
+                    for(int i = 0; i < lista.size(); i++){
+                    	if(pin == tarjetaPinActual){
+                    		pinExiste = true;
+                        } 
+                    }
+                    
+                    if(pinExiste){
+                    	System.out.println("Acceso aprobado");
+                    }else {
+                    	System.out.println("Pin equivocado");
+                    }
+                    
+        			
+                } catch (Exception excepcion) {
+                    System.err.println("Pin error");
+                    System.exit(0);
+                }	
+            	
+            }
+            
+			
+        } catch (Exception excepcion) {
+            System.err.println("Tarjeta error");
+            System.exit(0);
+        }	
 	}
 	
 	public ATM(){
@@ -56,22 +108,17 @@ public class ATM {
             	//System.out.println(numeroDeTarjeta); 
             	 
             	
-            	listaDeTarjetas.add(new Tarjeta(numeroDeTarjeta,pin));
+            	listaDeTarjetas.add(new Tarjeta(numeroDeTarjeta,pin));            	
             	
             	for(int i = 0; i < listaDeTarjetas.size(); i++){
             		if(listaDeTarjetas.get(i).getNumDeTarjeta() == numeroDeTarjeta){
-            			System.out.println("La tarjeta " + (i+1) + " es: " + listaDeTarjetas.get(i).getNumDeTarjeta()); 
+            			//System.out.println("La tarjeta " + (i+1) + " es: " + listaDeTarjetas.get(i).getNumDeTarjeta()); 
+            			
             		}
             		
             	}
-            	
-            	
-            	
-            	oneLine = lector.readLine();
-            	
-            	
 
-            	
+            	oneLine = lector.readLine();
 	
             }
             
@@ -87,6 +134,8 @@ public class ATM {
 		return listaDeTarjetas;
 		
 	}
+	
+	
 	
 	/*
 	private static void leerTarjeta(){
