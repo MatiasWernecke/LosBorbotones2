@@ -7,9 +7,7 @@ public class Tarjeta {
 
 	public Tarjeta(int numeroDeTarjeta, int pin) {
 
-		// numeroDeTarjeta debe tener 8 digitos sin repetirse
 		setNumeroDeTarjeta(numeroDeTarjeta);
-		// pin es un numero de 4 digitos
 		setPin(pin);
 	}
 
@@ -18,7 +16,11 @@ public class Tarjeta {
 	}
 
 	public void setNumeroDeTarjeta(int numeroDeTarjeta) {
-		this.numeroDeTarjeta = numeroDeTarjeta;
+		if (numeroDeTarjetaValido(numeroDeTarjeta)) {
+			this.numeroDeTarjeta = numeroDeTarjeta;
+		} else
+			throw new Error("Numero de tarjeta invalido");
+
 	}
 
 	public int getPin() {
@@ -26,7 +28,40 @@ public class Tarjeta {
 	}
 
 	public void setPin(int pin) {
-		this.pin = pin;
+		if (contarDigitos(pin) == 4) {
+			this.pin = pin;
+		} else 
+			throw new Error("Pin invalido");
 	}
 
+	// Metodos privados
+	private int contarDigitos(int numeroDeTarjeta) {
+		int contador = 0;
+		int numero = numeroDeTarjeta;
+		while (numero != 0) {
+			numero /= 10;
+			contador++;
+		}
+
+		return contador;
+	}
+
+	// codigo sacado de StackOverflow:
+	// https://stackoverflow.com/questions/26748026/check-if-integer-has-repeating-digits-no-string-methods-or-arrays
+	private boolean noSeRepitenDigitos(int num) {
+		int numMask = 0;
+		int numDigits = (int) Math.ceil(Math.log10(num + 1));
+		for (int digitIdx = 0; digitIdx < numDigits; digitIdx++) {
+			int curDigit = (int) (num / Math.pow(10, digitIdx)) % 10;
+			int digitMask = (int) Math.pow(2, curDigit);
+			if ((numMask & digitMask) > 0)
+				return false;
+			numMask = numMask | digitMask;
+		}
+		return true;
+	}
+
+	private boolean numeroDeTarjetaValido(int numeroDeTarjeta) {
+		return contarDigitos(numeroDeTarjeta) == 8 && noSeRepitenDigitos(numeroDeTarjeta);
+	}
 }
