@@ -10,7 +10,6 @@ public class Cliente {
 	public Cliente(int cuit) {
 		
 		tarjetas = new LinkedList<Tarjeta>();
-		//cuit debe ser de 11 digitos
 		setCuit(cuit);
 	}
 	
@@ -32,8 +31,20 @@ public class Cliente {
 	}
 
 	public void setCuit(int cuit) {
-		this.cuit = cuit;
+		if (contarDigitos(cuit) == 11) {
+			this.cuit = cuit;
+		} else
+			throw new Error("Cuit invalido");
 	}
 	
-	
+	private int contarDigitos(int num) {
+		int contador = 0;
+		int numero = num;
+		while (numero != 0) {
+			numero /= 10;
+			contador++;
+		}
+
+		return contador;
+	}
 }
