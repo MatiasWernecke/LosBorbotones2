@@ -31,6 +31,7 @@ y la ATM tenga billetes.
 - CuentaCorriente: subclase de Cuenta, posee un descubierto que le da al usuario un piso de saldo negativo que le permite seguir retirando una hasta una cierta cantidad de dinero.
 - CajaDeAhorroEnPesos: subclase de Cuenta, permite al usuario depositar pesos.
 - CajaDeAhorroEnDolares: subclase de Cuenta, permite al usuario depositar dólares, teniendo en cuenta la cotización del dólar y el impuesto país. El precio dólar utilizado es de 1 dólar = 68 pesos.
+- Movimientos: clase que contiene los atributos fecha, conceptos, importe y cuenta, además de sus respectivos getter y setter. 
 - Cliente: esta clase posee una lista de tarjetas y un cuit de 11 digitos. Además de poseer los getter y los setter necesarios.
 - Tarjeta: ésta clase posee un numeroDeTarjeta, el cual es un entero de 8 digitos que no se repiten; y un pin, un entero de 4 digitos. Posee además los getter y setter necesarios.
 
