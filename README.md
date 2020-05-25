@@ -11,7 +11,8 @@
 ##### Desiciones de diseño:
 Se decidió utilizar la clase BigDecimal en vez del tipo de datos double, ya que, con el primero, se logra una mayor precisión a
 la hora de realizar cálculos con decimales. También se decidió utilizar una jerarquía de transacciones con el fin de dejar preparado
-a futuro la correcta implenentación de la interfaz Reversible.
+a futuro la correcta implenentación de la interfaz Reversible. Para las clases que manejan dólares se decidió utilizar el precio dólar
+de 1 dólar = 68 pesos.
 
 -----------------------------------------------------------------------------------------------------
 ##### Descripción de los archivos:
@@ -30,10 +31,12 @@ y la ATM tenga billetes.
 - Cuenta: clase abstracta que posee un alias, un saldo, un cliente y una lista de movimientos. Permite al usuario ingresar o retirar efectivo de ésta, además, le permite consultar los últimos diez movimientos realizados.
 - CuentaCorriente: subclase de Cuenta, posee un descubierto que le da al usuario un piso de saldo negativo que le permite seguir retirando una hasta una cierta cantidad de dinero.
 - CajaDeAhorroEnPesos: subclase de Cuenta, permite al usuario depositar pesos.
-- CajaDeAhorroEnDolares: subclase de Cuenta, permite al usuario depositar dólares, teniendo en cuenta la cotización del dólar y el impuesto país. El precio dólar utilizado es de 1 dólar = 68 pesos.
+- CajaDeAhorroEnDolares: subclase de Cuenta, permite al usuario depositar dólares, teniendo en cuenta la cotización del dólar y el impuesto país. 
 - Movimientos: clase que contiene los atributos fecha, conceptos, importe y cuenta, además de sus respectivos getter y setter. 
 - Cliente: esta clase posee una lista de tarjetas y un cuit de 11 digitos. Además de poseer los getter y los setter necesarios.
 - Tarjeta: ésta clase posee un numeroDeTarjeta, el cual es un entero de 8 digitos que no se repiten; y un pin, un entero de 4 digitos. Posee además los getter y setter necesarios.
 
 -----------------------------------------------------------------------------------------------------
 ##### Conclusión: 
+
+En conclusión, este trabajo nos permitió afianzar varios de los temas vistos a lo largo del cutrimestre, como por ejemplo, herencia y polimorfismo, el uso de interfaces o la implementación de listas y diccionarios.
