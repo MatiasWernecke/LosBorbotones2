@@ -1,6 +1,7 @@
-package atm;
+package ATM_TP;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 
 public class CuentaCorriente extends Cuenta {
 

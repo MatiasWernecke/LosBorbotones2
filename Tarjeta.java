@@ -1,4 +1,4 @@
-package atm;
+package ATM_TP;
 
 public class Tarjeta {
 
@@ -46,8 +46,6 @@ public class Tarjeta {
 		return contador;
 	}
 
-	// codigo sacado de StackOverflow:
-	// https://stackoverflow.com/questions/26748026/check-if-integer-has-repeating-digits-no-string-methods-or-arrays
 	private boolean noSeRepitenDigitos(int num) {
 		int numMask = 0;
 		int numDigits = (int) Math.ceil(Math.log10(num + 1));

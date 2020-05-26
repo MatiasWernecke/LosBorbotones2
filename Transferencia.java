@@ -1,8 +1,8 @@
-package cajero_atm;
+package ATM_TP;
 
 import java.math.BigDecimal;
 
-public class Transferencia extends Transacciones implements Reversible {
+public class Transferencia extends Transaccion implements Reversible {
 
 	private Cuenta cuentaAtransferir;
 	private BigDecimal monto;

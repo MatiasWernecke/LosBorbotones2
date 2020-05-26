@@ -1,16 +1,20 @@
-package atm;
-
+package ATM_TP;
 import java.util.LinkedList;
+
+import ATM_TP.Tarjeta;
 
 public class Cliente {
 
 	private LinkedList<Tarjeta> tarjetas;
-	private int cuit;
+	private long cuit;
 	
-	public Cliente(int cuit) {
+	public Cliente(long cuit) {
+		if(cuit < 99999999999L || cuit < 11111111111L) {
+			setCuit(cuit);
+			tarjetas = new LinkedList<Tarjeta>();
+			
+		}
 		
-		tarjetas = new LinkedList<Tarjeta>();
-		setCuit(cuit);
 	}
 	
 	public void agregarTarjetas(Tarjeta tarjeta) {
@@ -26,20 +30,20 @@ public class Cliente {
 		this.tarjetas = tarjetas;
 	}
 
-	public int getCuit() {
+	public long getCuit() {
 		return cuit;
 	}
 
-	public void setCuit(int cuit) {
-		if (contarDigitos(cuit) == 11) {
+	public void setCuit(long cuit) {
+		if (contarDigitos(cuit) != 11) {
 			this.cuit = cuit;
 		} else
 			throw new Error("Cuit invalido");
 	}
 	
-	private int contarDigitos(int num) {
+	private int contarDigitos(long num) {
 		int contador = 0;
-		int numero = num;
+		long numero = num;
 		while (numero != 0) {
 			numero /= 10;
 			contador++;

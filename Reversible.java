@@ -1,4 +1,4 @@
-package tp_atm;
+package ATM_TP;
 
 public interface Reversible {
 	

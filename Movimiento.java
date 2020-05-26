@@ -1,4 +1,4 @@
-package atm;
+package ATM_TP;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -36,8 +36,11 @@ public class Movimiento {
 		return cuenta.getAlias();
 	}
 
+	public Cuenta getCuenta() {
+		return this.cuenta;
+	}
 	public String toString() {
 
-		return this.fecha + "," + " " + this.conceptos + "," + " " + this.cuenta.getAlias() + "," + " " + this.importe;
+		return this.fecha + "," + " " + this.conceptos + "," + " " + getAliasDeLaCuenta() + "," + " " + this.importe;
 	}
 }

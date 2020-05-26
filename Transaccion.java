@@ -1,8 +1,10 @@
-package atm;
+package ATM_TP;
+
 
 import java.math.BigDecimal;
 
 public abstract class Transaccion {
+
 	private Cuenta cuenta;
 	private BigDecimal monto;
 
