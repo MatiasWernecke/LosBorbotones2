@@ -38,6 +38,6 @@ public class Movimiento {
 
 	public String toString() {
 
-		return getFecha() + "," + " " + getConceptos() + "," + " " + getAliasDeLaCuenta() + "," + " " + getImporte();
+		return fecha + "," + " " + conceptos + "," + " " + cuenta.getAlias() + "," + " " + importe;
 	}
 }
