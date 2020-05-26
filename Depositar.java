@@ -2,7 +2,7 @@ package cajero_atm;
 
 import java.math.BigDecimal;
 
-public class Depositar extends Transacciones {
+public class Depositar extends Transaccion {
 
 	private BigDecimal montoPesos;
 	private BigDecimal montoDolares;
