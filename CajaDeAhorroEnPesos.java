@@ -18,12 +18,13 @@ public class CajaDeAhorroEnPesos extends Cuenta {
 	public void descontarEfectivo(BigDecimal montoDescontado) {
 		if (haySaldo(montoDescontado)) {
 			setSaldo(consultarSaldo().subtract(montoDescontado));
-		}
+		} else
+			System.out.println("Saldo insuficiente.");
 
 	}
 
 	private boolean haySaldo(BigDecimal montoDescontado) {
-		return consultarSaldo().compareTo(montoDescontado) != -1;
+		return consultarSaldo().compareTo(montoDescontado) < 0;
 	}
 
 }
