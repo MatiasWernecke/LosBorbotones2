@@ -2,7 +2,7 @@ package atm;
 
 import java.math.BigDecimal;
 
-public class RetirarEfectivo extends Transacciones {
+public class RetirarEfectivo extends Transaccion{
 
 	public RetirarEfectivo(Cuenta cuenta) {
 		super(cuenta);
