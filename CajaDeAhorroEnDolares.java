@@ -25,8 +25,8 @@ public class CajaDeAhorroEnDolares extends Cuenta {
 
 	}
 
-	private boolean haySaldo(BigDecimal montoDescontado) {
-		return consultarSaldo().compareTo(montoDescontado) < 0;
+		public boolean haySaldo(BigDecimal montoDescontado) {
+		return consultarSaldo().compareTo(montoDescontado) >= 0;
 	}
 
 }
