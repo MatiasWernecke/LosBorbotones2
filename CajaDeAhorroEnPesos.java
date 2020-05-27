@@ -21,9 +21,7 @@ public class CajaDeAhorroEnPesos extends Cuenta {
 
 	}
 
-	public boolean haySaldo(BigDecimal montoDescontado) {
-		return super.consultarSaldo().compareTo(montoDescontado) >= 0 ;
+	private boolean haySaldo(BigDecimal montoADescontar) {
+		return consultarSaldo().compareTo(montoADescontar) >= 0;
 	}
-
-
 }
