@@ -5,30 +5,24 @@ public class Transferencia extends Transaccion implements Reversible {
 
 	private Cuenta cuentaAtransferir;
 	private BigDecimal monto;
+	private Cuenta cuenta;
 
 	public Transferencia(Cuenta cuenta) {
 		super(cuenta);
-		
+		this.cuenta = cuenta;
 		monto = BigDecimal.ZERO;
 
 	}
 	
 	public void transferencia(BigDecimal montoATransferir,Cuenta cuentaATransferir) {
-		if(haySaldo(montoATransferir)){
-		
+
 		setMonto(montoATransferir);
-		
 		setCuenta(cuentaATransferir);
-		
-		cuentaEmisor.descontarEfectivo(montoATransferir);
-		
+		this.cuenta.descontarEfectivo(montoATransferir);
 		cuentaATransferir.ingresarEfectivo(montoATransferir);
 
-		} else {
-			throw new Error("No posee dinero para realizar esta transferencia");
-		}
-		
 	}
+
 
 	public BigDecimal getMonto() {
 		return monto;
@@ -46,9 +40,6 @@ public class Transferencia extends Transaccion implements Reversible {
 		this.cuentaAtransferir = cuentaAtransferir;
 	}
 
-	private boolean haySaldo(BigDecimal montoADescontar) {
-		return super.getCuenta().consultarSaldo().compareTo(montoADescontar) >= 0;
-	}
 	
 	@Override
 	public void reversible() {
