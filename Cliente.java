@@ -1,4 +1,3 @@
-package ATM_TP;
 import java.util.LinkedList;
 
 import ATM_TP.Tarjeta;
