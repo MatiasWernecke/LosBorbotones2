@@ -1,4 +1,3 @@
-package ATM_TP;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -153,10 +152,10 @@ public class ATM {
         }
 		
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado autom·ticamente
+			// TODO Bloque catch generado autom√°ticamente
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Bloque catch generado autom·ticamente
+			// TODO Bloque catch generado autom√°ticamente
 			e.printStackTrace();
 		}     
 		
