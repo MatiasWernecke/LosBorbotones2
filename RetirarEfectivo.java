@@ -21,8 +21,7 @@ public class RetirarEfectivo extends Transaccion {
 		}
 	}
 
-	private boolean haySaldo(BigDecimal montoRetirado) {
-		return getCuenta().consultarSaldo().subtract(montoRetirado)
-				.compareTo(BigDecimal.ZERO) != -1;
+	private boolean haySaldo(BigDecimal montoADescontar) {
+		return super.getCuenta().consultarSaldo().compareTo(montoADescontar) >= 0;
 	}
 }
