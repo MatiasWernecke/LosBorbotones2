@@ -1,4 +1,3 @@
-package ATM_TP;
 
 public class Tarjeta {
 
