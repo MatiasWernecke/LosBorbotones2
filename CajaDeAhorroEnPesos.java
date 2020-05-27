@@ -1,7 +1,6 @@
 package ATM_TP;
 
 import java.math.BigDecimal;
-import java.math.BigDecimal;
 
 public class CajaDeAhorroEnPesos extends Cuenta {
 
@@ -23,7 +22,7 @@ public class CajaDeAhorroEnPesos extends Cuenta {
 
 	}
 
-	private boolean haySaldo(BigDecimal montoDescontado) {
+	public boolean haySaldo(BigDecimal montoDescontado) {
 		return consultarSaldo().compareTo(montoDescontado) < 0 ;
 	}
 
