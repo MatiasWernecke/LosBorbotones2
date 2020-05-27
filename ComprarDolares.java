@@ -40,8 +40,12 @@ public class ComprarDolares extends Transaccion {
 		}
 	}
 
+	private boolean haySaldo(BigDecimal montoDescontado) {
+		return consultarSaldo().subtract(montoDescontado).compareTo(descubierto) >= 0;
+	}
+	
 	/**
-	 * cobra el impuesto y se los acredita a la cuenta agujero negro
+	 * cobra el impuesto
 	 */
 	public void aplicarImpuestoPais(BigDecimal impuesto) {
 		cajaPesos.descontarEfectivo(impuesto);
