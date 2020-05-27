@@ -4,20 +4,14 @@ import java.math.BigDecimal;
 
 public class CajaDeAhorroEnDolares extends Cuenta {
 
-	private BigDecimal impuestoPais;
-	private BigDecimal precioDolar;
-
 	public CajaDeAhorroEnDolares(Cliente cliente, String alias) {
 		super(cliente, alias);
-		impuestoPais = new BigDecimal(0.30);
-		precioDolar = new BigDecimal(68);
 	}
 
 	// montoIngresado es en pesos
 	@Override
 	public void ingresarEfectivo(BigDecimal montoIngresado) {
-		setSaldo(consultarSaldo().add(aplicarImpuestoPAIS(montoIngresado))
-				.divide(precioDolar));
+		setSaldo(consultarSaldo().add(montoIngresado));
 
 	}
 
@@ -36,7 +30,4 @@ public class CajaDeAhorroEnDolares extends Cuenta {
 		return consultarSaldo().compareTo(montoDescontado) < 0;
 	}
 
-	private BigDecimal aplicarImpuestoPAIS(BigDecimal montoIngresado) {
-		return montoIngresado.subtract(montoIngresado.multiply(impuestoPais));
-	}
 }
