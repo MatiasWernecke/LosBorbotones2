@@ -16,8 +16,8 @@ de 1 dólar = 68 pesos.
 
 -----------------------------------------------------------------------------------------------------
 ##### Descripción de los archivos:
-- ATM: clase principal con la que el usuario interactua mediante la consola. Posee un lector de tarjetas y la capacidad de
-imprimir un ticket. Implementa las clases Cuenta y Transacciones.
+- App: Clase que contiene el método principal y que le permite al usuario interactuar con la ATM mediante la consola. 
+- ATM: Posee un lector de tarjetas y la capacidad de imprimir un ticket. Implementa las clases Cuenta y Transacciones. Comienza cada día con una cierta cantidad de dinero.
 - Transacciones: una clase abstracta que posee un monto y una cuenta que serán utilizadas por sus subclases. También posee un metodo
 generarMovimiento el cual genera un movimiento luego de realizar una treansacción.
 - RetirarEfectivo: subclase de Transacciones, permite retirar efectivo de una cuenta siempre y cuando ésta tenga el saldo suficiente
