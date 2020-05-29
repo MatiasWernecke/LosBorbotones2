@@ -35,6 +35,11 @@ public class ComprarDolares extends Transaccion {
 
 			aplicarImpuestoPais(impuesto);
 
+			super.setMonto(cantAComprar);
+			
+			super.generarMovimiento();
+
+
 		} else {
 			throw new Error("No posee suficiente dinero en su caja de ahorros");
 		}
