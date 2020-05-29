@@ -8,7 +8,7 @@ public abstract class Transaccion {
 	private BigDecimal monto;
 
 	public Transaccion(Cuenta cuenta) {
-		this.setCuenta(cuenta);
+		this.cuenta = cuenta;
 		setMonto(BigDecimal.ZERO);
 	}
 
