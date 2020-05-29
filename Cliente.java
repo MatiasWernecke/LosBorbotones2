@@ -10,10 +10,12 @@ public class Cliente {
 	public Cliente(LinkedList<Tarjeta> tarjetas, long cuit) {
 		if(cuit < 99999999999L || cuit < 11111111111L) {
 			setCuit(cuit);
-			tarjetas = new LinkedList<Tarjeta>();
-			
+			tarjetas = new LinkedList<Tarjeta>();	
 		}
-		
+	}
+	
+	public Cliente() {
+			
 	}
 	
 	public void agregarTarjetas(Tarjeta tarjeta) {
