@@ -139,7 +139,7 @@ public class ATM {
 
                 for (int i = 0; i < clientes.size(); i++) {
                     Cliente cliente = clientes.get(i);
-                    List<Tarjeta> tarjetasCliente = new LinkedList<>();
+                   LinkedList<Tarjeta> tarjetasCliente = new LinkedList<>();
                     if (cuit.equals(Long.toString(cliente.getCuit()))) {
                         Tarjeta tarjeta = new Tarjeta(nroTarjeta, pin);
                         tarjetasCliente.add(tarjeta);
