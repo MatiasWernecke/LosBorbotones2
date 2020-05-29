@@ -6,6 +6,10 @@ public class CajaDeAhorroEnDolares extends Cuenta {
 	public CajaDeAhorroEnDolares(Cliente cliente, String alias) {
 		super(cliente, alias);
 	}
+	
+	public CajaDeAhorroEnDolares() {
+		
+	}
 
 	// montoIngresado es en pesos
 	@Override
