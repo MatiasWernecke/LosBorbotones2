@@ -14,7 +14,9 @@ public abstract class Cuenta {
 		setAlias(alias);
 		movimientos = new LinkedList<Movimiento>();
 	}
-
+	public Cuenta() {
+	
+	}	
 	public abstract void ingresarEfectivo(BigDecimal montoIngresado);
 
 	public abstract void descontarEfectivo(BigDecimal montoDescontado);
@@ -25,6 +27,10 @@ public abstract class Cuenta {
 	
 	public void setSaldo(BigDecimal saldo) {
 		this.saldo = saldo;
+	}
+
+	public void setCliente(Cliente cliente2) {
+		this.cliente = cliente2;
 	}
 
 	public Cliente getCliente() {
