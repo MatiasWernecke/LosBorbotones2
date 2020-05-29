@@ -23,18 +23,24 @@ public class VenderDolares extends Transaccion {
 
 	public void venderDolares(BigDecimal cantAVender) {
 
-		BigDecimal montoEnPesos = new BigDecimal(cantAVender.multiply(
-				cotizacionDolarVenta).doubleValue());
+		if (cantAVender.intValueExact() > 0) {
+			BigDecimal montoEnPesos = new BigDecimal(cantAVender.multiply(
+					cotizacionDolarVenta).doubleValue());
 
-		if (haySaldo(cantAVender)) {
+			if (haySaldo(cantAVender)) {
 
-			cajaPesos.ingresarEfectivo(montoEnPesos);
+				cajaPesos.ingresarEfectivo(montoEnPesos);
 
-			super.getCuenta().descontarEfectivo(cantAVender);
+				super.getCuenta().descontarEfectivo(cantAVender);
 
+			} else {
+				throw new Error(
+						"No posee suficiente dinero en su caja de ahorros");
+			}
 		} else {
-			throw new Error("No posee suficiente dinero en su caja de ahorros");
+			throw new Error("Cantidad incorrecta");
 		}
+
 	}
 
 	private boolean haySaldo(BigDecimal montoADescontar) {
