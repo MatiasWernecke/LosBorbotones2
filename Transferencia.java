@@ -16,11 +16,11 @@ public class Transferencia extends Transaccion implements Reversible {
 	
 	public void transferencia(BigDecimal montoATransferir,Cuenta cuentaATransferir) {
 
-		setMonto(montoATransferir);
+		super.setMonto(montoATransferir);
 		setCuenta(cuentaATransferir);
 		this.cuenta.descontarEfectivo(montoATransferir);
 		cuentaATransferir.ingresarEfectivo(montoATransferir);
-
+		super.generarMovimiento();
 	}
 
 
