@@ -7,7 +7,7 @@ public class Transferencia extends Transaccion implements Reversible {
 	private BigDecimal monto;
 	private Cuenta cuenta;
 
-	public Transferencia(Cuenta cuenta) {
+	public Transferencia(Cuenta cuenta, BigDecimal montoATransferir) {
 		super(cuenta);
 		this.cuenta = cuenta;
 		monto = BigDecimal.ZERO;
