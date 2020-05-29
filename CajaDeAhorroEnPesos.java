@@ -6,6 +6,10 @@ public class CajaDeAhorroEnPesos extends Cuenta {
 	public CajaDeAhorroEnPesos(Cliente cliente, String alias) {
 		super(cliente, alias);
 	}
+	
+	public CajaDeAhorroEnPesos() {
+
+	}
 
 	@Override
 	public void ingresarEfectivo(BigDecimal montoIngresado) {
