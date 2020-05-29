@@ -7,7 +7,7 @@ public class Cliente {
 	private LinkedList<Tarjeta> tarjetas;
 	private long cuit;
 	
-	public Cliente(long cuit) {
+	public Cliente(LinkedList<Tarjeta> tarjetas, long cuit) {
 		if(cuit < 99999999999L || cuit < 11111111111L) {
 			setCuit(cuit);
 			tarjetas = new LinkedList<Tarjeta>();
@@ -34,7 +34,7 @@ public class Cliente {
 	}
 
 	public void setCuit(long cuit) {
-		if (contarDigitos(cuit) != 11) {
+		if (contarDigitos(cuit) == 11) {
 			this.cuit = cuit;
 		} else
 			throw new Error("Cuit invalido");
