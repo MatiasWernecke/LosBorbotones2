@@ -10,6 +10,9 @@ public class CuentaCorriente extends Cuenta {
 		super(cliente, alias);
 		this.descubierto = descubierto;
 	}
+	public CuentaCorriente() {
+		
+	}
 
 	@Override
 	public void ingresarEfectivo(BigDecimal montoIngresado) {
