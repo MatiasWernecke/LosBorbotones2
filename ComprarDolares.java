@@ -21,28 +21,33 @@ public class ComprarDolares extends Transaccion {
 
 	public void comprarDolares(BigDecimal cantAComprar) {
 
-		BigDecimal dolaresConvertidosAPesos = new BigDecimal(cantAComprar
-				.multiply(cotizacionDolar).doubleValue());
+		if (cantAComprar.intValueExact() > 0) {
+			BigDecimal dolaresConvertidosAPesos = new BigDecimal(cantAComprar
+					.multiply(cotizacionDolar).doubleValue());
 
-		this.impuesto = new BigDecimal(dolaresConvertidosAPesos.multiply(
-				impuestoPAIS).doubleValue());
+			this.impuesto = new BigDecimal(dolaresConvertidosAPesos.multiply(
+					impuestoPAIS).doubleValue());
 
-		if (cajaPesos.haySaldo(dolaresConvertidosAPesos.add(impuesto))) {
+			if (haySaldo(dolaresConvertidosAPesos.add(impuesto))) {
 
-			cajaPesos.descontarEfectivo(dolaresConvertidosAPesos);
+				cajaPesos.descontarEfectivo(dolaresConvertidosAPesos);
 
-			super.getCuenta().ingresarEfectivo(cantAComprar);
+				super.getCuenta().ingresarEfectivo(cantAComprar);
 
-			aplicarImpuestoPais(impuesto);
+				aplicarImpuestoPais(impuesto);
 
-			super.setMonto(cantAComprar);
-			
-			super.generarMovimiento();
+				super.setMonto(cantAComprar);
 
+				super.generarMovimiento();
 
+			} else {
+				throw new Error(
+						"No posee suficiente dinero en su caja de ahorros");
+			}
 		} else {
-			throw new Error("No posee suficiente dinero en su caja de ahorros");
+			throw new Error("Cantidad incorrecta");
 		}
+
 	}
 
 	private boolean haySaldo(BigDecimal montoDescontado) {
