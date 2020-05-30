@@ -324,7 +324,7 @@ public class ATM {
     private void elegirOpcion() {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("\nOpciones \n1- Retirar Efectivo\n2- Comprar Dolares\n3- Vender Dolares\n4- Depositar\n5- Transferir");
+        System.out.println("\nOpciones \n1- Retirar Efectivo\n2- Comprar Dolares\n3- Vender Dolares\n4- Depositar\n5- Transferir\n6- Salir");
         System.out.println("\nEliga una opcion: ");
 
         try {
@@ -338,66 +338,106 @@ public class ATM {
                 	Cuenta cuenta = cuentaActual; 
                 	Transaccion t = new RetirarEfectivo(cuenta);
                     ((RetirarEfectivo) t).retirarEfectivo(BigDecimal.valueOf(monto));
-                    System.out.println(t.getCuenta().consultarSaldo());
-                    
-                    /*
-                    if (transacciones instanceof RetirarEfectivo) {
-                        ((RetirarEfectivo) transacciones).retirarEfectivo(BigDecimal.valueOf(efectivo));
-                    }
-                    */
-                    
-                    
+                    System.out.println("Sueldo actual: " + t.getCuenta().consultarSaldo());
+                    elegirOpcion();
                     break;
                 }
                 case 2: {
                     System.out.println("Comprar Dolares");
-                    
-                    Cuenta cuenta = cuentaActual;                  
-                    //ComprarDolares cd = new ComprarDolares(cuentaActual,cuentaActual,cuentaActual);
+                    Cuenta cuenta = cuentaActual;  
+                    Cuenta cuentaEnPesos = null;
+                    CajaDeAhorroEnPesos c = null;
                     System.out.println(cuenta.consultarSaldo());
-                    System.out.println("Retirar Efectivo:");
-                    //cd.asdasd
+                    boolean encontroAlias = false;
+                    System.out.println("¿Cuando desea comprar?");
+                    double monto = Double.parseDouble(in.readLine());
+                    System.out.println("Ingrese alias");
+                    String alias = in.readLine();
                     
+                    for(int i = 0; i < listaDeCuentas.size();i++){
+                    	if(alias.equals(listaDeCuentas.get(i).getAlias())){
+                    		
+                    		//System.out.println("Encontro alias");
+                    		cuentaEnPesos = listaDeCuentas.get(i);
+                    		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
+                    			
+                    			encontroAlias = true;
+                    			c = new CajaDeAhorroEnPesos(cuentaEnPesos.getCliente(),cuentaEnPesos.getAlias());
+
+                    		}
+                    		
+                    		
+                    		break;
+                    		
+                    	}
+                    }
+                    
+                    if(encontroAlias){
+                    	System.out.println("Encontro alias");                    	
+                    	System.out.print("Cuenta: " + c);
+                    	
+                    	
+                    } else {
+                    	System.out.println("No se encontro alias");
+                    }
+                  
+                    //hormiga.lija.crema
+                    ComprarDolares cd = new ComprarDolares( cuentaActual, c);
+                    System.out.println("Sueldo cuenta actual: " + cuenta.consultarSaldo());
+                    System.out.println("Sueldo en caja de ahorro en peso: " + c.consultarSaldo());
+                    
+                    elegirOpcion();
                     break;
                 }
                 case 3: {
                     System.out.println("Vender Dolares");
-                    
                     Cuenta cuenta = cuentaActual; 
                     //ComprarDolares cd = new ComprarDolares(listaDeCuentas.get(0),listaDeCuentas.get(1),listaDeCuentas.get(4));
                     System.out.println(cuenta.consultarSaldo());
-                    System.out.println("Retirar Efectivo:");
                     //cd.asdasd
-                    
-                    
+                    elegirOpcion();
                     break;
                 }
                 case 4: {
                     System.out.println("Depositar");
                     System.out.println("¿Cuanto desea depositar?");
                     double monto = Double.parseDouble(in.readLine());
-                    
                     Cuenta cuenta = cuentaActual;
                     Depositar d = new Depositar(cuenta);
-                    
                     d.depositarPesos(BigDecimal.valueOf(monto));
-                    
-                    System.out.println(cuenta.consultarSaldo());
-                    
+                    System.out.println("Sueldo actual: " + cuentaActual.getSaldo());
+                    elegirOpcion();
                     break;
                 }
                 case 5: {
                     System.out.println("Transferir");
-                    
                     Cuenta cuenta1 = cuentaActual;
-                    Cuenta cuenta2 = listaDeCuentas.get(1);
-                    System.out.println(cuenta1.consultarSaldo());
+                    Cuenta cuenta2 = null;
+                    System.out.println("Sueldo de cuenta 1: " + cuenta1.consultarSaldo());
+                    //System.out.println("Sueldo de cuenta 2: " + cuenta2.consultarSaldo());
                     Transferencia t = new Transferencia(cuenta1);
-                    t.transferencia(BigDecimal.valueOf(500), cuenta2);
-                   
+                    System.out.println("¿Cuando desea transferir?");
+                    double monto = Double.parseDouble(in.readLine());
+                    System.out.println("Ingrese alias");
+                    String alias = in.readLine();
                     
-                    System.out.println(cuenta1.consultarSaldo());
+                    for(int i = 0; i < listaDeCuentas.size();i++){
+                    	if(alias.equals(listaDeCuentas.get(i).getAlias())){
+                    		cuenta2 = listaDeCuentas.get(i);
+                    	}
+                    }
                     
+                    t.transferencia(BigDecimal.valueOf(monto), cuenta2);
+
+
+                    System.out.println("Sueldo de cuenta 1: " + cuenta1.consultarSaldo());
+                    System.out.println("Sueldo de cuenta 2: " + cuenta2.consultarSaldo());
+                    elegirOpcion();
+                    break;
+                } 
+                case 6: {
+                    System.out.println("Adios");
+                    System.exit(0);                    
                     break;
                 }
                 default:
