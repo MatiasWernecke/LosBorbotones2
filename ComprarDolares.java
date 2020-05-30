@@ -50,8 +50,8 @@ public class ComprarDolares extends Transaccion {
 
 	}
 
-	private boolean haySaldo(BigDecimal montoDescontado) {
-		return consultarSaldo().subtract(montoDescontado).compareTo(descubierto) >= 0;
+	private boolean haySaldo(BigDecimal montoADescontar) {
+		return cajaPesos.consultarSaldo().compareTo(montoADescontar) >= 0;
 	}
 	
 	/**
