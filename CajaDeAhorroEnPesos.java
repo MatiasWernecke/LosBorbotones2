@@ -1,4 +1,5 @@
 
+
 import java.math.BigDecimal;
 
 public class CajaDeAhorroEnPesos extends Cuenta {
@@ -6,9 +7,9 @@ public class CajaDeAhorroEnPesos extends Cuenta {
 	public CajaDeAhorroEnPesos(Cliente cliente, String alias) {
 		super(cliente, alias);
 	}
-	
-	public CajaDeAhorroEnPesos() {
 
+	public CajaDeAhorroEnPesos() {
+		// TODO Apéndice de constructor generado automáticamente
 	}
 
 	@Override
@@ -19,13 +20,14 @@ public class CajaDeAhorroEnPesos extends Cuenta {
 
 	@Override
 	public void descontarEfectivo(BigDecimal montoDescontado) {
-		if (haySaldo(montoDescontado)) {
+		if (!haySaldo(montoDescontado)) {
 			setSaldo(consultarSaldo().subtract(montoDescontado));
 		}
 
 	}
 
-	private boolean haySaldo(BigDecimal montoADescontar) {
-		return consultarSaldo().compareTo(montoADescontar) >= 0;
+	public boolean haySaldo(BigDecimal montoDescontado) {
+		return consultarSaldo().compareTo(montoDescontado) < 0 ;
 	}
+
 }

@@ -10,6 +10,7 @@ public class ATM {
     private Map billetes;
     private List<Cuenta> listaDeCuentas;
     private Transaccion transacciones;
+    private Cuenta cuentaActual;
 
     public ATM() {
         billetes = new TreeMap<Integer, Integer>();
@@ -19,10 +20,6 @@ public class ATM {
         this.billetes = billetes;
         this.listaDeCuentas = listaDeCuentas;
         this.transacciones = transacciones;
-    }
-
-    public void main() {
-        leerTarjeta();
     }
 
     public void leerTarjeta() {
@@ -53,6 +50,7 @@ public class ATM {
                     tarjeta = listaDeTarjetas.get(i);
                     cuitActual = buscarCuitPorTarjeta(numeroDeTarjeta);
                     aliasActual = saberSuAliasAtravesDeCuit(cuitActual);
+                    cuentaActual = listaDeCuentas.get(i);
                     break;
                 }
             }
@@ -79,6 +77,9 @@ public class ATM {
                         System.out.println("Acceso aprobado");
                         System.out.println("Cuit: " + cuitActual);
                         System.out.println("Alias: " + aliasActual);
+						System.out.println("Cuenta: " + cuentaActual);
+						System.out.println("Saldo: " + cuentaActual.consultarSaldo());
+                        elegirOpcion();
                     } else {
                         System.out.println("Pin equivocado");
                     }
@@ -139,7 +140,7 @@ public class ATM {
 
                 for (int i = 0; i < clientes.size(); i++) {
                     Cliente cliente = clientes.get(i);
-                   LinkedList<Tarjeta> tarjetasCliente = new LinkedList<>();
+                    List<Tarjeta> tarjetasCliente = new LinkedList<>();
                     if (cuit.equals(Long.toString(cliente.getCuit()))) {
                         Tarjeta tarjeta = new Tarjeta(nroTarjeta, pin);
                         tarjetasCliente.add(tarjeta);
@@ -245,7 +246,6 @@ public class ATM {
                 String[] datos = oneLine.split(",");
                 long cuit = Long.valueOf(datos[0]);
                 cliente.setCuit(cuit);
-
                 clientes.add(cliente);
                 oneLine = lector.readLine();
             }
@@ -322,8 +322,6 @@ public class ATM {
 
     //Elige la opcion.
     private void elegirOpcion() {
-        int valor = 0;
-        BigDecimal monto = BigDecimal.valueOf(valor);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("\nOpciones \n1- Retirar Efectivo\n2- Comprar Dolares\n3- Vender Dolares\n4- Depositar\n5- Transferir");
@@ -331,34 +329,75 @@ public class ATM {
 
         try {
             int eleccion = Integer.parseInt(in.readLine());
-
+            
             switch (eleccion) {
                 case 1: {
-                    transacciones = new RetirarEfectivo(new CuentaCorriente(new Cliente(new LinkedList<>(), 1234), "Luciano", monto));
-                    //System.out.println("Cuenta: " + cuenta.get(0));
-                    System.out.println("Retirar Efectivo:");
-                    int efectivo = Integer.parseInt(in.readLine());
-
+                	System.out.println("Retirar Efectivo");
+                    System.out.println("¿Cuanto desea retirar?");
+                	double monto = Double.parseDouble(in.readLine());
+                	Cuenta cuenta = cuentaActual; 
+                	Transaccion t = new RetirarEfectivo(cuenta);
+                    ((RetirarEfectivo) t).retirarEfectivo(BigDecimal.valueOf(monto));
+                    System.out.println(t.getCuenta().consultarSaldo());
+                    
+                    /*
                     if (transacciones instanceof RetirarEfectivo) {
                         ((RetirarEfectivo) transacciones).retirarEfectivo(BigDecimal.valueOf(efectivo));
                     }
-                    System.out.println("Retiro:" + efectivo);
+                    */
+                    
+                    
                     break;
                 }
                 case 2: {
                     System.out.println("Comprar Dolares");
+                    
+                    Cuenta cuenta = cuentaActual;                  
+                    //ComprarDolares cd = new ComprarDolares(cuentaActual,cuentaActual,cuentaActual);
+                    System.out.println(cuenta.consultarSaldo());
+                    System.out.println("Retirar Efectivo:");
+                    //cd.asdasd
+                    
                     break;
                 }
                 case 3: {
                     System.out.println("Vender Dolares");
+                    
+                    Cuenta cuenta = cuentaActual; 
+                    //ComprarDolares cd = new ComprarDolares(listaDeCuentas.get(0),listaDeCuentas.get(1),listaDeCuentas.get(4));
+                    System.out.println(cuenta.consultarSaldo());
+                    System.out.println("Retirar Efectivo:");
+                    //cd.asdasd
+                    
+                    
                     break;
                 }
                 case 4: {
                     System.out.println("Depositar");
+                    System.out.println("¿Cuanto desea depositar?");
+                    double monto = Double.parseDouble(in.readLine());
+                    
+                    Cuenta cuenta = cuentaActual;
+                    Depositar d = new Depositar(cuenta);
+                    
+                    d.depositarPesos(BigDecimal.valueOf(monto));
+                    
+                    System.out.println(cuenta.consultarSaldo());
+                    
                     break;
                 }
                 case 5: {
                     System.out.println("Transferir");
+                    
+                    Cuenta cuenta1 = cuentaActual;
+                    Cuenta cuenta2 = listaDeCuentas.get(1);
+                    System.out.println(cuenta1.consultarSaldo());
+                    Transferencia t = new Transferencia(cuenta1);
+                    t.transferencia(BigDecimal.valueOf(500), cuenta2);
+                   
+                    
+                    System.out.println(cuenta1.consultarSaldo());
+                    
                     break;
                 }
                 default:
@@ -396,7 +435,7 @@ public class ATM {
 
     //Imprime ticket
     public String imprimirTicket() {
-        return "Fecha - Hora - Cuenta: - TipoDeTransaccion: - ImporteInvolucradoEnLa Transaccion - Nuevo Saldo";
+        return "Fecha - Hora - Cuenta: " + cuentaActual + " - TipoDeTransaccion: - ImporteInvolucradoEnLa Transaccion - Nuevo Saldo";
     }
 
 }
