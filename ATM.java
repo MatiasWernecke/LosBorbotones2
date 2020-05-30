@@ -347,10 +347,7 @@ public class ATM {
                     Cuenta cuenta = cuentaActual;  
                     Cuenta cuentaEnPesos = null;
                     CajaDeAhorroEnPesos c = null;
-                    System.out.println(cuenta.consultarSaldo());
                     boolean encontroAlias = false;
-                    System.out.println("¿Cuando desea comprar?");
-                    double monto = Double.parseDouble(in.readLine());
                     System.out.println("Ingrese alias");
                     String alias = in.readLine();
                     
@@ -374,15 +371,17 @@ public class ATM {
                     
                     if(encontroAlias){
                     	System.out.println("Encontro alias");                    	
-                    	System.out.print("Cuenta: " + c);
                     	
                     	
                     } else {
                     	System.out.println("No se encontro alias");
                     }
                   
-                    //hormiga.lija.crema
-                    ComprarDolares cd = new ComprarDolares( cuentaActual, c);
+                    //uva.sandalia.halcon
+                    ComprarDolares cd = new ComprarDolares(cuentaActual, c);
+                    System.out.println("¿Cuanto desea comprar?");
+                    double cantAComprar = Double.parseDouble(in.readLine());
+                    cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
                     System.out.println("Sueldo cuenta actual: " + cuenta.consultarSaldo());
                     System.out.println("Sueldo en caja de ahorro en peso: " + c.consultarSaldo());
                     
