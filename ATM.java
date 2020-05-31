@@ -405,7 +405,8 @@ public class ATM {
                      		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
                      			
                      			encontroAlias = true;
-                     			c = new CajaDeAhorroEnPesos(cuentaEnPesos.getCliente(),cuentaEnPesos.getAlias());
+                     			c = new CajaDeAhorroEnPesos();
+                     			c.setSaldo(cuentaEnPesos.getSaldo());
 
                      		}
                      		
