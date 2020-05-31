@@ -9,7 +9,6 @@ public class RetirarEfectivo extends Transaccion {
 	
 	// saldo debe ser mayor o igual a monto
 	public void retirarEfectivo(BigDecimal montoRetirado) {
-		try {
 			// A.compareTo(B): este metodo retorna -1 si A < B, 0 si A = B, 1 si
 			// A > B
 			if (haySaldo(montoRetirado)) {
@@ -17,10 +16,11 @@ public class RetirarEfectivo extends Transaccion {
 				super.getCuenta().descontarEfectivo(montoRetirado);
 				super.generarMovimiento();
 				System.out.println("la extraccion se realizo con exito");
+
+			} else {
+				throw new Error("Saldo unsuficiente");
 			}
-		} catch (Exception e) {
-			e.getMessage();
-		}
+		
 	}
 
 	private boolean haySaldo(BigDecimal montoRetirado) {
