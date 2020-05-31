@@ -44,8 +44,6 @@ public class VenderDolares extends Transaccion {
 	}
 
 	private boolean haySaldo(BigDecimal montoADescontar) {
-		return super.getCuenta().consultarSaldo().compareTo(montoADescontar) >= 0;
+		return super.getCuenta().getSaldo().compareTo(montoADescontar) >= 0;
 	}
-
-	// POR AHORA NO SE SI SE APLICAN IMPUESTOS POR VENDER DOLARES, CREO QUE NO
 }
