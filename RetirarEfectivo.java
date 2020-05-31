@@ -18,7 +18,7 @@ public class RetirarEfectivo extends Transaccion {
 				System.out.println("la extraccion se realizo con exito");
 
 			} else {
-				throw new Error("Saldo unsuficiente");
+				throw new Error("Saldo Insuficiente");
 			}
 		
 	}
