@@ -9,7 +9,7 @@ public abstract class Transaccion {
 
 	public Transaccion(Cuenta cuenta) {
 		this.cuenta = cuenta;
-		setMonto(BigDecimal.ZERO);
+		this.monto = BigDecimal.ZERO;
 	}
 
 	public Cuenta getCuenta() {
@@ -29,9 +29,13 @@ public abstract class Transaccion {
 	}
 
 	public void generarMovimiento() {
-		Movimiento movimiento = new Movimiento("", monto, cuenta);
-		if (cuenta.getMovimientos().size() == 10) {
-			cuenta.getMovimientos().removeFirst();
+		Movimiento movimiento = new Movimiento("", this.monto, this.cuenta);
+		if(cuenta.getMovimientos() != null){
+			if (cuenta.getMovimientos().size() == 10) {
+				cuenta.getMovimientos().removeFirst();
+			}
+		}else{
+			cuenta.setMovimientos(new LinkedList<Movimiento>());
 		}
 		cuenta.getMovimientos().add(movimiento);
 	}
