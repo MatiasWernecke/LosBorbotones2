@@ -20,9 +20,10 @@ public class Depositar extends Transaccion {
 		if (validarDeposito(deposito)) {
 
 			setMontoPesos(deposito);
-			super.getCuenta().setSaldo(super.getCuenta().consultarSaldo().add(deposito));
+			super.getCuenta().setSaldo(
+					super.getCuenta().getSaldo().add(deposito));
 			System.out.println("se realizo el deposito en pesos correctamente");
-		
+
 		} else {
 
 			throw new Error("no se puede depositar el monto ingresado");
@@ -36,9 +37,11 @@ public class Depositar extends Transaccion {
 		if (validarDeposito(deposito)) {
 
 			setMontoDolares(deposito);
-			super.getCuenta().setSaldo(super.getCuenta().consultarSaldo().add(deposito));
-			System.out.println("se realizo el deposito en dolares correctamente");
-		
+			super.getCuenta().setSaldo(
+					super.getCuenta().getSaldo().add(deposito));
+			System.out
+					.println("se realizo el deposito en dolares correctamente");
+
 		} else {
 
 			throw new Error("no se puede depositar el monto ingresado");
