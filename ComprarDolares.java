@@ -21,7 +21,7 @@ public class ComprarDolares extends Transaccion {
 
 	public void comprarDolares(BigDecimal cantAComprar) {
 
-		if (cantAComprar.intValueExact() > 0) {
+		if (montoValido(cantAComprar) {
 			BigDecimal dolaresConvertidosAPesos = new BigDecimal(cantAComprar
 					.multiply(cotizacionDolar).doubleValue());
 
@@ -64,5 +64,9 @@ public class ComprarDolares extends Transaccion {
 
 	public BigDecimal getImpuestoDeLaCompra() {
 		return this.impuesto;
+	}
+	
+	private boolean montoValido(BigDecimal cantAComprar) {
+		return cantAComprar.compareTo(BigDecimal.ZERO) == 1 ;
 	}
 }
