@@ -23,11 +23,11 @@ public class Cliente {
 		tarjetas.add(tarjeta);
 	}
 
-	public LinkedList<Tarjeta> getTarjetas() {
+	public List<Tarjeta> getTarjetas() {
 		return tarjetas;
 	}
 
-	public void setTarjetas(LinkedList<Tarjeta> tarjetas) {
+	public void setTarjetas(List<Tarjeta> tarjetas) {
 		this.tarjetas = tarjetas;
 	}
 
