@@ -9,25 +9,25 @@ public class CajaDeAhorroEnPesos extends Cuenta {
 	}
 
 	public CajaDeAhorroEnPesos() {
-		// TODO ApÈndice de constructor generado autom·ticamente
+		// TODO Ap√©ndice de constructor generado autom√°ticamente
 	}
 
 	@Override
 	public void ingresarEfectivo(BigDecimal montoIngresado) {
-		setSaldo(consultarSaldo().add(montoIngresado));
+		setSaldo(getSaldo().add(montoIngresado));
 
 	}
 
 	@Override
 	public void descontarEfectivo(BigDecimal montoDescontado) {
 		if (!haySaldo(montoDescontado)) {
-			setSaldo(consultarSaldo().subtract(montoDescontado));
+			setSaldo(getSaldo().subtract(montoDescontado));
 		}
 
 	}
 
 	public boolean haySaldo(BigDecimal montoDescontado) {
-		return consultarSaldo().compareTo(montoDescontado) < 0 ;
+		return getSaldo().compareTo(montoDescontado) < 0 ;
 	}
 
 }
