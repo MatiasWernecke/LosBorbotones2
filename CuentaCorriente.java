@@ -16,19 +16,19 @@ public class CuentaCorriente extends Cuenta {
 
 	@Override
 	public void ingresarEfectivo(BigDecimal montoIngresado) {
-		setSaldo(consultarSaldo().add(montoIngresado));
+		setSaldo(getSaldo().add(montoIngresado));
 	}
 
 	@Override
 	public void descontarEfectivo(BigDecimal montoDescontado) {
 		//A.compareTo(B): este metodo retorna -1 si A < B, 0 si A = B, 1 si A > B
 		if(haySaldo(montoDescontado)) {
-			setSaldo(consultarSaldo().subtract(montoDescontado));
+			setSaldo(getSaldo().subtract(montoDescontado));
 		}
 	}
 
 	private boolean haySaldo(BigDecimal montoDescontado) {
-		return consultarSaldo().subtract(montoDescontado).compareTo(descubierto) != -1;
+		return getSaldo().subtract(montoDescontado).compareTo(descubierto) != -1;
 	}
 
 }
