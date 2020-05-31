@@ -3,6 +3,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class ATM {
@@ -81,7 +83,8 @@ public class ATM {
 						System.out.println("Saldo: " + cuentaActual.consultarSaldo());
                         elegirOpcion();
                     } else {
-                        System.out.println("Pin equivocado");
+                        System.err.println("El pin ingresado no existe");
+                        leerTarjeta();
                     }
 
                 } catch (Exception excepcion) {
@@ -89,7 +92,13 @@ public class ATM {
                     System.exit(0);
                 }
 
+            }else {
+            	System.err.println("La tarjeta que ingreso no existe. Vuelve a intentarlo.");
+            	leerTarjeta();
             }
+            
+            
+            
         } catch (Exception exception) {
             exception.printStackTrace();
             System.err.println("Tarjeta error");
@@ -338,7 +347,7 @@ public class ATM {
                 	Cuenta cuenta = cuentaActual; 
                 	Transaccion t = new RetirarEfectivo(cuenta);
                     ((RetirarEfectivo) t).retirarEfectivo(BigDecimal.valueOf(monto));
-                    System.out.println("\nSueldo actual: " + t.getCuenta().consultarSaldo());
+                    System.out.println(imprimirTicket());
                     elegirOpcion();
                     break;
                 }
@@ -353,8 +362,6 @@ public class ATM {
                     
                     for(int i = 0; i < listaDeCuentas.size();i++){
                     	if(alias.equals(listaDeCuentas.get(i).getAlias())){
-                    		
-                    		
                     		cuentaEnPesos = listaDeCuentas.get(i);
                     		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
                     			
@@ -362,29 +369,23 @@ public class ATM {
                     			c = new CajaDeAhorroEnPesos();
                     			c.setSaldo(cuentaEnPesos.getSaldo());
                     		}
-                    		
-                    		
                     		break;
-                    		
                     	}
                     }
                     
                     if(encontroAlias){
                     	System.out.println("Encontro alias");                    	
-                    	
-                    	
                     } else {
-                    	System.out.println("No se encontro alias");
+                    	System.err.println("No se encontro alias");
+                     	elegirOpcion();
                     }
-                  
-                    //uva.sandalia.halcon
+                    
                     ComprarDolares cd = new ComprarDolares(cuentaActual, c);
                     System.out.println("¿Cuanto desea comprar?");
                     double cantAComprar = Double.parseDouble(in.readLine());
                     cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
                     System.out.println("Sueldo cuenta actual: " + cuenta.consultarSaldo());
                     System.out.println("Sueldo en caja de ahorro en peso: " + c.consultarSaldo());
-                    
                     elegirOpcion();
                     break;
                 }
@@ -396,33 +397,25 @@ public class ATM {
                      boolean encontroAlias = false;
                      System.out.println("\nIngrese alias:");
                      String alias = in.readLine();
-                     
                      for(int i = 0; i < listaDeCuentas.size();i++){
                      	if(alias.equals(listaDeCuentas.get(i).getAlias())){
-                     		
-                     		//System.out.println("Encontro alias");
                      		cuentaEnPesos = listaDeCuentas.get(i);
                      		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
-                     			
                      			encontroAlias = true;
                      			c = new CajaDeAhorroEnPesos();
                      			c.setSaldo(cuentaEnPesos.getSaldo());
-
                      		}
-                     		
                      		break;
                      	}
-                     }
+                     }    
                      
                      if(encontroAlias){
                      	System.out.println("Encontro alias");                    	
-                     	
-                     	
                      } else {
-                     	System.out.println("No se encontro alias");
+                     	System.err.println("No se encontro alias");
+                     	elegirOpcion();
                      }
-                   
-                     //uva.sandalia.halcon
+                     
                      VenderDolares vd = new VenderDolares(cuentaActual, c);
                      System.out.println("\n¿Cuanto desea vender?");
                      double cantAComprar = Double.parseDouble(in.readLine());
@@ -457,12 +450,13 @@ public class ATM {
                     for(int i = 0; i < listaDeCuentas.size();i++){
                     	if(alias.equals(listaDeCuentas.get(i).getAlias())){
                     		cuenta2 = listaDeCuentas.get(i);
+                    	} else {
+                    		System.err.println("No se encontro alias");
+                         	elegirOpcion();
                     	}
                     }
                     
                     t.transferencia(BigDecimal.valueOf(monto), cuenta2);
-
-
                     System.out.println("\nSueldo de cuenta 1: " + cuenta1.consultarSaldo());
                     System.out.println("Sueldo de cuenta 2: " + cuenta2.consultarSaldo());
                     elegirOpcion();
@@ -508,7 +502,12 @@ public class ATM {
 
     //Imprime ticket
     public String imprimirTicket() {
-        return "Fecha - Hora - Cuenta: " + cuentaActual + " - TipoDeTransaccion: - ImporteInvolucradoEnLa Transaccion - Nuevo Saldo";
+    	LocalDate fecha = LocalDate.now();
+    	LocalDateTime tiempo = LocalDateTime.now();
+    	int hora  = tiempo.getHour();
+    	int minuto = tiempo.getMinute();
+    	int segundo = tiempo.getSecond();
+        return "Fecha: " + fecha + " - Hora: " + hora + ":" + minuto + ":" + segundo + " - Cuenta: " + cuentaActual.getAlias() + " - TipoDeTransaccion:  " +    "- Importe En La Transaccion: " + " - Nuevo Saldo: $" + cuentaActual.getSaldo();
     }
 
 }
