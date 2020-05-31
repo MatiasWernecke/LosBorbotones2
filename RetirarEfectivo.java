@@ -6,22 +6,25 @@ public class RetirarEfectivo extends Transaccion {
 	public RetirarEfectivo(Cuenta cuenta) {
 		super(cuenta);
 	}
-
+	
 	// saldo debe ser mayor o igual a monto
 	public void retirarEfectivo(BigDecimal montoRetirado) {
 		try {
 			// A.compareTo(B): este metodo retorna -1 si A < B, 0 si A = B, 1 si
 			// A > B
 			if (haySaldo(montoRetirado)) {
-				getCuenta().descontarEfectivo(montoRetirado);
-				generarMovimiento();
+				super.setMonto(montoRetirado);
+				super.getCuenta().descontarEfectivo(montoRetirado);
+				super.generarMovimiento();
+				System.out.println("la extraccion se realizo con exito");
 			}
 		} catch (Exception e) {
-			System.out.print(e);
+			e.getMessage();
 		}
 	}
 
-	private boolean haySaldo(BigDecimal montoADescontar) {
-		return super.getCuenta().consultarSaldo().compareTo(montoADescontar) >= 0;
+	private boolean haySaldo(BigDecimal montoRetirado) {
+		return getCuenta().getSaldo().subtract(montoRetirado)
+				.compareTo(BigDecimal.ZERO) != -1;
 	}
 }
