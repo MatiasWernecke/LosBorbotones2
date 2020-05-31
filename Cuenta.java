@@ -21,7 +21,7 @@ public abstract class Cuenta {
 
 	public abstract void descontarEfectivo(BigDecimal montoDescontado);
 
-	public BigDecimal consultarSaldo() {
+	public BigDecimal getSaldo() {
 		return saldo;
 	}
 	
