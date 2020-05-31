@@ -9,20 +9,37 @@ import java.util.*;
 
 public class ATM {
 
-    private Map billetes;
+	private Map<Integer, Integer> billetes;
     private List<Cuenta> listaDeCuentas;
     private Transaccion transacciones;
     private Cuenta cuentaActual;
 
     public ATM() {
-        billetes = new TreeMap<Integer, Integer>();
+    	billetes = new TreeMap<Integer, Integer>();
+    	billetes.put(100, 500);
+    	billetes.put(500, 500);
+		billetes.put(1000, 500);
+		
+		Iterator it = billetes.keySet().iterator();
+		while(it.hasNext()){
+		  Integer key = (Integer) it.next();
+		  System.out.println("Clave: " + key + " -> Valor: " + billetes.get(key));
+		}
+		
+		System.out.println(getBilletes(100));
+		
     }
 
-    public ATM(Map billetes, List<Cuenta> listaDeCuentas, Transaccion transacciones) {
+	public ATM(Map billetes, List<Cuenta> listaDeCuentas, Transaccion transacciones) {
         this.billetes = billetes;
         this.listaDeCuentas = listaDeCuentas;
         this.transacciones = transacciones;
     }
+	
+	public int getBilletes(int key){
+		return billetes.get(key);
+	}
+
 
     public void leerTarjeta() {
         boolean tarjetaExiste = false, pinExiste = false;
@@ -83,13 +100,13 @@ public class ATM {
 						System.out.println("Saldo: " + cuentaActual.consultarSaldo());
                         elegirOpcion();
                     } else {
-                        System.err.println("El pin ingresado no existe");
+                        System.err.println("El pin ingresado no existe. Vuelve a intentarlo.");
                         leerTarjeta();
                     }
 
                 } catch (Exception excepcion) {
-                    System.err.println("Pin error");
-                    System.exit(0);
+                	System.err.println("No ingreso correctamente el pin");
+                    leerTarjeta();
                 }
 
             }else {
@@ -100,9 +117,8 @@ public class ATM {
             
             
         } catch (Exception exception) {
-            exception.printStackTrace();
-            System.err.println("Tarjeta error");
-            System.exit(0);
+            System.err.println("No ingreso correctamente la tarjeta");
+            leerTarjeta();
         }
     }
 
@@ -119,7 +135,7 @@ public class ATM {
         }
     }
 
-  //Recorre la lista de cuentas y devuelve un cuit (usando como parametro un numero de tarjeta).
+    //Recorre la lista de cuentas y devuelve un cuit (usando como parametro un numero de tarjeta).
     private long buscarCuitPorTarjeta(int numeroTarjeta) {
         long cuit = 0;
         for (int i = 0; i < this.listaDeCuentas.size(); i++) {
@@ -311,18 +327,15 @@ public class ATM {
                 int tipoCuenta = Integer.valueOf(datos[0]);
                 String alias = datos[1];
                 BigDecimal saldo = BigDecimal.valueOf(Double.valueOf(datos[2]));
-
                 Cuenta cuenta = crearCuenta(tipoCuenta);
                 cuenta.setSaldo(saldo);
                 cuenta.setAlias(alias);
-
                 listaDeCuentas.add(cuenta);
                 oneLine = lector.readLine();
             }
 
             lector.close();
         } catch (Exception e) {
-            e.printStackTrace();
             System.err.println("No se encontro archivo 'cuentas.txt'");
             System.exit(0);
         }
@@ -341,13 +354,77 @@ public class ATM {
             
             switch (eleccion) {
                 case 1: {
+                	if(cuentaActual instanceof CajaDeAhorroEnDolares){
+                		throw new Error("No se puede extraer en dolares");
+                	}
                 	System.out.println("Retirar Efectivo");
                     System.out.println("\n¿Cuanto desea retirar?");
-                	double monto = Double.parseDouble(in.readLine());
+                    System.out.println("\n1- 100\n2- 500\n3- 1000");
+                    int eleccion2 = Integer.parseInt(in.readLine());
+                    int  dinero = 0;
+                    
+                    switch (eleccion2) {
+                    	case 1: {
+                    		
+                    		if(billetes.get(100) <= 0){
+                    			throw new Error("No hay mas billtes de 100");
+                    		}
+                    		
+                    		int billetesTotal = billetes.get(100);
+                    		dinero = 100;
+                			System.out.println("¿Cuanta cantidad de $" + dinero + "?: ");
+                    		int cantidad = Integer.parseInt(in.readLine());
+                    		dinero *= cantidad;
+                    		billetes.remove(100);
+                    		billetes.put(100, billetesTotal-(1*cantidad));
+                    		
+                    		System.out.println("Billetes de 100: " + billetes.get(100));
+                    		
+                    		break;
+                    	}
+                    	case 2: {
+                    		if(billetes.get(500) <= 0){
+                    			throw new Error("No hay mas billtes de 500");
+                    		}
+                    		
+                    		int billetesTotal = billetes.get(500);
+                    		dinero = 500;
+                    		System.out.println("¿Cuanta cantidad de $" + dinero + "?: ");
+                    		int cantidad = Integer.parseInt(in.readLine());
+                    		dinero *= cantidad;
+                    		
+                    		billetes.remove(500);
+                    		billetes.put(500, billetesTotal-(1*cantidad));
+                    		
+                    		System.out.println("Billetes de 500: " + billetes.get(500));
+                    		break;
+                    	}
+                    	case 3: {
+                    		if(billetes.get(1000) <= 0){
+                    			throw new Error("No hay mas billtes de 1000");
+                    		}
+                    		
+                    		int billetesTotal = billetes.get(1000);
+                    		dinero = 1000;
+                    		System.out.println("¿Cuanta cantidad de $" + dinero + "?: ");
+                    		int cantidad = Integer.parseInt(in.readLine());
+                    		dinero *= cantidad;
+                    		
+                    		billetes.remove(1000);
+                    		billetes.put(1000, billetesTotal-(1*cantidad));
+                    		
+                    		System.out.println("Billetes de 1000: " + billetes.get(1000));
+                    		break;
+                    	}
+                    	default:
+                            System.err.println("Error en numero ingresado");
+                            elegirOpcion();
+                    }
+                	//double monto = Double.parseDouble(in.readLine());
                 	Cuenta cuenta = cuentaActual; 
                 	Transaccion t = new RetirarEfectivo(cuenta);
-                    ((RetirarEfectivo) t).retirarEfectivo(BigDecimal.valueOf(monto));
-                    System.out.println(imprimirTicket());
+                    ((RetirarEfectivo) t).retirarEfectivo(BigDecimal.valueOf(dinero));
+                    System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dinero)));
                     elegirOpcion();
                     break;
                 }
@@ -356,7 +433,6 @@ public class ATM {
                     Cuenta cuenta = cuentaActual;  
                     Cuenta cuentaEnPesos = null;
                     CajaDeAhorroEnPesos c = null;
-                    boolean encontroAlias = false;
                     System.out.println("\nIngrese alias:");
                     String alias = in.readLine();
                     
@@ -364,28 +440,24 @@ public class ATM {
                     	if(alias.equals(listaDeCuentas.get(i).getAlias())){
                     		cuentaEnPesos = listaDeCuentas.get(i);
                     		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
-                    			
-                    			encontroAlias = true;
+                    			System.out.println("\nSe encontro alias");
                     			c = new CajaDeAhorroEnPesos();
-                    			c.setSaldo(cuentaEnPesos.getSaldo());
+                    			c.setSaldo(cuentaEnPesos.consultarSaldo());
                     		}
                     		break;
+                    	}else {
+                    		System.err.println("\nNo se encontro alias");
+                         	elegirOpcion();
                     	}
                     }
                     
-                    if(encontroAlias){
-                    	System.out.println("Encontro alias");                    	
-                    } else {
-                    	System.err.println("No se encontro alias");
-                     	elegirOpcion();
-                    }
-                    
                     ComprarDolares cd = new ComprarDolares(cuentaActual, c);
-                    System.out.println("¿Cuanto desea comprar?");
+                    System.out.println("\n¿Cuanto desea comprar?");
                     double cantAComprar = Double.parseDouble(in.readLine());
                     cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
-                    System.out.println("Sueldo cuenta actual: " + cuenta.consultarSaldo());
+                    System.out.println("\nSueldo cuenta actual: " + cuenta.consultarSaldo());
                     System.out.println("Sueldo en caja de ahorro en peso: " + c.consultarSaldo());
+                    System.out.println(imprimirTicket("Comprar Dolares", BigDecimal.valueOf(cantAComprar)));
                     elegirOpcion();
                     break;
                 }
@@ -394,46 +466,96 @@ public class ATM {
                      Cuenta cuenta = cuentaActual;  
                      Cuenta cuentaEnPesos = null;
                      CajaDeAhorroEnPesos c = null;
-                     boolean encontroAlias = false;
                      System.out.println("\nIngrese alias:");
                      String alias = in.readLine();
                      for(int i = 0; i < listaDeCuentas.size();i++){
                      	if(alias.equals(listaDeCuentas.get(i).getAlias())){
                      		cuentaEnPesos = listaDeCuentas.get(i);
                      		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
-                     			encontroAlias = true;
+                     			System.out.println("Encontro alias"); 
                      			c = new CajaDeAhorroEnPesos();
-                     			c.setSaldo(cuentaEnPesos.getSaldo());
+                     			c.setSaldo(cuentaEnPesos.consultarSaldo());
                      		}
                      		break;
-                     	}
+                     	}else {
+                    		System.err.println("\nNo se encontro alias");
+                         	elegirOpcion();
+                    	}
                      }    
-                     
-                     if(encontroAlias){
-                     	System.out.println("Encontro alias");                    	
-                     } else {
-                     	System.err.println("No se encontro alias");
-                     	elegirOpcion();
-                     }
-                     
+
                      VenderDolares vd = new VenderDolares(cuentaActual, c);
                      System.out.println("\n¿Cuanto desea vender?");
                      double cantAComprar = Double.parseDouble(in.readLine());
                      vd.venderDolares(BigDecimal.valueOf(cantAComprar));
                      System.out.println("\nSueldo cuenta actual: " + cuenta.consultarSaldo());
                      System.out.println("Sueldo en caja de ahorro en peso: " + c.consultarSaldo());
-                     
+                     System.out.println(imprimirTicket("Vender Dolares", BigDecimal.valueOf(cantAComprar)));
                      elegirOpcion();
                      break;
                 }
                 case 4: {
                     System.out.println("Depositar");
                     System.out.println("\n¿Cuanto desea depositar?");
-                    double monto = Double.parseDouble(in.readLine());
+                    System.out.println("\n1- 100\n2- 500\n3- 1000");
+                    
+                    int eleccion2 = Integer.parseInt(in.readLine());
+                    int  dinero = 0;
+                    
+                    switch (eleccion2) {
+                    	case 1: {
+                    		
+                    		int billetesTotal = billetes.get(100);
+                    		dinero = 100;
+                    		
+                    		
+                			System.out.println("¿Cuanta cantidad de $" + dinero + "?: ");
+                    		int cantidad = Integer.parseInt(in.readLine());
+                    		dinero *= cantidad;
+                    		billetes.remove(100);
+                    		billetes.put(100, billetesTotal+(1*cantidad));
+                    		
+                    		System.out.println("Billetes de 100: " + billetes.get(100));
+                		
+                    		break;
+                    	}
+                    	case 2: {
+                    		int billetesTotal = billetes.get(500);
+                    		dinero = 500;
+                    		System.out.println("¿Cuanta cantidad de $" + dinero + "?: ");
+                    		int cantidad = Integer.parseInt(in.readLine());
+                    		dinero *= cantidad;
+                    		
+                    		billetes.remove(500);
+                    		billetes.put(500, billetesTotal+(1*cantidad));
+                    		
+                    		System.out.println("Billetes de 500: " + billetes.get(500));
+                    		break;
+                    	}
+                    	case 3: {
+                    		int billetesTotal = billetes.get(1000);
+                    		dinero = 1000;
+                    		System.out.println("¿Cuanta cantidad de $" + dinero + "?: ");
+                    		int cantidad = Integer.parseInt(in.readLine());
+                    		dinero *= cantidad;
+                    		
+                    		billetes.remove(1000);
+                    		billetes.put(1000, billetesTotal+(1*cantidad));
+                    		
+                    		System.out.println("Billetes de 1000: " + billetes.get(1000));
+                    		break;
+                    	}
+                    	default:
+                            System.err.println("Error en numero ingresado");
+                            elegirOpcion();
+                    }
+                    
+                    
+                    
+                    //double monto = Double.parseDouble(in.readLine());
                     Cuenta cuenta = cuentaActual;
                     Depositar d = new Depositar(cuenta);
-                    d.depositarPesos(BigDecimal.valueOf(monto));
-                    System.out.println("\nSueldo actual: " + cuentaActual.getSaldo());
+                    d.depositarPesos(BigDecimal.valueOf(dinero));
+                    System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
                     elegirOpcion();
                     break;
                 }
@@ -459,6 +581,7 @@ public class ATM {
                     t.transferencia(BigDecimal.valueOf(monto), cuenta2);
                     System.out.println("\nSueldo de cuenta 1: " + cuenta1.consultarSaldo());
                     System.out.println("Sueldo de cuenta 2: " + cuenta2.consultarSaldo());
+                    System.out.println(imprimirTicket("Transferir", BigDecimal.valueOf(monto)));
                     elegirOpcion();
                     break;
                 } 
@@ -501,13 +624,15 @@ public class ATM {
     }
 
     //Imprime ticket
-    public String imprimirTicket() {
+    public String imprimirTicket(String tipoDeTransaccion, BigDecimal importe) {
     	LocalDate fecha = LocalDate.now();
     	LocalDateTime tiempo = LocalDateTime.now();
     	int hora  = tiempo.getHour();
     	int minuto = tiempo.getMinute();
     	int segundo = tiempo.getSecond();
-        return "Fecha: " + fecha + " - Hora: " + hora + ":" + minuto + ":" + segundo + " - Cuenta: " + cuentaActual.getAlias() + " - TipoDeTransaccion:  " +    "- Importe En La Transaccion: " + " - Nuevo Saldo: $" + cuentaActual.getSaldo();
+        return "Fecha: " + fecha + " - Hora: " + hora + ":" + minuto + ":" + segundo + 
+        		" - Cuenta: " + cuentaActual.getAlias() + " - TipoDeTransaccion: " +  tipoDeTransaccion +  " - Importe En La Transaccion: " + importe +
+        		" - Nuevo Saldo: $" + cuentaActual.consultarSaldo();
     }
 
 }
