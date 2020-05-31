@@ -14,7 +14,7 @@ public class CajaDeAhorroEnDolares extends Cuenta {
 	// montoIngresado es en pesos
 	@Override
 	public void ingresarEfectivo(BigDecimal montoIngresado) {
-		setSaldo(consultarSaldo().add(montoIngresado));
+		setSaldo(getSaldo().add(montoIngresado));
 
 	}
 
@@ -23,14 +23,14 @@ public class CajaDeAhorroEnDolares extends Cuenta {
 	@Override
 	public void descontarEfectivo(BigDecimal montoDescontado) {
 		if (haySaldo(montoDescontado)) {
-			setSaldo(consultarSaldo().subtract(montoDescontado));
+			setSaldo(getSaldo().subtract(montoDescontado));
 		} else
 			System.out.println("Saldo insuficiente.");
 
 	}
 
 	private boolean haySaldo(BigDecimal montoADescontar) {
-		return consultarSaldo().compareTo(montoADescontar) >= 0;
+		return getSaldo().compareTo(montoADescontar) >= 0;
 	}
 
 
