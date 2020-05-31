@@ -424,7 +424,7 @@ public class ATM {
                    
                      //uva.sandalia.halcon
                      VenderDolares vd = new VenderDolares(cuentaActual, c);
-                     System.out.println("\n¿Cuanto desea comprar?");
+                     System.out.println("\n¿Cuanto desea vender?");
                      double cantAComprar = Double.parseDouble(in.readLine());
                      vd.venderDolares(BigDecimal.valueOf(cantAComprar));
                      System.out.println("\nSueldo cuenta actual: " + cuenta.consultarSaldo());
