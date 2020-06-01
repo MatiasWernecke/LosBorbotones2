@@ -21,7 +21,7 @@ public class ComprarDolares extends Transaccion {
 
 	public void comprarDolares(BigDecimal cantAComprar) {
 
-		if (montoValido(cantAComprar) {
+		if (montoValido(cantAComprar)){
 			BigDecimal dolaresConvertidosAPesos = new BigDecimal(cantAComprar
 					.multiply(cotizacionDolar).doubleValue());
 
@@ -41,17 +41,16 @@ public class ComprarDolares extends Transaccion {
 				super.generarMovimiento();
 
 			} else {
-				throw new Error(
-						"No posee suficiente dinero en su caja de ahorros");
+				throw new Error("No posee suficiente dinero en su caja de ahorros");
 			}
 		} else {
 			throw new Error("Cantidad incorrecta");
 		}
-
+	
 	}
 
 	private boolean haySaldo(BigDecimal montoADescontar) {
-		return cajaPesos.consultarSaldo().compareTo(montoADescontar) >= 0;
+		return cajaPesos.getSaldo().compareTo(montoADescontar) >= 0;
 	}
 	
 	/**
