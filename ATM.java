@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -149,7 +148,7 @@ public class ATM {
     //Se le agrega el cliente un numero de tarjeta.
     private List<Cliente> actualizarClientes(List<Cliente> clientes) {
         try {
-            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/ValidacionDeTarjetas.txt");
+            FileReader archivo = new FileReader("validacionDeTarjetas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -184,7 +183,7 @@ public class ATM {
     //En la lista de cuentas se le agrega un cuit y un cliente.
     private List<Cuenta> actualizarCuentas(List<Cuenta> listaDeCuentas) {
         try {
-            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Clientes.txt");
+            FileReader archivo = new FileReader("clientes.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -232,7 +231,7 @@ public class ATM {
         List<Tarjeta> listaDeTarjetas = new LinkedList<>();
 
         try {
-            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/ValidacionDeTarjetas.txt");
+            FileReader archivo = new FileReader("validacionDeTarjetas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -258,7 +257,7 @@ public class ATM {
         List<Cliente> clientes = new LinkedList<>();
 
         try {
-            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Clientes.txt");
+            FileReader archivo = new FileReader("clientes.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -285,7 +284,7 @@ public class ATM {
 
         List<String> listaDeClientes = new LinkedList<>();
         try {
-            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Clientes.txt");
+            FileReader archivo = new FileReader("clientes.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -314,7 +313,7 @@ public class ATM {
     private List<Cuenta> buscarCuentas() {
         List<Cuenta> listaDeCuentas = new LinkedList<>();
         try {
-            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Cuentas.txt");
+            FileReader archivo = new FileReader("cuentas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -343,7 +342,7 @@ public class ATM {
 
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         if(cuentaActual instanceof CajaDeAhorroEnDolares) {
-	        System.out.println("\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Salir");
+	        System.out.println("\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
 	        System.out.println("\nElija una opcion: ");
 	
 	        try {
@@ -381,7 +380,7 @@ public class ATM {
 	               	}
 	                    
 	                    ComprarDolares cd = new ComprarDolares(cuentaActual, c);
-	                    System.out.println("\nÂ¿Cuanto desea comprar?");
+	                    System.out.println("\n¿Cuanto desea comprar?");
 	                    double cantAComprar = Double.parseDouble(in.readLine());
 	                    cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
 	                    System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
@@ -418,7 +417,7 @@ public class ATM {
 	                	}
 	
 	                     VenderDolares vd = new VenderDolares(cuentaActual, c);
-	                     System.out.println("\nÂ¿Cuanto desea vender?");
+	                     System.out.println("\n¿Cuanto desea vender?");
 	                     double cantAComprar = Double.parseDouble(in.readLine());
 	                     vd.venderDolares(BigDecimal.valueOf(cantAComprar));
 	                     System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
@@ -432,6 +431,16 @@ public class ATM {
 	                    break;
 	                }
 	                case 4: {
+	                    System.out.println("Su saldo actual es de: $" + cuentaActual.getSaldo());   
+	                    elejirOpcion();
+	                    break;
+	                }
+	                case 5: {
+	                	System.out.print("Movimiento: " + cuentaActual.getMovimientos());  
+	                	elejirOpcion();               
+	                    break;
+	                }
+	                case 6: {
 	                    System.out.println("\nAdios");
 	                    System.exit(0);                    
 	                    break;
@@ -442,14 +451,14 @@ public class ATM {
 	            }
 	
 	        } catch (NumberFormatException e) {
-	            // TODO Bloque catch generado automÃƒÂ¡ticamente
+	            // TODO Bloque catch generado automÃ¡ticamente
 	            e.printStackTrace();
 	        } catch (IOException e) {
-	            // TODO Bloque catch generado automÃƒÂ¡ticamente
+	            // TODO Bloque catch generado automÃ¡ticamente
 	            e.printStackTrace();
 	        }
        	} else {
-       		System.out.println("\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Salir");
+       		System.out.println("\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
 	        System.out.println("\nElija una opcion: ");
 	
 	        try {
@@ -469,7 +478,7 @@ public class ATM {
 	                    Cuenta cuenta1 = cuentaActual;
 	                    Cuenta cuenta2 = null;
 	                    Transferencia t = new Transferencia(cuenta1);
-	                    System.out.println("\nÂ¿Cuando desea transferir?");
+	                    System.out.println("\n¿Cuanto desea transferir?");
 	                    double monto = Double.parseDouble(in.readLine());
 	                    System.out.println("\nIngrese alias: ");
 	                    String alias = in.readLine();
@@ -504,6 +513,16 @@ public class ATM {
 	                    break;
 	                } 
 	                case 4: {
+	                    System.out.println("Su saldo actual es de: $" + cuentaActual.getSaldo());   
+	                    elejirOpcion();
+	                    break;
+	                }
+	                case 5: {
+	                	System.out.print("Movimiento: " +cuentaActual.getMovimientos());  
+	                	elejirOpcion();               
+	                    break;
+	                }
+	                case 6: {
 	                    System.out.println("\nAdios");
 	                    System.exit(0);                    
 	                    break;
@@ -514,10 +533,10 @@ public class ATM {
 	            }
 	
 	        } catch (NumberFormatException e) {
-	            // TODO Bloque catch generado automÃƒÂ¡ticamente
+	            // TODO Bloque catch generado automÃ¡ticamente
 	            e.printStackTrace();
 	        } catch (IOException e) {
-	            // TODO Bloque catch generado automÃƒÂ¡ticamente
+	            // TODO Bloque catch generado automÃ¡ticamente
 	            e.printStackTrace();
 	        }
        	}
@@ -538,7 +557,7 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\nÂ¿Cuanto desea retirar?");
+				System.out.println("\n¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());	
 				Cuenta cuenta = cuentaActual; 
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
@@ -558,22 +577,22 @@ public class ATM {
 				
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (Error e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			}
 		
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		} catch (Error e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		}
     }
@@ -582,7 +601,7 @@ public class ATM {
     	 try {
     		 BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			 System.out.println("Depositar");
-			 System.out.println("\nÂ¿Cuanto desea depositar?");
+			 System.out.println("\n¿Cuanto desea depositar?");
 
 			 try {
 				 	int dinero = Integer.parseInt(in.readLine());
@@ -593,17 +612,17 @@ public class ATM {
 					System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
 					
 				} catch (NumberFormatException e) {
-					// TODO Bloque catch generado automÃ¡ticamente
+					// TODO Bloque catch generado automáticamente
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Bloque catch generado automÃ¡ticamente
+					// TODO Bloque catch generado automáticamente
 					e.printStackTrace();
 				}
 			
 			 
 			 elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		} 
     }
@@ -634,11 +653,10 @@ public class ATM {
     	boolean retiroBilletes = false;
     	
 		if (valorDeDinero >= i) {
-			System.err.println("Limite de billetes ATM.");
+			System.err.println("El sueldo es mayor que la cantidad de billetes de 1000");
 		} else 	{
 			//CIENTOS
 			if (valorDeDinero < 500) {
-				System.out.println(valorDeDinero / 100 + " Hundreds");
 				
 				//QUININENTOS
 			} else if (valorDeDinero >= 500 && valorDeDinero < 1000) {
@@ -663,7 +681,6 @@ public class ATM {
 			} //MILES
 			 else if(valorDeDinero > 500 && valorDeDinero <= 1000){
 				 if(billetes.get(1000) > 0){
-					 System.out.println(valorDeDinero/1000 + " Mil ");
 					 int mil = valorDeDinero/1000;				 
 					 int cantidadMil = (int) billetes.get(1000);
 					 billetes.remove(1000);
@@ -687,9 +704,6 @@ public class ATM {
 						System.err.println("No hay billetes suficientes de 1000 en el ATM");
 						
 					} else {
-					
-//						System.out.println(t+ " Billetes de mil, " + f
-//								+ " Billetes de quinientos y " + h + " Billetes de cien");
 						
 						int cantidadCien =  (int) billetes.get(100);
 			            int cantidadQunientos = (int) billetes.get(500);
@@ -721,11 +735,10 @@ public class ATM {
     private void sacarDosDeQuinientosEnMil(int valorDeDinero, Cuenta cuenta, Transaccion transaccion){
     	boolean retiroBilletes = false;
 		if (valorDeDinero > 15000) {
-			System.out.println("ATM Cash Limit exceeds.");
+			System.out.println("El sueldo es mayor que la cantidad de billetes de 500");
 		} else {
 
 			if (valorDeDinero < 500) {
-				//System.out.println(valorDeDinero / 100 + " Hundreds HAY PLATA 1");
 				int cantidadCien =  (int) billetes.get(100);
 	            int cien = valorDeDinero / 100;
 	         
@@ -742,12 +755,10 @@ public class ATM {
 					System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(valorDeDinero)));
 	            }
 			} else if (valorDeDinero >= 500) {
-				//System.out.println(valorDeDinero / 500 + " SACAR QUINIENTOS ");
 				int cantidadCien =  (int) billetes.get(100);
 	            int cantidadQunientos = (int) billetes.get(500);
 	            int h = (valorDeDinero % 500) / 100;
 				int f = valorDeDinero / 500;
-				//System.out.println(f + " Five Hundreds and " + h + " Hundreds");
 	            billetes.remove(100);
 	            billetes.put(100, cantidadCien - h);
 	            billetes.remove(500);
@@ -769,15 +780,13 @@ public class ATM {
     private void sacar100De500(int valorDeDinero, Cuenta cuenta, Transaccion transaccion){
     	boolean retiroBilletes = false;
     	if (valorDeDinero > 15000) {
-			System.out.println("ATM Cash Limit exceeds.");
+			System.out.println("El sueldo es mayor que la cantidad de billetes de 100");
 		} else {
 
 			if (valorDeDinero < 500) {
-				//System.out.println(valorDeDinero / 100 + " Hundreds");
 				int cantidadCien =  (int) billetes.get(100);
 	            int h = (valorDeDinero % 500) / 100;
 				int f = valorDeDinero / 500;
-				//System.out.println(f + " Five Hundreds and " + h + " Hundreds");
 	            billetes.remove(100);
 	            billetes.put(100, cantidadCien - h);
 	            retiroBilletes = true;
