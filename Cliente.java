@@ -1,6 +1,8 @@
+
+import java.awt.List;
 import java.util.LinkedList;
 
-import ATM_TP.Tarjeta;
+import TPDEFINITIVO.Tarjeta;
 
 public class Cliente {
 
@@ -23,11 +25,11 @@ public class Cliente {
 		tarjetas.add(tarjeta);
 	}
 
-	public List<Tarjeta> getTarjetas() {
+	public LinkedList<Tarjeta> getTarjetas() {
 		return tarjetas;
 	}
 
-	public void setTarjetas(List<Tarjeta> tarjetas) {
+	public void setTarjetas(LinkedList<Tarjeta> tarjetas) {
 		this.tarjetas = tarjetas;
 	}
 
