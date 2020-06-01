@@ -14,15 +14,20 @@ public class Transferencia extends Transaccion implements Reversible {
 
 	}
 	
-	public void transferencia(BigDecimal montoATransferir,Cuenta cuentaATransferir) {
+		public void transferencia(BigDecimal montoATransferir,
+			Cuenta cuentaATransferir) {
+		if (cuentaATransferir instanceof CajaDeAhorroEnPesos || cuentaATransferir instanceof CuentaCorriente) {
+			super.setMonto(montoATransferir);
+			setMonto(montoATransferir);
+			setCuenta(cuentaATransferir);
+			this.cuenta.descontarEfectivo(montoATransferir);
+			cuentaATransferir.ingresarEfectivo(montoATransferir);
+			super.generarMovimiento();
 
-		super.setMonto(montoATransferir);
-		setCuenta(cuentaATransferir);
-		this.cuenta.descontarEfectivo(montoATransferir);
-		cuentaATransferir.ingresarEfectivo(montoATransferir);
-		super.generarMovimiento();
+		} else {
+			throw new Error("No se puede transferir dolares");
+		}
 	}
-
 
 	public BigDecimal getMonto() {
 		return monto;
