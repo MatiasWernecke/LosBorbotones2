@@ -1,3 +1,4 @@
+
 import java.math.BigDecimal;
 import java.util.LinkedList;
 
@@ -51,6 +52,10 @@ public abstract class Cuenta {
 		}
 	}
 
+	public void setMovimientos(LinkedList<Movimiento> movimientos) {
+		this.movimientos = movimientos;
+	}
+	
 	public LinkedList<Movimiento> getMovimientos() {
 		return movimientos;
 	}
