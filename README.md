@@ -39,4 +39,4 @@ y la ATM tenga billetes.
 -----------------------------------------------------------------------------------------------------
 ##### Conclusión: 
 
-En conclusión, este trabajo nos permitió afianzar varios de los temas vistos a lo largo del cutrimestre, como por ejemplo, herencia y polimorfismo, el uso de interfaces o la implementación de listas y diccionarios.
+En conclusión, este trabajo nos permitió afianzar varios de los temas vistos a lo largo del cuatrimestre, como por ejemplo, herencia y polimorfismo, el uso de interfaces o la implementación de listas y diccionarios.
