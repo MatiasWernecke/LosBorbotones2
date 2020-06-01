@@ -1,4 +1,3 @@
-
 import java.math.BigDecimal;
 import org.junit.Test;
 import junit.framework.Assert;
@@ -270,7 +269,7 @@ public class PRUEBAS {
 	public void testDepositoEnCuentaCorriente() {
 
 		long cuit = 12345678990L;
-		Cliente c = new Cliente(cuit);
+		Cliente c = new Cliente(null,cuit);
 
 		BigDecimal descubierto = BigDecimal.valueOf(10000);
 
@@ -325,7 +324,7 @@ public class PRUEBAS {
 	public void testDepositoEnCajaDeAhorroEnPesos() {
 
 		long cuit = 143656636012L;
-		Cliente c = new Cliente(cuit);
+		Cliente c = new Cliente(null,cuit);
 		Cuenta cap = new CajaDeAhorroEnPesos(c, "eduardo");
 		BigDecimal deposito = BigDecimal.valueOf(100000);
 		BigDecimal deposito2 = BigDecimal.valueOf(22000);
@@ -586,3 +585,4 @@ public class PRUEBAS {
 		
 	}
 }
+
