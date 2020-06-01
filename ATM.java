@@ -1,3 +1,5 @@
+package TPDEFINITIVO;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -91,7 +93,7 @@ public class ATM {
                         System.out.println("Cuit: " + cuitActual);
                         System.out.println("Alias: " + aliasActual);
 						System.out.println("Cuenta: " + cuentaActual);
-						System.out.println("Saldo: " + cuentaActual.consultarSaldo());
+						System.out.println("Saldo: " + cuentaActual.getSaldo());
                         elejirOpcion();
                     } else {
                         System.err.println("El pin ingresado no existe. Vuelve a intentarlo.");
@@ -148,7 +150,7 @@ public class ATM {
     //Se le agrega el cliente un numero de tarjeta.
     private List<Cliente> actualizarClientes(List<Cliente> clientes) {
         try {
-            FileReader archivo = new FileReader("validacionDeTarjetas.txt");
+            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/ValidacionDeTarjetas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -160,7 +162,7 @@ public class ATM {
 
                 for (int i = 0; i < clientes.size(); i++) {
                     Cliente cliente = clientes.get(i);
-                    List<Tarjeta> tarjetasCliente = new LinkedList<>();
+                    LinkedList<Tarjeta> tarjetasCliente = new LinkedList<>();
                     if (cuit.equals(Long.toString(cliente.getCuit()))) {
                         Tarjeta tarjeta = new Tarjeta(nroTarjeta, pin);
                         tarjetasCliente.add(tarjeta);
@@ -183,7 +185,7 @@ public class ATM {
     //En la lista de cuentas se le agrega un cuit y un cliente.
     private List<Cuenta> actualizarCuentas(List<Cuenta> listaDeCuentas) {
         try {
-            FileReader archivo = new FileReader("clientes.txt");
+            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Clientes.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -231,7 +233,7 @@ public class ATM {
         List<Tarjeta> listaDeTarjetas = new LinkedList<>();
 
         try {
-            FileReader archivo = new FileReader("validacionDeTarjetas.txt");
+            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/ValidacionDeTarjetas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -257,7 +259,7 @@ public class ATM {
         List<Cliente> clientes = new LinkedList<>();
 
         try {
-            FileReader archivo = new FileReader("clientes.txt");
+            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Clientes.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -284,7 +286,7 @@ public class ATM {
 
         List<String> listaDeClientes = new LinkedList<>();
         try {
-            FileReader archivo = new FileReader("clientes.txt");
+            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Clientes.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -313,7 +315,7 @@ public class ATM {
     private List<Cuenta> buscarCuentas() {
         List<Cuenta> listaDeCuentas = new LinkedList<>();
         try {
-            FileReader archivo = new FileReader("cuentas.txt");
+            FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/Cuentas.txt");
             BufferedReader lector = new BufferedReader(archivo);
             String oneLine = lector.readLine();
 
@@ -363,7 +365,7 @@ public class ATM {
 	                    		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
 	                    			existe = true;
 	                    			c = new CajaDeAhorroEnPesos();
-	                    			c.setSaldo(cuentaEnPesos.consultarSaldo());
+	                    			c.setSaldo(cuentaEnPesos.getSaldo());
 	                    		}
 	                    		break;
 	                    	}else {
@@ -380,11 +382,11 @@ public class ATM {
 	               	}
 	                    
 	                    ComprarDolares cd = new ComprarDolares(cuentaActual, c);
-	                    System.out.println("\n¿Cuanto desea comprar?");
+	                    System.out.println("\nÂ¿Cuanto desea comprar?");
 	                    double cantAComprar = Double.parseDouble(in.readLine());
 	                    cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
-	                    System.out.println("\nSueldo cuenta actual: " + cuenta.consultarSaldo());
-	                    System.out.println("Sueldo en caja de ahorro en peso: " + c.consultarSaldo());
+	                    System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
+	                    System.out.println("Sueldo en caja de ahorro en peso: " + c.getSaldo());
 	                    System.out.println(imprimirTicket("Comprar Dolares", BigDecimal.valueOf(cantAComprar)));
 	                    elejirOpcion();
 	                    break;
@@ -403,7 +405,7 @@ public class ATM {
 	                     		if(cuentaEnPesos instanceof CajaDeAhorroEnPesos){
 	                     			existe = true;
 	                     			c = new CajaDeAhorroEnPesos();
-	                     			c.setSaldo(cuentaEnPesos.consultarSaldo());
+	                     			c.setSaldo(cuentaEnPesos.getSaldo());
 	                     		}
 	                     		break;
 	                     	}
@@ -417,11 +419,11 @@ public class ATM {
 	                	}
 	
 	                     VenderDolares vd = new VenderDolares(cuentaActual, c);
-	                     System.out.println("\n¿Cuanto desea vender?");
+	                     System.out.println("\nÂ¿Cuanto desea vender?");
 	                     double cantAComprar = Double.parseDouble(in.readLine());
 	                     vd.venderDolares(BigDecimal.valueOf(cantAComprar));
-	                     System.out.println("\nSueldo cuenta actual: " + cuenta.consultarSaldo());
-	                     System.out.println("Sueldo en caja de ahorro en peso: " + c.consultarSaldo());
+	                     System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
+	                     System.out.println("Sueldo en caja de ahorro en peso: " + c.getSaldo());
 	                     System.out.println(imprimirTicket("Vender Dolares", BigDecimal.valueOf(cantAComprar)));
 	                     elejirOpcion();
 	                     break;
@@ -441,10 +443,10 @@ public class ATM {
 	            }
 	
 	        } catch (NumberFormatException e) {
-	            // TODO Bloque catch generado automÃ¡ticamente
+	            // TODO Bloque catch generado automÃƒÂ¡ticamente
 	            e.printStackTrace();
 	        } catch (IOException e) {
-	            // TODO Bloque catch generado automÃ¡ticamente
+	            // TODO Bloque catch generado automÃƒÂ¡ticamente
 	            e.printStackTrace();
 	        }
        	} else {
@@ -468,7 +470,7 @@ public class ATM {
 	                    Cuenta cuenta1 = cuentaActual;
 	                    Cuenta cuenta2 = null;
 	                    Transferencia t = new Transferencia(cuenta1);
-	                    System.out.println("\n¿Cuando desea transferir?");
+	                    System.out.println("\nÂ¿Cuando desea transferir?");
 	                    double monto = Double.parseDouble(in.readLine());
 	                    System.out.println("\nIngrese alias: ");
 	                    String alias = in.readLine();
@@ -488,9 +490,17 @@ public class ATM {
 	                	}
 	                    
 	                    t.transferencia(BigDecimal.valueOf(monto), cuenta2);
-	                    System.out.println("\nSueldo de cuenta 1: " + cuenta1.consultarSaldo());
-	                    System.out.println("Sueldo de cuenta 2: " + cuenta2.consultarSaldo());
+	                    System.out.println("\nSueldo de cuenta 1: " + cuenta1.getSaldo());
+	                    System.out.println("Sueldo de cuenta 2: " + cuenta2.getSaldo());
 	                    System.out.println(imprimirTicket("Transferir", BigDecimal.valueOf(monto)));
+	                    System.out.println("Revertir Transferencia?: \nsi - no");
+                        String decision = in.readLine();
+                        if(decision.equals("si")) {
+                        	t.reversible();
+                        	 System.out.println("\nSueldo de cuenta 1: " + cuenta1.getSaldo());
+                             System.out.println("Sueldo de cuenta 2: " + cuenta2.getSaldo());
+                             System.out.println("Transferencia revertida");
+                        }
 	                    elejirOpcion();
 	                    break;
 	                } 
@@ -505,10 +515,10 @@ public class ATM {
 	            }
 	
 	        } catch (NumberFormatException e) {
-	            // TODO Bloque catch generado automÃ¡ticamente
+	            // TODO Bloque catch generado automÃƒÂ¡ticamente
 	            e.printStackTrace();
 	        } catch (IOException e) {
-	            // TODO Bloque catch generado automÃ¡ticamente
+	            // TODO Bloque catch generado automÃƒÂ¡ticamente
 	            e.printStackTrace();
 	        }
        	}
@@ -529,7 +539,7 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\n¿Cuanto desea retirar?");
+				System.out.println("\nÂ¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());	
 				Cuenta cuenta = cuentaActual; 
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
@@ -549,22 +559,22 @@ public class ATM {
 				
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (Error e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 		
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		} catch (Error e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		}
     }
@@ -573,7 +583,7 @@ public class ATM {
     	 try {
     		 BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			 System.out.println("Depositar");
-			 System.out.println("\n¿Cuanto desea depositar?");
+			 System.out.println("\nÂ¿Cuanto desea depositar?");
 
 			 try {
 				 	int dinero = Integer.parseInt(in.readLine());
@@ -584,17 +594,17 @@ public class ATM {
 					System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
 					
 				} catch (NumberFormatException e) {
-					// TODO Bloque catch generado automáticamente
+					// TODO Bloque catch generado automÃ¡ticamente
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Bloque catch generado automáticamente
+					// TODO Bloque catch generado automÃ¡ticamente
 					e.printStackTrace();
 				}
 			
 			 
 			 elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		} 
     }
@@ -620,7 +630,7 @@ public class ATM {
     }
  
     private void calcularBilletes(int valorDeDinero, Cuenta cuenta, Transaccion transaccion){   
-    	BigDecimal d = cuentaActual.consultarSaldo();
+    	BigDecimal d = cuentaActual.getSaldo();
     	int i = d.intValue();
     	boolean retiroBilletes = false;
     	
@@ -794,7 +804,7 @@ public class ATM {
     	int segundo = tiempo.getSecond();
         return "\nFecha: " + fecha + " - Hora: " + hora + ":" + minuto + ":" + segundo + 
         		" - Cuenta: " + cuentaActual.getAlias() + " - TipoDeTransaccion: " +  tipoDeTransaccion +  " - Importe En La Transaccion: " + importe +
-        		" - Nuevo Saldo: $" + cuentaActual.consultarSaldo();
+        		" - Nuevo Saldo: $" + cuentaActual.getSaldo();
     }
 
 }
