@@ -1,4 +1,3 @@
-
 import java.math.BigDecimal;
 
 public class CajaDeAhorroEnDolares extends Cuenta {
@@ -32,6 +31,5 @@ public class CajaDeAhorroEnDolares extends Cuenta {
 	private boolean haySaldo(BigDecimal montoADescontar) {
 		return getSaldo().compareTo(montoADescontar) >= 0;
 	}
-
 
 }
