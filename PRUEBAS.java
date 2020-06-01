@@ -1,4 +1,3 @@
-package ATM_TP;
 
 import java.math.BigDecimal;
 import org.junit.Test;
