@@ -1,4 +1,3 @@
-package ATM_TP;
 
 import java.math.BigDecimal;
 
@@ -47,3 +46,4 @@ public class VenderDolares extends Transaccion {
 		return super.getCuenta().getSaldo().compareTo(montoADescontar) >= 0;
 	}
 }
+
