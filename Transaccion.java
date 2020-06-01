@@ -1,6 +1,6 @@
 
-
 import java.math.BigDecimal;
+import java.util.LinkedList;
 
 public abstract class Transaccion {
 
@@ -40,3 +40,4 @@ public abstract class Transaccion {
 		cuenta.getMovimientos().add(movimiento);
 	}
 }
+
