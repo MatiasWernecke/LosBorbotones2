@@ -216,6 +216,45 @@ public class PRUEBAS {
 	 * DEPOSITO
 	 */
 
+		@Test
+	public void testDepositoEnCuentaCorriente() {
+
+		long cuit = 12345678990L;
+		Cliente c = new Cliente(cuit);
+
+		BigDecimal descubierto = BigDecimal.valueOf(10000);
+
+		Cuenta cc = new CuentaCorriente(c, "eduardo", descubierto);
+
+		BigDecimal deposito = BigDecimal.valueOf(35000);
+		BigDecimal deposito2 = BigDecimal.valueOf(25000);
+		Depositar t1 = new Depositar(cc);
+		t1.depositarPesos(deposito);
+		t1.depositarPesos(deposito2);
+		BigDecimal resultado = cc.getSaldo();
+		BigDecimal esperado = BigDecimal.valueOf(60000);
+		Assert.assertEquals(resultado, esperado);
+
+	}
+
+	@Test
+	public void testDepositoEnCajaDeAhorroEnPesos() {
+
+		long cuit = 143656636012L;
+		Cliente c = new Cliente(cuit);
+		Cuenta cap = new CajaDeAhorroEnPesos(c, "eduardo");
+		BigDecimal deposito = BigDecimal.valueOf(100000);
+		BigDecimal deposito2 = BigDecimal.valueOf(22000);
+		Depositar d = new Depositar(cap);
+		d.depositarPesos(deposito);
+		d.depositarPesos(deposito2);
+
+		BigDecimal resultado = cap.getSaldo();
+		BigDecimal esperado = BigDecimal.valueOf(122000);
+		Assert.assertEquals(resultado, esperado);
+
+	}
+	
 	@Test
 	public void depositarEnPesosCorrectamente() {
 		Cuenta cajaLuchoPesos = new CajaDeAhorroEnPesos(luciano,
