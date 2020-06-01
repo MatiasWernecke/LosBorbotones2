@@ -1,4 +1,3 @@
-
 import java.math.BigDecimal;
 
 public class Transferencia extends Transaccion implements Reversible {
