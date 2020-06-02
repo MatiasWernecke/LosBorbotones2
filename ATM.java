@@ -10,30 +10,36 @@ import java.util.Map.Entry;
 
 public class ATM {
 
-	private Map<Integer, Integer> billetes;
+	private int[] billetes;
     private List<Cuenta> listaDeCuentas;
     private Transaccion transacciones;
     private Cuenta cuentaActual;
 
     public ATM() {
     	
-    	billetes = new TreeMap<Integer, Integer>();
-    	billetes.put(100, 5);
-    	billetes.put(500, 3);
-		billetes.put(1000, 11);
+    	billetes = new int[3];
+//    	for(int i = 0; i < billetes.length; i++){
+//    		billetes[i] = 0;
+//    		System.out.println(billetes[i]);
+//    	}
+    	
+    	billetes[0] = 12;
+    	billetes[1] = 5;
+    	billetes[2] = 6;
 		
+    	for(int i = 0; i < billetes.length; i++){
+
+    		System.out.println(billetes[i]);
+    	}
+    	
     }
 
 	public ATM(Map billetes, List<Cuenta> listaDeCuentas, Transaccion transacciones) {
-        this.billetes = billetes;
+  
         this.listaDeCuentas = listaDeCuentas;
         this.transacciones = transacciones;
     }
 	
-	public Integer getBilletes(String key){
-		return billetes.get(key);
-	}
-
 
     public void leerTarjeta() {
         boolean tarjetaExiste = false, pinExiste = false;
@@ -545,14 +551,12 @@ public class ATM {
     private void retirarEfectivo(){
     	try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+			boolean hayBilletes = false;
 			if(cuentaActual instanceof CajaDeAhorroEnDolares){
 				throw new Error("No se puede extraer en dolares");
 			}
 			
-			if(billetes.get(1000) <= 0 && billetes.get(500) <= 0 && billetes.get(100) <= 0){
-				System.err.println("No hay mas billestes en la caja");
-				elejirOpcion();
-			}			
+			
 			
 			System.out.println("Retirar Efectivo");
 
@@ -561,19 +565,12 @@ public class ATM {
 				int dineroIngresado = Integer.parseInt(in.readLine());	
 				Cuenta cuenta = cuentaActual; 
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
-				System.out.println("Billetes de 100: " + billetes.get(100));
-				System.out.println("Billetes de 500: " + billetes.get(500));
-				System.out.println("Billetes de 1000: " + billetes.get(1000));
+				hayBilletes = calcularBilletes(dineroIngresado, cuenta, hayBilletes);
 				
-				if(billetes.get(1000) > 0 && billetes.get(500)> 0 && billetes.get(100)> 0){
-					calcularBilletes(dineroIngresado, cuentaActual, transaccion);
-				} else if(billetes.get(1000) <= 0 && billetes.get(500) > 0 && billetes.get(100)> 0){
-					System.out.println("Aun hay plata 1");
-					sacarDosDeQuinientosEnMil(dineroIngresado, cuentaActual, transaccion);
-				} else if(billetes.get(1000) <= 0 && billetes.get(500) <= 0 && billetes.get(100)> 0){
-					System.out.println("Aun hay plata 2");
-					sacar100De500(dineroIngresado, cuentaActual, transaccion);
+				if(hayBilletes){
+				  ((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(dineroIngresado));
 				}
+				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 				
 
 			} catch (NumberFormatException e) {
@@ -619,7 +616,6 @@ public class ATM {
 					e.printStackTrace();
 				}
 			
-			 
 			 elejirOpcion();
 		} catch (NumberFormatException e) {
 			// TODO Bloque catch generado automáticamente
@@ -647,162 +643,91 @@ public class ATM {
         return cuenta;
     }
  
-    private void calcularBilletes(int valorDeDinero, Cuenta cuenta, Transaccion transaccion){   
-    	BigDecimal d = cuentaActual.getSaldo();
-    	int i = d.intValue();
-    	boolean retiroBilletes = false;
+
     	
-		if (valorDeDinero >= i) {
-			System.err.println("El sueldo es mayor que la cantidad de billetes de 1000");
-		} else 	{
-			//CIENTOS
-			if (valorDeDinero < 500) {
-				
-				//QUININENTOS
-			} else if (valorDeDinero >= 500 && valorDeDinero < 1000) {
-				if(billetes.get(500) > 0){
-					//System.out.println(valorDeDinero/500 + " Quinientos ");
-					int quinientos = valorDeDinero / 500;
-					int cantidadQunientos = (int) billetes.get(500);
-					billetes.remove(500);
-					billetes.put(500, cantidadQunientos - quinientos);
-					((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal
-							.valueOf(valorDeDinero));
-					System.out.println("Billetes de 100: " + billetes.get(100));
-					System.out.println("Billetes de 500: " + billetes.get(500));
-					System.out.println("Billetes de 1000: "
-							+ billetes.get(1000));
-					System.out.println(imprimirTicket("Retirar Efectivo",
-							BigDecimal.valueOf(valorDeDinero)));
-					
-				}else{
-					 System.err.println("No hay billetes de 500");
-				 }
-			} //MILES
-			 else if(valorDeDinero > 500 && valorDeDinero <= 1000){
-				 if(billetes.get(1000) > 0){
-					 int mil = valorDeDinero/1000;				 
-					 int cantidadMil = (int) billetes.get(1000);
-					 billetes.remove(1000);
-			         billetes.put(1000, cantidadMil - mil);
-			         ((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(valorDeDinero));
-			         System.out.println("Billetes de 100: " + billetes.get(100));
-					 System.out.println("Billetes de 500: " + billetes.get(500));
-					 System.out.println("Billetes de 1000: " + billetes.get(1000));
-					 System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(valorDeDinero)));
-				 }else{
-					 System.err.println("No hay billetes de 1000");
-				 }
-			}
-				else if(valorDeDinero > 1000 && valorDeDinero<=i){
-					
-					int h = (valorDeDinero % 500) / 100;
-					int f = (valorDeDinero % 1000) / 500;
-					int t = valorDeDinero / 1000;
-					
-					if(t > billetes.get(1000)){
-						System.err.println("No hay billetes suficientes de 1000 en el ATM");
-						
-					} else {
-						
-						int cantidadCien =  (int) billetes.get(100);
-			            int cantidadQunientos = (int) billetes.get(500);
-			            int cantidadMil = (int) billetes.get(1000);
-			            
-			            billetes.remove(100);
-			            billetes.put(100, cantidadCien - h);
-			            billetes.remove(500);
-			            billetes.put(500, cantidadQunientos - f);
-		            	billetes.remove(1000);
-			            billetes.put(1000, cantidadMil - t);
-			            
-			            retiroBilletes = true;
-			            
-			            if(retiroBilletes){
-			            	((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(valorDeDinero));
-			            	System.out.println("Billetes de 100: " + billetes.get(100));
-							System.out.println("Billetes de 500: " + billetes.get(500));
-							System.out.println("Billetes de 1000: " + billetes.get(1000));
-							System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(valorDeDinero)));
-			            }
+	private boolean calcularBilletes(int valor, Cuenta cuenta,boolean hayBillete) {
+		int calculo = 0;
+		int suma = 0;
+		hayBillete = false;
+		BigDecimal d = cuentaActual.getSaldo();
+    	int saldoDeCuenta = d.intValue();
+    	int cant = 0;
+		
+		for(int i = 0; i < billetes.length; i++){    			
+			if(billetes[i] > 0){
+				if(i == 0){
+					calculo = valor / 1000;
+					if(calculo >= billetes[i] && billetes[i+1] > 0 && billetes[i+2] > 0){
+						System.out.println("Tomar 2 de 500");
+						//Tomo 2 de 500 hasta que la suma de lo mismo que el calculo 
+						suma = calculo * 1000;
+						while(calculo != billetes[i]){
+							//sacar 2 billetes de 500 
+							billetes[i+1] -= 2;
+							billetes[i] += 1;
+							
+						}
+						billetes[i] -= calculo;
+						hayBillete = true;
+					}else{
+    					suma = calculo * 1000;
+    					System.out.println(calculo);
+    					System.out.println("suma de 1000: " + suma);
+    					billetes[i] -= calculo;
+    					hayBillete = true;
 					}
+
+				} else if( i == 1 && suma != valor){
+					calculo = (valor%1000) / 500;
+					suma = calculo * 500;
+					System.out.println("suma de 500: " + suma);
+					System.out.println(calculo);
+					billetes[i] -= calculo;
+					hayBillete = true;
+
+				} else if(i == 2 && suma != valor){
+					calculo = ((valor%1000)%500) / 100;
+					suma = calculo * 100;
+					System.out.println("suma de 100: " + suma);
+					System.out.println(calculo);
+					billetes[i] -= calculo;
+					hayBillete = true;
 				}
-		
-		}
-        
-    }
-    
-    private void sacarDosDeQuinientosEnMil(int valorDeDinero, Cuenta cuenta, Transaccion transaccion){
-    	boolean retiroBilletes = false;
-		if (valorDeDinero > 15000) {
-			System.out.println("El sueldo es mayor que la cantidad de billetes de 500");
-		} else {
-
-			if (valorDeDinero < 500) {
-				int cantidadCien =  (int) billetes.get(100);
-	            int cien = valorDeDinero / 100;
-	         
-	            billetes.remove(100);
-	            billetes.put(100, cantidadCien - cien);
-	           
-	            retiroBilletes = true;
-	            
-	            if(retiroBilletes){
-	            	((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(valorDeDinero));
-	            	System.out.println("Billetes de 100: " + billetes.get(100));
-					System.out.println("Billetes de 500: " + billetes.get(500));
-					System.out.println("Billetes de 1000: " + billetes.get(1000));
-					System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(valorDeDinero)));
-	            }
-			} else if (valorDeDinero >= 500) {
-				int cantidadCien =  (int) billetes.get(100);
-	            int cantidadQunientos = (int) billetes.get(500);
-	            int h = (valorDeDinero % 500) / 100;
-				int f = valorDeDinero / 500;
-	            billetes.remove(100);
-	            billetes.put(100, cantidadCien - h);
-	            billetes.remove(500);
-	            billetes.put(500, cantidadQunientos - f);
-	            retiroBilletes = true;
-	            
-	            if(retiroBilletes){
-	            	((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(valorDeDinero));
-	            	System.out.println("Billetes de 100: " + billetes.get(100));
-					System.out.println("Billetes de 500: " + billetes.get(500));
-					System.out.println("Billetes de 1000: " + billetes.get(1000));
-					System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(valorDeDinero)));
-	            }
-			}
-		
-		}
-    }
-    
-    private void sacar100De500(int valorDeDinero, Cuenta cuenta, Transaccion transaccion){
-    	boolean retiroBilletes = false;
-    	if (valorDeDinero > 15000) {
-			System.out.println("El sueldo es mayor que la cantidad de billetes de 100");
-		} else {
-
-			if (valorDeDinero < 500) {
-				int cantidadCien =  (int) billetes.get(100);
-	            int h = (valorDeDinero % 500) / 100;
-				int f = valorDeDinero / 500;
-	            billetes.remove(100);
-	            billetes.put(100, cantidadCien - h);
-	            retiroBilletes = true;
-	            
-	            if(retiroBilletes){
-	            	((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(valorDeDinero));
-	            	System.out.println("Billetes de 100: " + billetes.get(100));
-					System.out.println("Billetes de 500: " + billetes.get(500));
-					System.out.println("Billetes de 1000: " + billetes.get(1000));
-					System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(valorDeDinero)));
-	            }
 			} 
-		
+			
+			if(billetes[i] <= 0 && i == 0){
+				
+				System.out.println("No hay billete de 1000");
+				if(billetes[i] > 0){
+					
+					if( i == 1 && suma != valor){
+						System.out.println("No hay billete de 1000,pero hay de 500");
+    				} else if(i == 2 && suma != valor){
+    					System.out.println("No hay billete de 1000,pero hay de 500");
+    				}
+    			}
+				
+			}if(billetes[i] <= 0 && i == 1){
+				
+				System.out.println("No hay billete de 500");
+				
+			}if(billetes[i] <= 0 && i == 2){
+				
+				System.err.println("No hay mas billetes en el sistema");
+				hayBillete = false;
+				
+			}
 		}
-    }
-    
+		
+		
+    	for(int i = 0; i < billetes.length; i++){
+    		System.out.println("Billete " + i + " = " + billetes[i]);
+    	}
+    	
+    	return hayBillete;
+		
+	}
+
     //Imprime ticket
     public String imprimirTicket(String tipoDeTransaccion, BigDecimal importe) {
     	LocalDate fecha = LocalDate.now();
