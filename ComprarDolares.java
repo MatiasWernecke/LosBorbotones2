@@ -41,10 +41,10 @@ public class ComprarDolares extends Transaccion {
 				super.generarMovimiento();
 
 			} else {
-				throw new Error("No posee suficiente dinero en su caja de ahorros");
-			}
+				System.err.println("No posee suficiente dinero en su caja de ahorros");
+  			}
 		} else {
-			throw new Error("Cantidad incorrecta");
+			System.err.println("Cantidad incorrecta");
 		}
 	
 	}
