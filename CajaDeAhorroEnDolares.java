@@ -24,7 +24,7 @@ public class CajaDeAhorroEnDolares extends Cuenta {
 		if (haySaldo(montoDescontado)) {
 			setSaldo(getSaldo().subtract(montoDescontado));
 		} else
-			System.out.println("Saldo insuficiente.");
+			System.err.println("Saldo insuficiente.");
 
 	}
 
