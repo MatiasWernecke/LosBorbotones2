@@ -19,9 +19,10 @@ public class Depositar extends Transaccion {
 
 		if (validarDeposito(deposito)) {
 
-			setMontoPesos(deposito);
+			setMonto(deposito);
 			super.getCuenta().setSaldo(
 					super.getCuenta().getSaldo().add(deposito));
+			generarMovimiento();
 			System.out.println("se realizo el deposito en pesos correctamente");
 
 		} else {
@@ -36,9 +37,10 @@ public class Depositar extends Transaccion {
 
 		if (validarDeposito(deposito)) {
 
-			setMontoDolares(deposito);
+			setMonto(deposito);
 			super.getCuenta().setSaldo(
 					super.getCuenta().getSaldo().add(deposito));
+			generarMovimiento();
 			System.out
 					.println("se realizo el deposito en dolares correctamente");
 
