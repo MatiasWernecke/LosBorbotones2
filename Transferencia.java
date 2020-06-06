@@ -23,9 +23,7 @@ public class Transferencia extends Transaccion implements Reversible {
 			cuentaATransferir.ingresarEfectivo(montoATransferir);
 			super.generarMovimiento();
 
-		} else {
-			throw new Error("No se puede transferir dolares");
-		}
+		} 
 	}
 
 	public BigDecimal getMonto() {
