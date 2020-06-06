@@ -31,6 +31,7 @@ public class VenderDolares extends Transaccion {
 				cajaPesos.ingresarEfectivo(montoEnPesos);
 
 				super.getCuenta().descontarEfectivo(cantAVender);
+				generarMovimiento();
 
 			} else {
 				System.err.println("No posee suficiente dinero en su caja de ahorros");
