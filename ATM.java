@@ -512,21 +512,18 @@ public class ATM {
 						}
 
 						t.transferencia(BigDecimal.valueOf(monto), cuenta2);
-						System.out.println("\nSueldo de cuenta 1: "
+						System.out.println("\nSu saldo actual es de :$"
 								+ cuenta1.getSaldo());
-						System.out.println("Sueldo de cuenta 2: "
-								+ cuenta2.getSaldo());
+
 						System.out.println(imprimirTicket("Transferir",
 								BigDecimal.valueOf(monto)));
 						System.out
-								.println("Revertir Transferencia?: \nsi - no");
+								.println("Desea revertir la transferencia?: \nsi - no");
 						String decision = in.readLine();
 						if (decision.equals("si")) {
 							t.reversible();
-							System.out.println("\nSueldo de cuenta 1: "
+							System.out.println("\nSu saldo actual es de :$"
 									+ cuenta1.getSaldo());
-							System.out.println("Sueldo de cuenta 2: "
-									+ cuenta2.getSaldo());
 							System.out.println("Transferencia revertida");
 						}
 						elejirOpcion();
