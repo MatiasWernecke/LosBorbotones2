@@ -48,8 +48,7 @@ public class ATM {
 				// Si el numero ingresado es lo mismo que el numero de la lista
 				// de tarjetas.
 				// La tarjeta existe.
-				if (numeroDeTarjeta == listaDeTarjetas.get(i)
-						.getNumeroDeTarjeta()) {
+				if (numeroDeTarjeta == listaDeTarjetas.get(i).getNumeroDeTarjeta()) {
 					tarjetaExiste = true;
 					tarjeta = listaDeTarjetas.get(i);
 					cuitActual = buscarCuitPorTarjeta(numeroDeTarjeta);
@@ -86,8 +85,7 @@ public class ATM {
 						System.out.println("Saldo: " + cuentaActual.getSaldo());
 						elejirOpcion();
 					} else {
-						System.err
-								.println("El pin ingresado no existe. Vuelve a intentarlo.");
+						System.err.println("El pin ingresado no existe. Vuelve a intentarlo.");
 						leerTarjeta();
 					}
 
@@ -97,8 +95,7 @@ public class ATM {
 				}
 
 			} else {
-				System.err
-						.println("La tarjeta que ingreso no existe. Vuelve a intentarlo.");
+				System.err.println("La tarjeta que ingreso no existe. Vuelve a intentarlo.");
 				leerTarjeta();
 			}
 
@@ -109,8 +106,7 @@ public class ATM {
 	}
 
 	// La lista de cuenta agrega el cliente.
-	private void actualizarClientesDeCuentas(List<Cuenta> listaDeCuentas,
-			List<Cliente> listaDeClientes) {
+	private void actualizarClientesDeCuentas(List<Cuenta> listaDeCuentas, List<Cliente> listaDeClientes) {
 		for (int i = 0; i < listaDeCuentas.size(); i++) {
 			Cuenta cuenta = listaDeCuentas.get(i);
 			for (int j = 0; j < listaDeClientes.size(); j++) {
@@ -170,8 +166,7 @@ public class ATM {
 			lector.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err
-					.println("No se encontro archivo 'validacionDeTarjetas.txt'");
+			System.err.println("No se encontro archivo 'validacionDeTarjetas.txt'");
 			System.exit(0);
 		}
 		return clientes;
@@ -203,8 +198,7 @@ public class ATM {
 			lector.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.err
-					.println("No se encontro archivo 'validacionDeTarjetas.txt'");
+			System.err.println("No se encontro archivo 'validacionDeTarjetas.txt'");
 			System.exit(0);
 		}
 		return listaDeCuentas;
@@ -242,8 +236,7 @@ public class ATM {
 
 			lector.close();
 		} catch (Exception e) {
-			System.err
-					.println("No se encontro archivo 'validacionDeTarjetas.txt'");
+			System.err.println("No se encontro archivo 'validacionDeTarjetas.txt'");
 			System.exit(0);
 		}
 
@@ -341,8 +334,8 @@ public class ATM {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		if (cuentaActual instanceof CajaDeAhorroEnDolares) {
-			System.out
-					.println("\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
+			System.out.println(
+					"\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
 			System.out.println("\nElija una opcion: ");
 
 			try {
@@ -383,12 +376,9 @@ public class ATM {
 					System.out.println("\n¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
-					System.out.println("\nSueldo cuenta actual: "
-							+ cuenta.getSaldo());
-					System.out.println("Sueldo en caja de ahorro en peso: "
-							+ c.getSaldo());
-					System.out.println(imprimirTicket("Comprar Dolares",
-							BigDecimal.valueOf(cantAComprar)));
+					System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
+					System.out.println("Sueldo en caja de ahorro en peso: " + c.getSaldo());
+					System.out.println(imprimirTicket("Comprar Dolares", BigDecimal.valueOf(cantAComprar)));
 					elejirOpcion();
 					break;
 				}
@@ -423,12 +413,9 @@ public class ATM {
 					System.out.println("\n¿Cuanto desea vender?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAComprar));
-					System.out.println("\nSueldo cuenta actual: "
-							+ cuenta.getSaldo());
-					System.out.println("Sueldo en caja de ahorro en peso: "
-							+ c.getSaldo());
-					System.out.println(imprimirTicket("Vender Dolares",
-							BigDecimal.valueOf(cantAComprar)));
+					System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
+					System.out.println("Sueldo en caja de ahorro en peso: " + c.getSaldo());
+					System.out.println(imprimirTicket("Vender Dolares", BigDecimal.valueOf(cantAComprar)));
 					elejirOpcion();
 					break;
 				}
@@ -437,14 +424,12 @@ public class ATM {
 					break;
 				}
 				case 4: {
-					System.out.println("Su saldo actual es de: $"
-							+ cuentaActual.getSaldo());
+					System.out.println("Su saldo actual es de: $" + cuentaActual.getSaldo());
 					elejirOpcion();
 					break;
 				}
 				case 5: {
-					System.out.print("Movimiento: "
-							+ cuentaActual.getMovimientos());
+					System.out.print("Movimiento: " + cuentaActual.getMovimientos());
 					elejirOpcion();
 					break;
 				}
@@ -466,8 +451,8 @@ public class ATM {
 				e.printStackTrace();
 			}
 		} else {
-			System.out
-					.println("\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
+			System.out.println(
+					"\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
 			System.out.println("\nElija una opcion: ");
 
 			try {
@@ -491,18 +476,14 @@ public class ATM {
 					double monto = Double.parseDouble(in.readLine());
 					System.out.println("\nIngrese alias: ");
 					String alias = in.readLine();
-					if (alias.equals(cuentaActual.getAlias())) {
-						System.err
-								.print("No se puede transferir a la misma cuenta con la que esta operando");
-					} else {
-
-						boolean existe = false;
-						for (int i = 0; i < listaDeCuentas.size(); i++) {
-							if (alias.equals(listaDeCuentas.get(i).getAlias())) {
-								cuenta2 = listaDeCuentas.get(i);
-								existe = true;
-							}
+					boolean existe = false;
+					for (int i = 0; i < listaDeCuentas.size(); i++) {
+						if (alias.equals(listaDeCuentas.get(i).getAlias())) {
+							cuenta2 = listaDeCuentas.get(i);
+							existe = true;
 						}
+					}
+					if (!(cuenta2 instanceof CajaDeAhorroEnDolares)) {
 
 						if (existe) {
 							System.out.println("Encontro alias");
@@ -512,34 +493,30 @@ public class ATM {
 						}
 
 						t.transferencia(BigDecimal.valueOf(monto), cuenta2);
-						System.out.println("\nSu saldo actual es de :$"
-								+ cuenta1.getSaldo());
-
-						System.out.println(imprimirTicket("Transferir",
-								BigDecimal.valueOf(monto)));
-						System.out
-								.println("Desea revertir la transferencia?: \nsi - no");
+						System.out.println("\nSueldo de cuenta 1: " + cuenta1.getSaldo());
+						System.out.println("Sueldo de cuenta 2: " + cuenta2.getSaldo());
+						System.out.println(imprimirTicket("Transferir", BigDecimal.valueOf(monto)));
+						System.out.println("Revertir Transferencia?: \nsi - no");
 						String decision = in.readLine();
 						if (decision.equals("si")) {
 							t.reversible();
-							System.out.println("\nSu saldo actual es de :$"
-									+ cuenta1.getSaldo());
+							System.out.println("\nSueldo de cuenta 1: " + cuenta1.getSaldo());
+							System.out.println("Sueldo de cuenta 2: " + cuenta2.getSaldo());
 							System.out.println("Transferencia revertida");
 						}
-						elejirOpcion();
+					} else {
+						System.err.println("No se puede transferir dolares");
 					}
 					elejirOpcion();
 					break;
 				}
 				case 4: {
-					System.out.println("Su saldo actual es de: $"
-							+ cuentaActual.getSaldo());
+					System.out.println("Su saldo actual es de: $" + cuentaActual.getSaldo());
 					elejirOpcion();
 					break;
 				}
 				case 5: {
-					System.out.print("Movimiento: "
-							+ cuentaActual.getMovimientos());
+					System.out.print("Movimiento: " + cuentaActual.getMovimientos());
 					elejirOpcion();
 					break;
 				}
@@ -565,8 +542,7 @@ public class ATM {
 
 	private void retirarEfectivo() {
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					System.in));
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			boolean hayBilletes = false;
 			if (cuentaActual instanceof CajaDeAhorroEnDolares) {
 				throw new Error("No se puede extraer en dolares");
@@ -579,15 +555,12 @@ public class ATM {
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
-				hayBilletes = calcularBilletes(dineroIngresado, cuenta,
-						hayBilletes);
+				hayBilletes = calcularBilletes(dineroIngresado, cuenta, hayBilletes);
 
 				if (hayBilletes) {
-					((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal
-							.valueOf(dineroIngresado));
+					((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(dineroIngresado));
 				}
-				System.out.println(imprimirTicket("Retirar Efectivo",
-						BigDecimal.valueOf(dineroIngresado)));
+				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 
 			} catch (NumberFormatException e) {
 				// TODO Bloque catch generado automáticamente
@@ -612,8 +585,7 @@ public class ATM {
 
 	private void depositar() {
 		try {
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					System.in));
+			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Depositar");
 			System.out.println("\n¿Cuanto desea depositar?");
 
@@ -623,8 +595,7 @@ public class ATM {
 				Depositar d = new Depositar(cuenta);
 				d.depositarPesos(BigDecimal.valueOf(dinero));
 
-				System.out.println(imprimirTicket("Depositar",
-						BigDecimal.valueOf(dinero)));
+				System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
 
 			} catch (NumberFormatException e) {
 				// TODO Bloque catch generado automáticamente
@@ -660,8 +631,7 @@ public class ATM {
 		return cuenta;
 	}
 
-	private boolean calcularBilletes(int valor, Cuenta cuenta,
-			boolean hayBillete) {
+	private boolean calcularBilletes(int valor, Cuenta cuenta, boolean hayBillete) {
 		int calculo = 0;
 		int suma = 0;
 		hayBillete = false;
@@ -673,8 +643,7 @@ public class ATM {
 			if (billetes[i] > 0) {
 				if (i == 0) {
 					calculo = valor / 1000;
-					if (calculo >= billetes[i] && billetes[i + 1] > 0
-							&& billetes[i + 2] > 0) {
+					if (calculo >= billetes[i] && billetes[i + 1] > 0 && billetes[i + 2] > 0) {
 						// Tomo 2 de 500 hasta que la suma de lo mismo que el
 						// calculo
 						suma = calculo * 1000;
@@ -708,7 +677,7 @@ public class ATM {
 
 			if (billetes[i] <= 0 && i == 0) {
 
-				//System.out.println("No hay billete de 1000");
+				// System.out.println("No hay billete de 1000");
 				if (billetes[i] > 0) {
 
 					if (i == 1 && suma != valor) {
@@ -716,8 +685,8 @@ public class ATM {
 //								.println("No hay billete de 1000,pero hay de 500");
 						hayBillete = true;
 					} else if (i == 2 && suma != valor) {
-						//System.out
-						//		.println("No hay billete de 1000,pero hay de 500");
+						// System.out
+						// .println("No hay billete de 1000,pero hay de 500");
 						hayBillete = true;
 					}
 				}
@@ -725,18 +694,17 @@ public class ATM {
 			}
 			if (billetes[i] <= 0 && i == 1) {
 
-				//System.out.println("No hay billete de 500");
+				// System.out.println("No hay billete de 500");
 				hayBillete = true;
 			}
 			if (billetes[i] <= 0 && i == 2) {
 
-				//System.err.println("No hay mas billetes en el sistema");
+				// System.err.println("No hay mas billetes en el sistema");
 				hayBillete = false;
 
 			}
 		}
 
-		
 		return hayBillete;
 
 	}
@@ -748,11 +716,9 @@ public class ATM {
 		int hora = tiempo.getHour();
 		int minuto = tiempo.getMinute();
 		int segundo = tiempo.getSecond();
-		return "\nFecha: " + fecha + " - Hora: " + hora + ":" + minuto + ":"
-				+ segundo + " - Cuenta: " + cuentaActual.getAlias()
-				+ " - TipoDeTransaccion: " + tipoDeTransaccion
-				+ " - Importe En La Transaccion: " + importe
-				+ " - Nuevo Saldo: $" + cuentaActual.getSaldo();
+		return "\nFecha: " + fecha + " - Hora: " + hora + ":" + minuto + ":" + segundo + " - Cuenta: "
+				+ cuentaActual.getAlias() + " - TipoDeTransaccion: " + tipoDeTransaccion
+				+ " - Importe En La Transaccion: " + importe + " - Nuevo Saldo: $" + cuentaActual.getSaldo();
 	}
 
 }
