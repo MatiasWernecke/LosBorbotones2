@@ -1,4 +1,3 @@
-
 import java.math.BigDecimal;
 import java.util.LinkedList;
 
@@ -29,7 +28,8 @@ public abstract class Transaccion {
 	}
 
 	public void generarMovimiento() {
-		Movimiento movimiento = new Movimiento("", this.monto, this.cuenta);
+		
+		Movimiento movimiento = new Movimiento("Banco Generico", this.monto, this.cuenta);
 		if(cuenta.getMovimientos() != null){
 			if (cuenta.getMovimientos().size() == 10) {
 				cuenta.getMovimientos().removeFirst();
@@ -40,4 +40,3 @@ public abstract class Transaccion {
 		cuenta.getMovimientos().add(movimiento);
 	}
 }
-
