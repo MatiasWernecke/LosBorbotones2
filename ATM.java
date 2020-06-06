@@ -429,7 +429,7 @@ public class ATM {
 					break;
 				}
 				case 5: {
-					System.out.print("Movimiento: " + cuentaActual.getMovimientos());
+					cuentaActual.consultarMovimientos();
 					elejirOpcion();
 					break;
 				}
@@ -516,7 +516,7 @@ public class ATM {
 					break;
 				}
 				case 5: {
-					System.out.print("Movimiento: " + cuentaActual.getMovimientos());
+					cuentaActual.consultarMovimientos();
 					elejirOpcion();
 					break;
 				}
