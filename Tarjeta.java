@@ -18,7 +18,7 @@ public class Tarjeta {
 		if (numeroDeTarjetaValido(numeroDeTarjeta)) {
 			this.numeroDeTarjeta = numeroDeTarjeta;
 		} else
-			throw new Error("Numero de tarjeta invalido");
+			System.err.println("Numero de tarjeta invalido");
 
 	}
 
@@ -30,7 +30,7 @@ public class Tarjeta {
 		if (contarDigitos(pin) == 4) {
 			this.pin = pin;
 		} else 
-			throw new Error("Pin invalido");
+			System.err.println("Pin invalido");
 	}
 
 	// Metodos privados
