@@ -12,7 +12,7 @@
 Se decidió utilizar la clase BigDecimal en vez del tipo de datos double, ya que, con el primero, se logra una mayor precisión a
 la hora de realizar cálculos con decimales. También se decidió utilizar una jerarquía de transacciones con el fin de dejar preparado
 a futuro la correcta implenentación de la interfaz Reversible. Para las clases que manejan dólares se decidió utilizar el precio dólar
-de 1 dólar = 68 pesos.
+de 1 dólar = 69 pesos.
 
 -----------------------------------------------------------------------------------------------------
 ##### Descripción de los archivos:
