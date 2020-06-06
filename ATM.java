@@ -380,7 +380,7 @@ public class ATM {
 					}
 
 					ComprarDolares cd = new ComprarDolares(cuentaActual, c);
-					System.out.println("\n¿Cuanto desea comprar?");
+					System.out.println("\nÂ¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: "
@@ -420,7 +420,7 @@ public class ATM {
 					}
 
 					VenderDolares vd = new VenderDolares(cuentaActual, c);
-					System.out.println("\n¿Cuanto desea vender?");
+					System.out.println("\nÂ¿Cuanto desea vender?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: "
@@ -459,10 +459,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			}
 		} else {
@@ -487,41 +487,49 @@ public class ATM {
 					Cuenta cuenta1 = cuentaActual;
 					Cuenta cuenta2 = null;
 					Transferencia t = new Transferencia(cuenta1);
-					System.out.println("\n¿Cuanto desea transferir?");
+					System.out.println("\nÂ¿Cuanto desea transferir?");
 					double monto = Double.parseDouble(in.readLine());
 					System.out.println("\nIngrese alias: ");
 					String alias = in.readLine();
-					boolean existe = false;
-					for (int i = 0; i < listaDeCuentas.size(); i++) {
-						if (alias.equals(listaDeCuentas.get(i).getAlias())) {
-							cuenta2 = listaDeCuentas.get(i);
-							existe = true;
-						}
-					}
-
-					if (existe) {
-						System.out.println("Encontro alias");
+					if (alias.equals(cuentaActual.getAlias())) {
+						System.err
+								.print("No se puede transferir a la misma cuenta con la que esta operando");
 					} else {
-						System.err.println("No se encontro alias");
-						elejirOpcion();
-					}
 
-					t.transferencia(BigDecimal.valueOf(monto), cuenta2);
-					System.out.println("\nSueldo de cuenta 1: "
-							+ cuenta1.getSaldo());
-					System.out.println("Sueldo de cuenta 2: "
-							+ cuenta2.getSaldo());
-					System.out.println(imprimirTicket("Transferir",
-							BigDecimal.valueOf(monto)));
-					System.out.println("Revertir Transferencia?: \nsi - no");
-					String decision = in.readLine();
-					if (decision.equals("si")) {
-						t.reversible();
+						boolean existe = false;
+						for (int i = 0; i < listaDeCuentas.size(); i++) {
+							if (alias.equals(listaDeCuentas.get(i).getAlias())) {
+								cuenta2 = listaDeCuentas.get(i);
+								existe = true;
+							}
+						}
+
+						if (existe) {
+							System.out.println("Encontro alias");
+						} else {
+							System.err.println("No se encontro alias");
+							elejirOpcion();
+						}
+
+						t.transferencia(BigDecimal.valueOf(monto), cuenta2);
 						System.out.println("\nSueldo de cuenta 1: "
 								+ cuenta1.getSaldo());
 						System.out.println("Sueldo de cuenta 2: "
 								+ cuenta2.getSaldo());
-						System.out.println("Transferencia revertida");
+						System.out.println(imprimirTicket("Transferir",
+								BigDecimal.valueOf(monto)));
+						System.out
+								.println("Revertir Transferencia?: \nsi - no");
+						String decision = in.readLine();
+						if (decision.equals("si")) {
+							t.reversible();
+							System.out.println("\nSueldo de cuenta 1: "
+									+ cuenta1.getSaldo());
+							System.out.println("Sueldo de cuenta 2: "
+									+ cuenta2.getSaldo());
+							System.out.println("Transferencia revertida");
+						}
+						elejirOpcion();
 					}
 					elejirOpcion();
 					break;
@@ -549,10 +557,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			}
 		}
@@ -570,7 +578,7 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\n¿Cuanto desea retirar?");
+				System.out.println("\nÂ¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
@@ -585,22 +593,22 @@ public class ATM {
 						BigDecimal.valueOf(dineroIngresado)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (Error e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		} catch (Error e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		}
 	}
@@ -610,7 +618,7 @@ public class ATM {
 			BufferedReader in = new BufferedReader(new InputStreamReader(
 					System.in));
 			System.out.println("Depositar");
-			System.out.println("\n¿Cuanto desea depositar?");
+			System.out.println("\nÂ¿Cuanto desea depositar?");
 
 			try {
 				int dinero = Integer.parseInt(in.readLine());
@@ -622,16 +630,16 @@ public class ATM {
 						BigDecimal.valueOf(dinero)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		}
 	}
