@@ -33,11 +33,11 @@ public class VenderDolares extends Transaccion {
 				super.getCuenta().descontarEfectivo(cantAVender);
 
 			} else {
-				throw new Error(
-						"No posee suficiente dinero en su caja de ahorros");
+				System.err.println("No posee suficiente dinero en su caja de ahorros");
+
 			}
 		} else {
-			throw new Error("Cantidad incorrecta");
+			System.err.println("Cantidad Incorrecta");
 		}
 
 	}
