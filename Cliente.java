@@ -41,7 +41,7 @@ public class Cliente {
 		if (contarDigitos(cuit) == 11) {
 			this.cuit = cuit;
 		} else
-			throw new Error("Cuit invalido");
+			System.out.println("Error CUIT invalido");
 	}
 	
 	private int contarDigitos(long num) {
