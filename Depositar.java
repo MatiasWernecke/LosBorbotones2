@@ -26,7 +26,7 @@ public class Depositar extends Transaccion {
 
 		} else {
 
-			throw new Error("no se puede depositar el monto ingresado");
+			System.err.println("No se puede depositar el monto ingresado");
 
 		}
 
@@ -44,7 +44,7 @@ public class Depositar extends Transaccion {
 
 		} else {
 
-			throw new Error("no se puede depositar el monto ingresado");
+			System.err.println("No se puede depositar el monto ingresado");
 
 		}
 
