@@ -2,8 +2,6 @@
 import java.awt.List;
 import java.util.LinkedList;
 
-import TPDEFINITIVO.Tarjeta;
-
 public class Cliente {
 
 	private LinkedList<Tarjeta> tarjetas;
