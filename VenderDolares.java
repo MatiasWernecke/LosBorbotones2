@@ -24,7 +24,7 @@ public class VenderDolares extends Transaccion {
 
 		if (cantAVender.intValueExact() > 0) {
 			BigDecimal montoEnPesos = new BigDecimal(cantAVender.multiply(
-					cotizacionDolarVenta).doubleValue());
+					cotizacionDolarVenta).intValue());
 
 			if (haySaldo(cantAVender)) {
 
