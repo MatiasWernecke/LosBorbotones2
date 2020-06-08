@@ -10,18 +10,17 @@ import java.util.Map.Entry;
 
 public class ATM {
 
-	private int[] billetes;
 	private List<Cuenta> listaDeCuentas;
 	private Transaccion transacciones;
 	private Cuenta cuentaActual;
-
-	public ATM() {
-
-		billetes = new int[3];
-		for (int i = 0; i < billetes.length; i++) {
-			billetes[i] = 500;
-		}
-
+	private static int[] billetes = { 1000,500,100 };
+    private static int[] cantidad = { 12,0,10 };
+    private int[] contador = { 0, 0, 0 };
+    private static int totalDeBilletes;
+	
+	
+	public ATM() {		
+		
 	}
 
 	public void leerTarjeta() {
@@ -373,7 +372,7 @@ public class ATM {
 					}
 
 					ComprarDolares cd = new ComprarDolares(cuentaActual, c);
-					System.out.println("\nÂ¿Cuanto desea comprar?");
+					System.out.println("\n¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
@@ -410,7 +409,7 @@ public class ATM {
 					}
 
 					VenderDolares vd = new VenderDolares(cuentaActual, c);
-					System.out.println("\nÂ¿Cuanto desea vender?");
+					System.out.println("\n¿Cuanto desea vender?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
@@ -444,10 +443,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 		} else {
@@ -472,7 +471,7 @@ public class ATM {
 					Cuenta cuenta1 = cuentaActual;
 					Cuenta cuenta2 = null;
 					Transferencia t = new Transferencia(cuenta1);
-					System.out.println("\nÂ¿Cuanto desea transferir?");
+					System.out.println("\n¿Cuanto desea transferir?");
 					double monto = Double.parseDouble(in.readLine());
 					System.out.println("\nIngrese alias: ");
 					String alias = in.readLine();
@@ -531,10 +530,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 		}
@@ -551,34 +550,31 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\nÂ¿Cuanto desea retirar?");
+				System.out.println("\n¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
-				hayBilletes = calcularBilletes(dineroIngresado, cuenta, hayBilletes);
-
-				if (hayBilletes) {
-					((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(dineroIngresado));
-				}
+				calcTotalCorpus();
+				sacarDinero(dineroIngresado, transaccion);
 				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (Error e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		} catch (Error e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		}
 	}
@@ -587,7 +583,7 @@ public class ATM {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Depositar");
-			System.out.println("\nÂ¿Cuanto desea depositar?");
+			System.out.println("\n¿Cuanto desea depositar?");
 
 			try {
 				int dinero = Integer.parseInt(in.readLine());
@@ -598,16 +594,16 @@ public class ATM {
 				System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		}
 	}
@@ -631,83 +627,58 @@ public class ATM {
 		return cuenta;
 	}
 
-	private boolean calcularBilletes(int valor, Cuenta cuenta, boolean hayBillete) {
-		int calculo = 0;
-		int suma = 0;
-		hayBillete = false;
-		BigDecimal d = cuentaActual.getSaldo();
-		int saldoDeCuenta = d.intValue();
-		int cant = 0;
+	public static void calcTotalCorpus() {
+        for (int i = 0; i < billetes.length; i++) {
+            totalDeBilletes = totalDeBilletes + billetes[i] * cantidad[i];
+        }
+    }
 
-		for (int i = 0; i < billetes.length; i++) {
-			if (billetes[i] > 0) {
-				if (i == 0) {
-					calculo = valor / 1000;
-					if (calculo >= billetes[i] && billetes[i + 1] > 0 && billetes[i + 2] > 0) {
-						// Tomo 2 de 500 hasta que la suma de lo mismo que el
-						// calculo
-						suma = calculo * 1000;
-						while (calculo != billetes[i]) {
-							// sacar 2 billetes de 500
-							billetes[i + 1] -= 2;
-							billetes[i] += 1;
 
-						}
-						billetes[i] -= calculo;
-						hayBillete = true;
-					} else {
-						suma = calculo * 1000;
-						billetes[i] -= calculo;
-						hayBillete = true;
-					}
+	public synchronized void sacarDinero(int valor,Transaccion transaccion) {
+		boolean hayBilletes = false;
+		BigDecimal cuenta = cuentaActual.getSaldo();
+		int cuentaInt = cuenta.intValue();
+    	if(valor%100==0 && valor <= cuentaInt){
+	    	//Si la suma de todos los billetes son mayor que el valor agregado, se hace el metodo.
+	        if (valor <= totalDeBilletes) {
+	            for (int i = 0; i < billetes.length; i++) {
+	            	//Si el valor del billete i es menor que el valor agregado.
+	                if (billetes[i] <= valor) {
+	                    int contadorDeBilletes = valor / billetes[i];
+	                    if (cantidad[i] > 0) {//Si la cantidad es mayor a 0
+	                    	contador[i] = contadorDeBilletes >= cantidad[i] ? cantidad[i] : contadorDeBilletes;
+	                        cantidad[i] = contadorDeBilletes >= cantidad[i] ? 0 : cantidad[i] - contadorDeBilletes;
+	                        //Deduce el totarl de billetes que quedan en el ATM 
+	                        totalDeBilletes = totalDeBilletes - (contador[i] * billetes[i]);
+	                        // Calcula el valor que necesita para la proxima iteracion
+	                        valor = valor - (contador[i] * billetes[i]);
+	                        ((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(valor));
+	                        mostrarBilletesQueQuedan();
+	                        hayBilletes = true;
+	                    }
+	                }
+	            }
+	            //mostrarBilletes();
+	           
+	            
+	
+	        } else {
+	            System.err.println("El valor ingresado es mayor que la suma de todos los billetes");
+	        }
+    	}else{
+    		System.err.println("El valor ingresado no es valido");
+    	}
+    	
+    	
 
-				} else if (i == 1 && suma != valor) {
-					calculo = (valor % 1000) / 500;
-					suma = calculo * 500;
-					billetes[i] -= calculo;
-					hayBillete = true;
+    }
 
-				} else if (i == 2 && suma != valor) {
-					calculo = ((valor % 1000) % 500) / 100;
-					suma = calculo * 100;
-					billetes[i] -= calculo;
-					hayBillete = true;
-				}
-			}
+    private void mostrarBilletesQueQuedan() {
+        for (int i = 0; i < billetes.length; i++) {
+            System.out.println("Billetes de " + billetes[i] + " quedan " + cantidad[i]);
+        }
 
-			if (billetes[i] <= 0 && i == 0) {
-
-				// System.out.println("No hay billete de 1000");
-				if (billetes[i] > 0) {
-
-					if (i == 1 && suma != valor) {
-//						System.out
-//								.println("No hay billete de 1000,pero hay de 500");
-						hayBillete = true;
-					} else if (i == 2 && suma != valor) {
-						// System.out
-						// .println("No hay billete de 1000,pero hay de 500");
-						hayBillete = true;
-					}
-				}
-
-			}
-			if (billetes[i] <= 0 && i == 1) {
-
-				// System.out.println("No hay billete de 500");
-				hayBillete = true;
-			}
-			if (billetes[i] <= 0 && i == 2) {
-
-				// System.err.println("No hay mas billetes en el sistema");
-				hayBillete = false;
-
-			}
-		}
-
-		return hayBillete;
-
-	}
+    }
 
 	// Imprime ticket
 	public String imprimirTicket(String tipoDeTransaccion, BigDecimal importe) {
