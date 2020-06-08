@@ -555,7 +555,10 @@ public class ATM {
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
 				calcTotalBilletes();
-				sacarDinero(dineroIngresado, transaccion);
+				if(sacarDinero(dineroIngresado)){
+					((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(dineroIngresado));
+				}
+				
 				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 
 			} catch (NumberFormatException e) {
@@ -634,10 +637,15 @@ public class ATM {
     }
 
 
-	public synchronized void sacarDinero(int valor,Transaccion transaccion) {
+	public synchronized boolean sacarDinero(int valor) {
 		boolean hayBilletes = false;
 		BigDecimal cuenta = cuentaActual.getSaldo();
 		int cuentaInt = cuenta.intValue();
+		
+		if(billetes[0] <= 0 && billetes[1] <= 0 && billetes[2] <= 0){
+        	System.err.println("No hay mas billetes en el ATM.");
+        }
+		
     	if(valor%100==0 && valor <= cuentaInt){
 	    	//Si la suma de todos los billetes son mayor que el valor agregado, se hace el metodo.
 	        if (valor <= totalDeBilletes) {
@@ -652,7 +660,6 @@ public class ATM {
 	                        totalDeBilletes = totalDeBilletes - (contador[i] * billetes[i]);
 	                        // Calcula el valor que necesita para la proxima iteracion
 	                        valor = valor - (contador[i] * billetes[i]);
-	                        ((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(valor));
 	                        mostrarBilletesQueQuedan();
 	                        hayBilletes = true;
 	                    }
@@ -665,11 +672,13 @@ public class ATM {
 	        } else {
 	            System.err.println("El valor ingresado es mayor que la suma de todos los billetes");
 	        }
+	        
+	        
     	}else{
     		System.err.println("El valor ingresado no es valido");
     	}
     	
-    	
+    	return hayBilletes;
 
     }
 
