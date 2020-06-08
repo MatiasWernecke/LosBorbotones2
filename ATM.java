@@ -346,38 +346,31 @@ public class ATM {
 					Cuenta cuenta = cuentaActual;
 					Cuenta cuentaEnPesos = null;
 					CajaDeAhorroEnPesos c = null;
-					System.out.println("\nIngrese alias:");
-					String alias = in.readLine();
-					boolean existe = false;
+					Cliente clienteActual = cuenta.getCliente();
+					
 					for (int i = 0; i < listaDeCuentas.size(); i++) {
-						if (alias.equals(listaDeCuentas.get(i).getAlias())) {
+						if (clienteActual.equals(listaDeCuentas.get(i).getCliente())
+								&& listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos) {
 							cuentaEnPesos = listaDeCuentas.get(i);
-							if (cuentaEnPesos instanceof CajaDeAhorroEnPesos) {
-								existe = true;
-								c = new CajaDeAhorroEnPesos();
-								c.setSaldo(cuentaEnPesos.getSaldo());
-							}
+							c = new CajaDeAhorroEnPesos();
+							c.setSaldo(cuentaEnPesos.getSaldo());
 							break;
 						} else {
-							System.err.println("\nNo se encontro alias");
+							System.err.println("\nNo posee una caja de ahorro en pesos para comprar dolares");
 							elejirOpcion();
 						}
 					}
 
-					if (existe) {
-						System.out.println("Encontro alias");
-					} else {
-						System.err.println("\nNo se encontro alias");
-						elejirOpcion();
-					}
-
 					ComprarDolares cd = new ComprarDolares(cuentaActual, c);
-					System.out.println("\n¿Cuanto desea comprar?");
+					System.out.println("\nÂ¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
-					System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
-					System.out.println("Sueldo en caja de ahorro en peso: " + c.getSaldo());
-					System.out.println(imprimirTicket("Comprar Dolares", BigDecimal.valueOf(cantAComprar)));
+					System.out.println("\nSueldo cuenta actual: "
+							+ cuenta.getSaldo());
+					System.out.println("Sueldo en caja de ahorro en peso: "
+							+ c.getSaldo());
+					System.out.println(imprimirTicket("Comprar Dolares",
+							BigDecimal.valueOf(cantAComprar)));
 					elejirOpcion();
 					break;
 				}
@@ -386,34 +379,27 @@ public class ATM {
 					Cuenta cuenta = cuentaActual;
 					Cuenta cuentaEnPesos = null;
 					CajaDeAhorroEnPesos c = null;
-					System.out.println("\nIngrese alias:");
-					String alias = in.readLine();
-					boolean existe = false;
+					Cliente clienteActual = cuenta.getCliente();
+					
 					for (int i = 0; i < listaDeCuentas.size(); i++) {
-						if (alias.equals(listaDeCuentas.get(i).getAlias())) {
+						if (clienteActual.equals(listaDeCuentas.get(i).getCliente()) 
+						    && listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos) {
 							cuentaEnPesos = listaDeCuentas.get(i);
-							if (cuentaEnPesos instanceof CajaDeAhorroEnPesos) {
-								existe = true;
 								c = new CajaDeAhorroEnPesos();
 								c.setSaldo(cuentaEnPesos.getSaldo());
-							}
 							break;
+						} else {
+							System.err.println("\nNo posee una caja de ahorro en pesos para vender dolares");
+							elejirOpcion();
 						}
 					}
 
-					if (existe) {
-						System.out.println("Encontro alias");
-					} else {
-						System.err.println("\nNo se encontro alias");
-						elejirOpcion();
-					}
-
 					VenderDolares vd = new VenderDolares(cuentaActual, c);
-					System.out.println("\n¿Cuanto desea vender?");
+					System.out.println("\nÂ¿Cuanto desea vender?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
-					System.out.println("Sueldo en caja de ahorro en peso: " + c.getSaldo());
+					System.out.println("Sueldo en caja de ahorro en pesos: " + c.getSaldo());
 					System.out.println(imprimirTicket("Vender Dolares", BigDecimal.valueOf(cantAComprar)));
 					elejirOpcion();
 					break;
@@ -443,10 +429,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			}
 		} else {
@@ -471,7 +457,7 @@ public class ATM {
 					Cuenta cuenta1 = cuentaActual;
 					Cuenta cuenta2 = null;
 					Transferencia t = new Transferencia(cuenta1);
-					System.out.println("\n¿Cuanto desea transferir?");
+					System.out.println("\nÂ¿Cuanto desea transferir?");
 					double monto = Double.parseDouble(in.readLine());
 					System.out.println("\nIngrese alias: ");
 					String alias = in.readLine();
@@ -530,10 +516,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃƒÂ¡ticamente
 				e.printStackTrace();
 			}
 		}
@@ -550,7 +536,7 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\n¿Cuanto desea retirar?");
+				System.out.println("\nÂ¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
@@ -562,22 +548,22 @@ public class ATM {
 				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (Error e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		} catch (Error e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		}
 	}
@@ -586,7 +572,7 @@ public class ATM {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Depositar");
-			System.out.println("\n¿Cuanto desea depositar?");
+			System.out.println("\nÂ¿Cuanto desea depositar?");
 
 			try {
 				int dinero = Integer.parseInt(in.readLine());
@@ -597,16 +583,16 @@ public class ATM {
 				System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		}
 	}
