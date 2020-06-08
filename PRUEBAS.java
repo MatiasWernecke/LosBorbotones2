@@ -5,10 +5,12 @@ import junit.framework.Assert;
 public class PRUEBAS {
 
 	Cliente leandro = new Cliente(null, 12345678901L);
-	Cliente matias = new Cliente(null, 23456789L);
-	Cliente leonardo = new Cliente(null, 34567890L);
-	Cliente luciano = new Cliente(null, 45678901L);
+	Cliente matias = new Cliente(null, 23456789012L);
+	Cliente leonardo = new Cliente(null, 34567890123L);
+	Cliente luciano = new Cliente(null, 45678901234L);
 
+	//LOS CASOS QUE PRESENTAN ERROR SE IMPRIMIRAN POR PANTALLA
+	
 	/**
 	 * COMPRAR DOLARES
 	 */
@@ -45,7 +47,7 @@ public class PRUEBAS {
 	}
 
 	// ERROR CUANDO SE INGRESA UN NUMERO NEGATIVO
-	@Test(expected = Error.class)
+	@Test
 	public void compraDolaresFallaConNumeroNegativo() {
 
 		Cuenta cajaLeanDolares = new CajaDeAhorroEnDolares(leandro,
@@ -69,7 +71,7 @@ public class PRUEBAS {
 
 	// ERROR CUANDO QUERES COMPRAR DOLARES SIN PLATA EN LA CJA DE AHORRO EN
 	// PESOS
-	@Test(expected = Error.class)
+	@Test
 	public void noCompraDolaresSinPlata() {
 
 		Cuenta cajaLeoDolares = new CajaDeAhorroEnDolares(leonardo,
@@ -169,7 +171,7 @@ public class PRUEBAS {
 	}
 
 	// ERROR AL VENDER DOLARES QUE NO TENGO
-	@Test(expected = Error.class)
+	@Test
 	public void noVendeDolaresSiNoTieneEnCajaDeDolares() {
 
 		Cuenta cajaLeanDolares = new CajaDeAhorroEnDolares(leandro,
@@ -189,7 +191,7 @@ public class PRUEBAS {
 	}
 
 	// ERROR AL INGRESAR UN NUMERO NEGATIVO
-	@Test(expected = Error.class)
+	@Test
 	public void venderDolaresFallaConNumeroNegativo() {
 		Cuenta cajaLeoDolares = new CajaDeAhorroEnDolares(leonardo,
 				"leoBorbotonesDolares");
@@ -233,7 +235,7 @@ public class PRUEBAS {
 
 	}
 
-	@Test(expected = Error.class)
+	@Test
 	public void depositarEnPesosFallaConNumeroNegativo() {
 		Cuenta cajaMatiPesos = new CajaDeAhorroEnPesos(matias,
 				"matiBorbotonesPesos");
@@ -249,7 +251,7 @@ public class PRUEBAS {
 
 	}
 
-	@Test(expected = Error.class)
+	@Test
 	public void depositarEnPesosFallaSiNoIngresamosMonto() {
 		Cuenta cajaLeanPesos = new CajaDeAhorroEnPesos(leandro,
 				"leanBorbotonesPesos");
@@ -304,7 +306,7 @@ public class PRUEBAS {
 
 	}
 
-	@Test(expected = Error.class)
+	@Test
 	public void depositarEnDolaresFallaSiNoIngresamosMonto() {
 		Cuenta cajaLuchoDolares = new CajaDeAhorroEnDolares(luciano,
 				"luchoBorbotonesDolares");
@@ -340,7 +342,7 @@ public class PRUEBAS {
 	
 
 
-	@Test(expected = Error.class)
+	@Test
 	public void depositarEnDolaresFallaSiIngresamosNumeroNegativo() {
 		Cuenta cajaMatiPesos = new CajaDeAhorroEnPesos(matias,
 				"matiBorbotonesPesos");
@@ -442,7 +444,7 @@ public class PRUEBAS {
 
 	}
 
-	@Test(expected = Error.class)
+	@Test
 	public void errorAlTransferirDesdeCajaDePesosACajaDeDolares() {
 
 		Cuenta cajaLuchoDolares = new CajaDeAhorroEnDolares(luciano,
@@ -506,8 +508,7 @@ public class PRUEBAS {
 
 		BigDecimal descubierto = new BigDecimal(1000);
 
-		Cuenta cuentaLeoCorriente = new CuentaCorriente(leonardo,
-				"leoBorbotonesDolares", descubierto);
+		Cuenta cuentaLeoCorriente = new CuentaCorriente(leonardo,"leoBorbotonesDolares", descubierto);
 
 		// Tiene saldo cero pero extraemos por que tiene descubierto de 1000
 		Assert.assertEquals(cuentaLeoCorriente.getSaldo(), BigDecimal.ZERO);
@@ -521,10 +522,9 @@ public class PRUEBAS {
 		// Saldo final de la cuenta corriente en pesos
 		BigDecimal saldoFinalCtaCorriente = new BigDecimal(-500);
 
-		// Verificamos que le extrajo correctamente por el descubierto
+		// Verificamos que le extrajo correctamente
 
-		Assert.assertEquals(cuentaLeoCorriente.getSaldo(),
-				saldoFinalCtaCorriente);
+		Assert.assertEquals(cuentaLeoCorriente.getSaldo(),saldoFinalCtaCorriente);
 
 	}
 
@@ -533,8 +533,7 @@ public class PRUEBAS {
 
 		BigDecimal descubierto = new BigDecimal(1000);
 
-		Cuenta cuentaLuchitoCorriente = new CuentaCorriente(luciano,
-				"luchoBorbotonesCorriente", descubierto);
+		Cuenta cuentaLuchitoCorriente = new CuentaCorriente(luciano,"luchoBorbotonesCorriente", descubierto);
 
 		// Tiene saldo cero y un descubierto de 1000
 		Assert.assertEquals(cuentaLuchitoCorriente.getSaldo(), BigDecimal.ZERO);
@@ -560,10 +559,9 @@ public class PRUEBAS {
 
 	}
 
-	@Test(expected = Error.class)
+	@Test
 	public void errorAlExtraerDesdeCajaDeDolares() {
-		Cuenta cajaMatiDolares = new CajaDeAhorroEnDolares(matias,
-				"matiBorbotonesDolares");
+		Cuenta cajaMatiDolares = new CajaDeAhorroEnDolares(matias,"matiBorbotonesDolares");
 		
 		//cargamos plata
 		BigDecimal saldoACargar = new BigDecimal(2000);
@@ -585,4 +583,3 @@ public class PRUEBAS {
 		
 	}
 }
-
