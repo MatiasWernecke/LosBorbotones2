@@ -362,7 +362,7 @@ public class ATM {
 					}
 
 					ComprarDolares cd = new ComprarDolares(cuentaActual, c);
-					System.out.println("\nÂ¿Cuanto desea comprar?");
+					System.out.println("\n¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: "
@@ -395,7 +395,7 @@ public class ATM {
 					}
 
 					VenderDolares vd = new VenderDolares(cuentaActual, c);
-					System.out.println("\nÂ¿Cuanto desea vender?");
+					System.out.println("\n¿Cuanto desea vender?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: " + cuenta.getSaldo());
@@ -429,10 +429,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 		} else {
@@ -457,7 +457,7 @@ public class ATM {
 					Cuenta cuenta1 = cuentaActual;
 					Cuenta cuenta2 = null;
 					Transferencia t = new Transferencia(cuenta1);
-					System.out.println("\nÂ¿Cuanto desea transferir?");
+					System.out.println("\n¿Cuanto desea transferir?");
 					double monto = Double.parseDouble(in.readLine());
 					System.out.println("\nIngrese alias: ");
 					String alias = in.readLine();
@@ -478,8 +478,6 @@ public class ATM {
 						}
 
 						t.transferencia(BigDecimal.valueOf(monto), cuenta2);
-						System.out.println("\nSueldo de cuenta 1: " + cuenta1.getSaldo());
-						System.out.println("Sueldo de cuenta 2: " + cuenta2.getSaldo());
 						System.out.println(imprimirTicket("Transferir", BigDecimal.valueOf(monto)));
 						System.out.println("Revertir Transferencia?: \nsi - no");
 						String decision = in.readLine();
@@ -516,10 +514,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃƒÂ¡ticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 		}
@@ -536,7 +534,7 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\nÂ¿Cuanto desea retirar?");
+				System.out.println("\n¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
@@ -548,22 +546,22 @@ public class ATM {
 				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (Error e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		} catch (Error e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		}
 	}
@@ -572,7 +570,7 @@ public class ATM {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Depositar");
-			System.out.println("\nÂ¿Cuanto desea depositar?");
+			System.out.println("\n¿Cuanto desea depositar?");
 
 			try {
 				int dinero = Integer.parseInt(in.readLine());
@@ -583,16 +581,16 @@ public class ATM {
 				System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automÃ¡ticamente
+			// TODO Bloque catch generado automáticamente
 			e.printStackTrace();
 		}
 	}
