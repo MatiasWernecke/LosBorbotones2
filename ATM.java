@@ -554,7 +554,7 @@ public class ATM {
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
-				calcTotalCorpus();
+				calcTotalBilletes();
 				sacarDinero(dineroIngresado, transaccion);
 				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 
@@ -627,7 +627,7 @@ public class ATM {
 		return cuenta;
 	}
 
-	public static void calcTotalCorpus() {
+	public static void calcTotalBilletes() {
         for (int i = 0; i < billetes.length; i++) {
             totalDeBilletes = totalDeBilletes + billetes[i] * cantidad[i];
         }
