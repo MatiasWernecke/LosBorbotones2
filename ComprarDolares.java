@@ -23,10 +23,10 @@ public class ComprarDolares extends Transaccion {
 
 		if (montoValido(cantAComprar)){
 			BigDecimal dolaresConvertidosAPesos = new BigDecimal(cantAComprar
-					.multiply(cotizacionDolar).doubleValue());
+					.multiply(cotizacionDolar).intValue());
 
 			this.impuesto = new BigDecimal(dolaresConvertidosAPesos.multiply(
-					impuestoPAIS).doubleValue());
+					impuestoPAIS).intValue());
 
 			if (haySaldo(dolaresConvertidosAPesos.add(impuesto))) {
 
