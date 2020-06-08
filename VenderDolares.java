@@ -31,6 +31,9 @@ public class VenderDolares extends Transaccion {
 				cajaPesos.ingresarEfectivo(montoEnPesos);
 
 				super.getCuenta().descontarEfectivo(cantAVender);
+				
+				super.setMonto(cantAVender);
+
 				generarMovimiento();
 
 			} else {
