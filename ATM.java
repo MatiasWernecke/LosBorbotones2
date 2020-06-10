@@ -406,8 +406,7 @@ public class ATM {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		if (cuentaActual instanceof CajaDeAhorroEnDolares) {
-			System.out
-					.println("\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
+			System.out.println("\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
 			System.out.println("\nElija una opcion: ");
 
 			try {
@@ -618,7 +617,7 @@ public class ATM {
 				if(sacarDinero(dineroIngresado)){
 					((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(dineroIngresado));
 				}
-				
+				sobreEscribirSaldo();
 				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
 
 			} catch (NumberFormatException e) {
