@@ -599,8 +599,9 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
-				System.err.println("No se ingreso ninguna opcion valida" + "\nError: " + e.getMessage());
+			System.out.println("no se ingreso ninguna opcion valida" + "\nError:" + e.getMessage());
+				elejirOpcion();
+				
 			} catch (IOException e) {
 				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
