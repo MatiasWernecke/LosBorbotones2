@@ -652,8 +652,12 @@ public class ATM {
 				int dinero = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Depositar d = new Depositar(cuenta);
-				d.depositarPesos(BigDecimal.valueOf(dinero));
-
+				if(cuentaActual instanceof CajaDeAhorroEnDolares) {
+					d.depositarDolares(BigDecimal.valueOf(dinero));
+				} else {
+					d.depositarPesos(BigDecimal.valueOf(dinero));
+				}
+				sobreEscribirSaldo();
 				System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
 
 			} catch (NumberFormatException e) {
