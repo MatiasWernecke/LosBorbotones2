@@ -406,7 +406,7 @@ public class ATM {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		if (cuentaActual instanceof CajaDeAhorroEnDolares) {
-			System.out.println("\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
+			System.out.println("\nOpciones \n1- Comprar Dolares\n2- Vender Dolares\n3- Depositar\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir de la cuenta\n7- Salir del sistema");
 			System.out.println("\nElija una opcion: ");
 
 			try {
@@ -420,8 +420,7 @@ public class ATM {
 						if (listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos
 								&& cuentaActual.getCliente().getCuit() == (listaDeCuentas
 										.get(i).getCliente().getCuit())) {
-							cuentaEnPesos = (CajaDeAhorroEnPesos) listaDeCuentas
-									.get(i);
+							cuentaEnPesos = (CajaDeAhorroEnPesos) listaDeCuentas.get(i);
 						}
 					}
 
@@ -491,6 +490,11 @@ public class ATM {
 				}
 				case 6: {
 					System.out.println("\nAdios");
+					leerTarjeta();;
+					break;
+				}
+				case 7: {
+					System.out.println("\nAdios");
 					System.exit(0);
 					break;
 				}
@@ -508,7 +512,7 @@ public class ATM {
 			}
 		} else {
 			System.out
-					.println("\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir");
+					.println("\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir de la cuenta\n7- Salir del sistema");
 			System.out.println("\nElija una opcion: ");
 
 			try {
@@ -557,10 +561,11 @@ public class ATM {
 						if (decision.equals("si")) {
 							t.reversible();
 							sobreEscribirSaldo();
-							System.out.println("\nSueldo de cuenta 1: "
-									+ cuenta1.getSaldo());
-							System.out.println("Transferencia revertida");
-						}
+							System.out.println(imprimirTicket("Transferencia Revertida",
+									BigDecimal.valueOf(monto)));
+							System.out.println("\nSueldo de su cuenta : "
+									+ cuenta1.getSaldo());						
+							}
 					} else {
 						System.err.println("No se puede transferir dolares");
 					}
@@ -579,6 +584,11 @@ public class ATM {
 					break;
 				}
 				case 6: {
+					System.out.println("\nAdios");
+					leerTarjeta();;
+					break;
+				}
+				case 7: {
 					System.out.println("\nAdios");
 					System.exit(0);
 					break;
