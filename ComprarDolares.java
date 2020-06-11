@@ -7,6 +7,7 @@ public class ComprarDolares extends Transaccion {
 	private BigDecimal impuesto;
 	private BigDecimal cotizacionDolar = BigDecimal.valueOf(69);
 	private CajaDeAhorroEnPesos cajaPesos;
+	private boolean compraRealizada = false;
 
 	public ComprarDolares(Cuenta cuenta, CajaDeAhorroEnPesos cajaPesos) {
 		super(cuenta);
@@ -29,6 +30,7 @@ public class ComprarDolares extends Transaccion {
 					impuestoPAIS).intValue());
 
 			if (haySaldo(dolaresConvertidosAPesos.add(impuesto))) {
+				compraRealizada = true;
 
 				cajaPesos.descontarEfectivo(dolaresConvertidosAPesos);
 
@@ -67,5 +69,9 @@ public class ComprarDolares extends Transaccion {
 	
 	private boolean montoValido(BigDecimal cantAComprar) {
 		return cantAComprar.compareTo(BigDecimal.ZERO) == 1 ;
+	}
+	
+	public boolean getAceptacionDeCompra() {
+		return compraRealizada;
 	}
 }
