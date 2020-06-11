@@ -457,15 +457,15 @@ public class ATM {
 					VenderDolares vd = new VenderDolares(cuentaActual,
 							cuentaEnPesos);
 					System.out.println("\n¿Cuanto desea comprar?");
-					double cantAComprar = Double.parseDouble(in.readLine());
-					vd.venderDolares(BigDecimal.valueOf(cantAComprar));
+					double cantAVender = Double.parseDouble(in.readLine());
+					vd.venderDolares(BigDecimal.valueOf(cantAVender));
 					System.out.println("\nSueldo cuenta actual: "
 							+ cuentaActual.getSaldo());
 					System.out.println("Sueldo en caja de ahorro en peso: "
 							+ cuentaEnPesos.getSaldo());
 					sobreEscribirSaldo();
-					System.out.println(imprimirTicket("Comprar Dolares",
-							BigDecimal.valueOf(cantAComprar)));
+					System.out.println(imprimirTicket("Vender Dolares",
+							BigDecimal.valueOf(cantAVender)));
 					elejirOpcion();
 					break;
 				}
