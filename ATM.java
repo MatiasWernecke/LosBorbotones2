@@ -421,6 +421,10 @@ public class ATM {
 								&& cuentaActual.getCliente().getCuit() == (listaDeCuentas
 										.get(i).getCliente().getCuit())) {
 							cuentaEnPesos = (CajaDeAhorroEnPesos) listaDeCuentas.get(i);
+						}else{
+							System.err.println("No tiene caja de ahorro en pesos");
+							elejirOpcion();
+							break;
 						}
 					}
 
