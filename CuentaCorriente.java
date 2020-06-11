@@ -26,11 +26,6 @@ public class CuentaCorriente extends Cuenta {
 			setSaldo(getSaldo().subtract(montoDescontado));
 		}
 	}
-
-	private boolean haySaldo(BigDecimal montoDescontado) {
-		return getSaldo().subtract(montoDescontado).compareTo(descubierto) != -1;
-	}
-	
 	
 	public BigDecimal getDescubierto() {
 		return descubierto;
