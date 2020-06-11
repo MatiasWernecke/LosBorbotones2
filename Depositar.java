@@ -5,7 +5,7 @@ public class Depositar extends Transaccion {
 
 	private BigDecimal montoPesos;
 	private BigDecimal montoDolares;
-	private boolean depositoRealizado;
+	private boolean depositoRealizado = false;
 
 
 	public Depositar(Cuenta cuenta) {
