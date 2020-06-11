@@ -36,6 +36,6 @@ public class CuentaCorriente extends Cuenta {
 	}
 
 	private boolean haySaldo(BigDecimal montoDescontado) {
-		return getSaldo().add(descubierto.negate()).compareTo(montoDescontado) >= -1;
+		return getSaldo().add(descubierto.negate()).compareTo(montoDescontado) > -1;
 	}
 }
