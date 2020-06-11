@@ -5,6 +5,8 @@ public class Depositar extends Transaccion {
 
 	private BigDecimal montoPesos;
 	private BigDecimal montoDolares;
+	private boolean depositoRealizado;
+
 
 	public Depositar(Cuenta cuenta) {
 
@@ -12,17 +14,21 @@ public class Depositar extends Transaccion {
 
 		montoPesos = BigDecimal.ZERO;
 		montoDolares = BigDecimal.ZERO;
-
 	}
 
 	public void depositarPesos(BigDecimal deposito) {
 
 		if (validarDeposito(deposito)) {
+			depositoRealizado = true;
 
 			setMonto(deposito);
+			
 			super.getCuenta().setSaldo(
-					super.getCuenta().getSaldo().add(deposito));
+			
+			super.getCuenta().getSaldo().add(deposito));
+			
 			generarMovimiento();
+			
 			System.out.println("se realizo el deposito en pesos correctamente");
 
 		} else {
@@ -36,13 +42,17 @@ public class Depositar extends Transaccion {
 	public void depositarDolares(BigDecimal deposito) {
 
 		if (validarDeposito(deposito)) {
-
+			depositoRealizado = true;
+			
 			setMonto(deposito);
+			
 			super.getCuenta().setSaldo(
-					super.getCuenta().getSaldo().add(deposito));
+			
+			super.getCuenta().getSaldo().add(deposito));
+			
 			generarMovimiento();
-			System.out
-					.println("se realizo el deposito en dolares correctamente");
+			
+			System.out.println("se realizo el deposito en dolares correctamente");
 
 		} else {
 
@@ -72,8 +82,9 @@ public class Depositar extends Transaccion {
 
 		return deposito.compareTo(BigDecimal.ZERO) > 0
 				|| deposito.compareTo(BigDecimal.ZERO) > 0;
-
 	}
-
+	
+	public boolean getAceptacionDeDeposito() {
+		return depositoRealizado;
+	}
 }
-
