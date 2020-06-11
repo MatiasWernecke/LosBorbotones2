@@ -332,15 +332,15 @@ public class ATM {
 
 		private void sobreEscribirSaldo() {
 		try	{
-			FileWriter archivoAEscribir = new FileWriter("C:/Users/Silvia/Desktop/cuentas.txt", true);
+			FileWriter archivoAEscribir = new FileWriter("cuentas.txt", true);
 			BufferedWriter bf = new BufferedWriter(archivoAEscribir);
 			String tipoCuenta = null;
 			String alias = null;
 			double saldo = 0;
 			double descubierto = 0;
 			
-			 File inputFile = new File("C:/Users/Silvia/Desktop/cuentas.txt");
-			 File outputFile = new File("C:/Users/Silvia/Desktop/cuentas.txt");
+			 File inputFile = new File("cuentas.txt");
+			 File outputFile = new File("cuentas.txt");
 
 		    try {
 		      BufferedReader reader = new BufferedReader(new FileReader(inputFile));
