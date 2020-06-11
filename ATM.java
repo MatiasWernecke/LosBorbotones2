@@ -421,10 +421,6 @@ public class ATM {
 								&& cuentaActual.getCliente().getCuit() == (listaDeCuentas
 										.get(i).getCliente().getCuit())) {
 							cuentaEnPesos = (CajaDeAhorroEnPesos) listaDeCuentas.get(i);
-						}else{
-							System.err.println("No tiene caja de ahorro en pesos");
-							elejirOpcion();
-							break;
 						}
 					}
 
@@ -438,23 +434,20 @@ public class ATM {
 					System.out.println("Sueldo en caja de ahorro en peso: "
 							+ cuentaEnPesos.getSaldo());
 					sobreEscribirSaldo();
-					System.out.println(imprimirTicket("Comprar Dolares",
-							BigDecimal.valueOf(cantAComprar)));
+					if(cd.getAceptacionDeCompra() == true) {
+						System.out.println(imprimirTicket("Comprar Dolares", BigDecimal.valueOf(cantAComprar)));		
+							}
 					elejirOpcion();
 					break;
 				}
 				case 2: {
-					System.out.println("Vender Dolares");
-					CajaDeAhorroEnPesos cuentaEnPesos = null;
+				    System.out.println("Vender Dolares");
+				    CajaDeAhorroEnPesos cuentaEnPesos = null;
 					for (int i = 0; i < listaDeCuentas.size(); i++) {
 						if (listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos
 								&& cuentaActual.getCliente().getCuit() == (listaDeCuentas
 										.get(i).getCliente().getCuit())) {
 							cuentaEnPesos = (CajaDeAhorroEnPesos) listaDeCuentas.get(i);
-						}else{
-							System.err.println("No tiene caja de ahorro en pesos");
-							elejirOpcion();
-							break;
 						}
 					}
 
@@ -468,8 +461,10 @@ public class ATM {
 					System.out.println("Sueldo en caja de ahorro en peso: "
 							+ cuentaEnPesos.getSaldo());
 					sobreEscribirSaldo();
-					System.out.println(imprimirTicket("Vender Dolares",
-							BigDecimal.valueOf(cantAVender)));
+						if(vd.getAceptacionDeVenta() == true) {
+					System.out.println(imprimirTicket("Vender Dolares", BigDecimal.valueOf(cantAVender)));		
+						} 
+				
 					elejirOpcion();
 					break;
 				}
@@ -489,7 +484,7 @@ public class ATM {
 				}
 				case 6: {
 					System.out.println("\nAdios");
-					leerTarjeta();;
+					leerTarjeta();
 					break;
 				}
 				case 7: {
@@ -510,8 +505,7 @@ public class ATM {
 				e.printStackTrace();
 			}
 		} else {
-			System.out
-					.println("\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir de la cuenta\n7- Salir del sistema");
+			System.out.println("\nOpciones \n1- Retirar Efectivo\n2- Depositar\n3- Transferir\n4- Consultar saldo\n5- Consultar movimiento\n6- Salir de la cuenta\n7- Salir del sistema");
 			System.out.println("\nElija una opcion: ");
 
 			try {
@@ -531,8 +525,6 @@ public class ATM {
 					Cuenta cuenta1 = cuentaActual;
 					Cuenta cuenta2 = null;
 					Transferencia t = new Transferencia(cuenta1);
-					System.out.println("\n¿Cuanto desea transferir?");
-					double monto = Double.parseDouble(in.readLine());
 					System.out.println("\nIngrese alias: ");
 					String alias = in.readLine();
 					boolean existe = false;
@@ -550,21 +542,26 @@ public class ATM {
 							System.err.println("No se encontro alias");
 							elejirOpcion();
 						}
-
+						System.out.println("\n¿Cuanto desea transferir?");
+						double monto = Double.parseDouble(in.readLine());
+					
 						t.transferencia(BigDecimal.valueOf(monto), cuenta2);
 						sobreEscribirSaldo();
-						System.out.println(imprimirTicket("Transferir",
-								BigDecimal.valueOf(monto)));
-						System.out.println("Revertir Transferencia?: \nsi - no");
-						String decision = in.readLine();
-						if (decision.equals("si")) {
-							t.reversible();
-							sobreEscribirSaldo();
-							System.out.println(imprimirTicket("Transferencia Revertida",
-									BigDecimal.valueOf(monto)));
-							System.out.println("\nSueldo de su cuenta : "
-									+ cuenta1.getSaldo());						
+						
+						if(t.getAceptacionTransferencia() == true){ 
+							System.out.println(imprimirTicket("Transferir",BigDecimal.valueOf(monto)));
+							System.out.println("Revertir Transferencia?: \nsi - no");
+							String decision = in.readLine();
+							if (decision.equals("si")) {
+								t.reversible();
+								sobreEscribirSaldo();
+								System.out.println(imprimirTicket("Transferencia Revertida",
+										BigDecimal.valueOf(monto)));
+								System.out.println("\nSueldo de su cuenta : "
+										+ cuenta1.getSaldo());						
 							}
+						}			
+						
 					} else {
 						System.err.println("No se puede transferir dolares");
 					}
@@ -572,8 +569,7 @@ public class ATM {
 					break;
 				}
 				case 4: {
-					System.out.println("Su saldo actual es de: $"
-							+ cuentaActual.getSaldo());
+					System.out.println("Su saldo actual es de: $"+ cuentaActual.getSaldo());
 					elejirOpcion();
 					break;
 				}
@@ -584,7 +580,7 @@ public class ATM {
 				}
 				case 6: {
 					System.out.println("\nAdios");
-					leerTarjeta();;
+					leerTarjeta();
 					break;
 				}
 				case 7: {
@@ -612,11 +608,7 @@ public class ATM {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			boolean hayBilletes = false;
-			if (cuentaActual instanceof CajaDeAhorroEnDolares) {
-				System.err.println("No se puede extraer en dolares");
-				elejirOpcion();
-			}
-
+			
 			System.out.println("Retirar Efectivo");
 
 			try {
@@ -625,12 +617,14 @@ public class ATM {
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
 				calcTotalBilletes();
-				if(sacarDinero(dineroIngresado)){
-					((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(dineroIngresado));
+				if (sacarDinero(dineroIngresado)) {
+				   ((RetirarEfectivo) transaccion).retirarEfectivo(BigDecimal.valueOf(dineroIngresado));
 				}
 				sobreEscribirSaldo();
-				System.out.println(imprimirTicket("Retirar Efectivo", BigDecimal.valueOf(dineroIngresado)));
-
+				
+				if (((RetirarEfectivo) transaccion).getAceptacionDeExtraccion() == true) {
+				   System.out.println(imprimirTicket("Retirar Efectivo",BigDecimal.valueOf(dineroIngresado)));
+				}						
 			} catch (NumberFormatException e) {
 				// TODO Bloque catch generado automáticamente
 				e.printStackTrace();
@@ -668,7 +662,9 @@ public class ATM {
 					d.depositarPesos(BigDecimal.valueOf(dinero));
 				}
 				sobreEscribirSaldo();
-				System.out.println(imprimirTicket("Depositar", BigDecimal.valueOf(dinero)));
+				if(d.getAceptacionDeDeposito()) {
+					System.out.println(imprimirTicket("Depositar",BigDecimal.valueOf(dinero)));
+				}
 
 			} catch (NumberFormatException e) {
 				// TODO Bloque catch generado automáticamente
