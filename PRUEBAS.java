@@ -554,8 +554,7 @@ public class PRUEBAS {
 		retirar.retirarEfectivo(montoARetirar);
 
 		// Verificamos que retiro efectivo
-		Assert.assertEquals(cuentaLuchitoCorriente.getSaldo(),
-				saldoACargar.subtract(montoARetirar));
+		Assert.assertEquals(cuentaLuchitoCorriente.getSaldo(),saldoACargar.subtract(montoARetirar));
 
 	}
 
@@ -577,9 +576,11 @@ public class PRUEBAS {
 
 		BigDecimal montoARetirar = new BigDecimal(3000);
 
+		// Intentamos Retirar e imprimira error por pantalla
+		
 		retirar.retirarEfectivo(montoARetirar);
 
-		// Intentamos Retirar y dara error
+		Assert.assertEquals(false, retirar.getAceptacionDeExtraccion());
 		
 	}
 }
