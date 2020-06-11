@@ -16,7 +16,7 @@ public class ATM {
 	private Transaccion transacciones;
 	private Cuenta cuentaActual;
 	private static int[] billetes = { 1000,500,100 };
-    private static int[] cantidad = { 12,0,10 };
+    private static int[] cantidad = { 500,500,500 };
     private int[] contador = { 0, 0, 0 };
     private static int totalDeBilletes;
 	
