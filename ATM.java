@@ -445,35 +445,26 @@ public class ATM {
 				}
 				case 2: {
 					System.out.println("Vender Dolares");
-					Cuenta cuenta = cuentaActual;
-					Cuenta cuentaEnPesos = null;
-					CajaDeAhorroEnPesos c = null;
-					Cliente clienteActual = cuenta.getCliente();
-
+					CajaDeAhorroEnPesos cuentaEnPesos = null;
 					for (int i = 0; i < listaDeCuentas.size(); i++) {
-						if (clienteActual.equals(listaDeCuentas.get(i)
-								.getCliente())
-								&& listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos) {
-							cuentaEnPesos = listaDeCuentas.get(i);
-							c = new CajaDeAhorroEnPesos();
-							c.setSaldo(cuentaEnPesos.getSaldo());
-							break;
-						} else {
-							System.err.println("\nNo posee una caja de ahorro en pesos para vender dolares");
-							elejirOpcion();
+						if (listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos
+								&& cuentaActual.getCliente().getCuit() == (listaDeCuentas
+										.get(i).getCliente().getCuit())) {
+							cuentaEnPesos = (CajaDeAhorroEnPesos) listaDeCuentas.get(i);
 						}
 					}
 
-					VenderDolares vd = new VenderDolares(cuentaActual, c);
-					System.out.println("\n¿Cuanto desea vender?");
+					VenderDolares vd = new VenderDolares(cuentaActual,
+							cuentaEnPesos);
+					System.out.println("\n¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: "
-							+ cuenta.getSaldo());
-					System.out.println("Sueldo en caja de ahorro en pesos: "
-							+ c.getSaldo());
+							+ cuentaActual.getSaldo());
+					System.out.println("Sueldo en caja de ahorro en peso: "
+							+ cuentaEnPesos.getSaldo());
 					sobreEscribirSaldo();
-					System.out.println(imprimirTicket("Vender Dolares",
+					System.out.println(imprimirTicket("Comprar Dolares",
 							BigDecimal.valueOf(cantAComprar)));
 					elejirOpcion();
 					break;
