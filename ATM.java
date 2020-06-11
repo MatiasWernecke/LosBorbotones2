@@ -32,6 +32,7 @@ public class ATM {
 		List<Tarjeta> listaDeTarjetas = leerArchivoTarjetas();
 		this.listaDeCuentas = buscarCuentas();
 		this.listaDeCuentas = actualizarCuentas(this.listaDeCuentas);
+		actualizarDescubiertos(this.listaDeCuentas, buscarDescubiertos());;
 
 		List<Cliente> listaDeClientes = listaDeCuitDeClientesEnElArchivo();
 		listaDeClientes = actualizarClientes(listaDeClientes);
@@ -337,16 +338,55 @@ public class ATM {
 		return listaDeCuentas;
 	}
 	
-		private void sobreEscribirSaldo() {
+		//GUARDA DESCUBIERTOS EN LAS CUENTAS Q SON CUENTA CORRIENTE
+	public void actualizarDescubiertos(List<Cuenta> listaDeCuentas, List<BigDecimal> descubiertos) {
+		for(int i = 0; i < listaDeCuentas.size(); i++) {
+				if(listaDeCuentas.get(i) instanceof CuentaCorriente) {
+					for(int j = 0; j < descubiertos.size(); j++) {
+					( (CuentaCorriente) listaDeCuentas.get(i) ).setDescubierto(descubiertos.get(j));
+				}
+			}
+		}
+	}
+	
+               //BUSCA DESCUBIERTOS EN EL TXT
+	public List<BigDecimal> buscarDescubiertos() {
+		List<BigDecimal> descubiertos = new LinkedList<>();
+		try {
+			FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/cuentas.txt");
+			BufferedReader lector = new BufferedReader(archivo);
+			String oneLine = lector.readLine();
+
+			while (oneLine != null) {
+				String[] datos = oneLine.split(",");
+				int tipoCuenta = Integer.valueOf(datos[0]);
+				String alias = datos[1];
+				BigDecimal saldo = BigDecimal.valueOf(Double.valueOf(datos[2]));
+				if(tipoCuenta == 2 ){
+				BigDecimal descubierto = BigDecimal.valueOf(Double.valueOf(datos[3]));
+				descubiertos.add(descubierto);
+				}
+				oneLine = lector.readLine();
+			}
+			lector.close();
+		} catch (Exception e) {
+			System.err.println("No se encontro archivo 'cuentas.txt'");
+			System.exit(0);
+		}
+		return descubiertos;
+	}
+	
+			private void sobreEscribirSaldo() {
 		try	{
-			FileWriter archivoAEscribir = new FileWriter("cuentas.txt", true);
+			FileWriter archivoAEscribir = new FileWriter("C:/Users/Silvia/Desktop/cuentas.txt", true);
 			BufferedWriter bf = new BufferedWriter(archivoAEscribir);
 			String tipoCuenta = null;
 			String alias = null;
 			double saldo = 0;
-			double descubierto = 0;
-			File inputFile = new File("cuentas.txt");
-			File outputFile = new File("cuentas.txt");
+			BigDecimal descubierto = BigDecimal.ZERO;
+			
+			 File inputFile = new File("C:/Users/Silvia/Desktop/cuentas.txt");
+			 File outputFile = new File("C:/Users/Silvia/Desktop/cuentas.txt");
 
 		    try {
 		      BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -372,32 +412,45 @@ public class ATM {
 				if(listaDeCuentas.get(i).equals(cuentaActual)) {
 					if(cuentaActual instanceof CajaDeAhorroEnPesos) {
 						tipoCuenta = "01";
-						descubierto = 0;
 					} else if(cuentaActual instanceof CuentaCorriente) {
 						tipoCuenta = "02";
-						descubierto = ((CuentaCorriente) listaDeCuentas.get(i)).getDescubierto();
+						descubierto = ((CuentaCorriente) cuentaActual).getDescubierto();
 					} else {
 						tipoCuenta = "03";
-						descubierto = 0;
+
 					}
 					alias = cuentaActual.getAlias();
 					saldo = cuentaActual.getSaldo().doubleValue();
-				} else if(listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos 
-						&& listaDeCuentas.get(i).equals(cuentaActual) == false) {
-					
+				
+				 } 
+				 if(listaDeCuentas.get(i).equals(cuentaActual) == false &&
+						listaDeCuentas.get(i) instanceof CajaDeAhorroEnPesos) {
 						tipoCuenta = "01";
-						
-				 } else if(listaDeCuentas.get(i) instanceof CuentaCorriente 
-						 && listaDeCuentas.get(i).equals(cuentaActual) == false) {
-					 
-						tipoCuenta = "02";
-				 } else if(listaDeCuentas.get(i) instanceof CajaDeAhorroEnDolares 
-						 && listaDeCuentas.get(i).equals(cuentaActual) == false) {
-							tipoCuenta = "03";
+						alias = listaDeCuentas.get(i).getAlias();
+						saldo = listaDeCuentas.get(i).getSaldo().doubleValue();
+				 
+				 } else if(listaDeCuentas.get(i).equals(cuentaActual) == false &&
+					    listaDeCuentas.get(i) instanceof CajaDeAhorroEnDolares) {
+					    tipoCuenta = "03";
+					    alias = listaDeCuentas.get(i).getAlias();
+					    saldo = listaDeCuentas.get(i).getSaldo().doubleValue();	
 				 }
-				alias = listaDeCuentas.get(i).getAlias();
-				saldo = listaDeCuentas.get(i).getSaldo().doubleValue();
-				bf.write(tipoCuenta + "," + alias + "," + saldo +  ","+ descubierto );	        
+				
+			     if(listaDeCuentas.get(i).equals(cuentaActual) == false 
+			    		 && listaDeCuentas.get(i) instanceof CuentaCorriente) {	 
+						descubierto = (((CuentaCorriente) listaDeCuentas.get(i)).getDescubierto());
+						tipoCuenta = "02";
+						alias = listaDeCuentas.get(i).getAlias();
+					    saldo = listaDeCuentas.get(i).getSaldo().doubleValue();
+					
+				}
+			     
+			    if(listaDeCuentas.get(i) instanceof CuentaCorriente) {
+			    	bf.write(tipoCuenta + "," + alias + "," + saldo + "," + descubierto );	        
+			    } else {
+			    	bf.write(tipoCuenta + "," + alias + "," + saldo);
+			    }
+			    
 				bf.newLine();
 			}
 			bf.close();
@@ -434,7 +487,7 @@ public class ATM {
 
 					ComprarDolares cd = new ComprarDolares(cuentaActual,
 							cuentaEnPesos);
-					System.out.println("\n�Cuanto desea comprar?");
+					System.out.println("\n¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: "
@@ -461,7 +514,7 @@ public class ATM {
 
 					VenderDolares vd = new VenderDolares(cuentaActual,
 							cuentaEnPesos);
-					System.out.println("\n�Cuanto desea vender?");
+					System.out.println("\n¿Cuanto desea vender?");
 					double cantAVender = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAVender));
 					System.out.println("\nSueldo cuenta actual: "
@@ -506,10 +559,10 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃÂ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃÂ¡ticamente
 				e.printStackTrace();
 			}
 		} else {
@@ -550,7 +603,7 @@ public class ATM {
 							System.err.println("No se encontro alias");
 							elejirOpcion();
 						}
-						System.out.println("\n�Cuanto desea transferir?");
+						System.out.println("\n¿Cuanto desea transferir?");
 						double monto = Double.parseDouble(in.readLine());
 					
 						t.transferencia(BigDecimal.valueOf(monto), cuenta2);
@@ -606,7 +659,7 @@ public class ATM {
 				elejirOpcion();
 				
 			} catch (IOException e) {
-				// TODO Bloque catch generado automÃ¡ticamente
+				// TODO Bloque catch generado automÃÂ¡ticamente
 				e.printStackTrace();
 			}
 		}
@@ -620,7 +673,7 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\n�Cuanto desea retirar?");
+				System.out.println("\n¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
@@ -634,22 +687,22 @@ public class ATM {
 				   System.out.println(imprimirTicket("Retirar Efectivo",BigDecimal.valueOf(dineroIngresado)));
 				}						
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (Error e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		} catch (Error e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		}
 	}
@@ -658,7 +711,7 @@ public class ATM {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Depositar");
-			System.out.println("\n�Cuanto desea depositar?");
+			System.out.println("\n¿Cuanto desea depositar?");
 
 			try {
 				int dinero = Integer.parseInt(in.readLine());
@@ -675,16 +728,16 @@ public class ATM {
 				}
 
 			} catch (NumberFormatException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Bloque catch generado automáticamente
+				// TODO Bloque catch generado automÃ¡ticamente
 				e.printStackTrace();
 			}
 
 			elejirOpcion();
 		} catch (NumberFormatException e) {
-			// TODO Bloque catch generado automáticamente
+			// TODO Bloque catch generado automÃ¡ticamente
 			e.printStackTrace();
 		}
 	}
@@ -724,7 +777,7 @@ public class ATM {
         	System.err.println("No hay mas billetes en el ATM.");
         }
 		
-    	if(valor%100==0 && valor <= cuentaInt){
+    	if(valor%100==0){
 	    	//Si la suma de todos los billetes son mayor que el valor agregado, se hace el metodo.
 	        if (valor <= totalDeBilletes) {
 	            for (int i = 0; i < billetes.length; i++) {
