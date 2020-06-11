@@ -27,9 +27,9 @@ public class RetirarEfectivo extends Transaccion {
 
 	private boolean haySaldo(BigDecimal montoRetirado) {
 		if (super.getCuenta() instanceof CuentaCorriente) {
-			return getCuenta().getSaldo().compareTo(montoRetirado) >= -1;
-
-		} else {
+			BigDecimal descubierto = ((CuentaCorriente) super.getCuenta()).getDescubierto();
+			return getCuenta().getSaldo().add(descubierto.negate()).compareTo(montoRetirado) >= -1;		
+			} else {
 			return getCuenta().getSaldo().compareTo(montoRetirado) >= 0;
 		}
 	}
