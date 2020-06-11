@@ -618,7 +618,8 @@ public class ATM {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			boolean hayBilletes = false;
 			if (cuentaActual instanceof CajaDeAhorroEnDolares) {
-				throw new Error("No se puede extraer en dolares");
+				System.err.println("No se puede extraer en dolares");
+				elejirOpcion();
 			}
 
 			System.out.println("Retirar Efectivo");
