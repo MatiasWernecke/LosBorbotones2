@@ -16,9 +16,9 @@ public class ATM {
 	private Transaccion transacciones;
 	private Cuenta cuentaActual;
 	private static int[] billetes = { 1000,500,100 };
-    private static int[] cantidad = { 500,500,500 };
-    private int[] contador = { 0, 0, 0 };
-    private static int totalDeBilletes;
+        private static int[] cantidad = { 500,500,500 };
+        private int[] contador = { 0, 0, 0 };
+        private static int totalDeBilletes;
 	
 	
 	public ATM() {		
@@ -353,7 +353,7 @@ public class ATM {
 	public List<BigDecimal> buscarDescubiertos() {
 		List<BigDecimal> descubiertos = new LinkedList<>();
 		try {
-			FileReader archivo = new FileReader("C:/Users/Silvia/Desktop/cuentas.txt");
+			FileReader archivo = new FileReader("cuentas.txt");
 			BufferedReader lector = new BufferedReader(archivo);
 			String oneLine = lector.readLine();
 
@@ -376,9 +376,9 @@ public class ATM {
 		return descubiertos;
 	}
 	
-			private void sobreEscribirSaldo() {
+	private void sobreEscribirSaldo() {
 		try	{
-			FileWriter archivoAEscribir = new FileWriter("C:/Users/Silvia/Desktop/cuentas.txt", true);
+			FileWriter archivoAEscribir = new FileWriter("cuentas.txt", true);
 			BufferedWriter bf = new BufferedWriter(archivoAEscribir);
 			String tipoCuenta = null;
 			String alias = null;
