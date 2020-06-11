@@ -40,4 +40,7 @@ public class CuentaCorriente extends Cuenta {
 		this.descubierto = descubierto;
 	}
 
+	private boolean haySaldo(BigDecimal montoDescontado) {
+		return getSaldo().add(descubierto.negate()).compareTo(montoDescontado) >= -1;
+	}
 }
