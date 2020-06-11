@@ -460,7 +460,7 @@ public class ATM {
 
 					VenderDolares vd = new VenderDolares(cuentaActual,
 							cuentaEnPesos);
-					System.out.println("\n¿Cuanto desea comprar?");
+					System.out.println("\n¿Cuanto desea vender?");
 					double cantAVender = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAVender));
 					System.out.println("\nSueldo cuenta actual: "
