@@ -315,9 +315,16 @@ public class ATM {
 				int tipoCuenta = Integer.valueOf(datos[0]);
 				String alias = datos[1];
 				BigDecimal saldo = BigDecimal.valueOf(Double.valueOf(datos[2]));
+				BigDecimal descubierto = BigDecimal.valueOf(Double.valueOf(datos[3]));
 				Cuenta cuenta = crearCuenta(tipoCuenta);
+				if(tipoCuenta == 02){
+					((CuentaCorriente) cuenta).setSaldo(saldo);
+					((CuentaCorriente) cuenta).setAlias(alias);
+					((CuentaCorriente) cuenta).setDescubierto(descubierto);
+				}
+				
 				cuenta.setSaldo(saldo);
-				cuenta.setAlias(alias);
+				cuenta.setAlias(alias);	
 				listaDeCuentas.add(cuenta);
 				oneLine = lector.readLine();
 			}
@@ -329,7 +336,7 @@ public class ATM {
 		}
 		return listaDeCuentas;
 	}
-
+	
 		private void sobreEscribirSaldo() {
 		try	{
 			FileWriter archivoAEscribir = new FileWriter("cuentas.txt", true);
@@ -338,9 +345,8 @@ public class ATM {
 			String alias = null;
 			double saldo = 0;
 			double descubierto = 0;
-			
-			 File inputFile = new File("cuentas.txt");
-			 File outputFile = new File("cuentas.txt");
+			File inputFile = new File("cuentas.txt");
+			File outputFile = new File("cuentas.txt");
 
 		    try {
 		      BufferedReader reader = new BufferedReader(new FileReader(inputFile));
@@ -366,11 +372,13 @@ public class ATM {
 				if(listaDeCuentas.get(i).equals(cuentaActual)) {
 					if(cuentaActual instanceof CajaDeAhorroEnPesos) {
 						tipoCuenta = "01";
+						descubierto = 0;
 					} else if(cuentaActual instanceof CuentaCorriente) {
 						tipoCuenta = "02";
+						descubierto = ((CuentaCorriente) listaDeCuentas.get(i)).getDescubierto();
 					} else {
 						tipoCuenta = "03";
-
+						descubierto = 0;
 					}
 					alias = cuentaActual.getAlias();
 					saldo = cuentaActual.getSaldo().doubleValue();
@@ -426,7 +434,7 @@ public class ATM {
 
 					ComprarDolares cd = new ComprarDolares(cuentaActual,
 							cuentaEnPesos);
-					System.out.println("\nÂ¿Cuanto desea comprar?");
+					System.out.println("\n¿Cuanto desea comprar?");
 					double cantAComprar = Double.parseDouble(in.readLine());
 					cd.comprarDolares(BigDecimal.valueOf(cantAComprar));
 					System.out.println("\nSueldo cuenta actual: "
@@ -453,7 +461,7 @@ public class ATM {
 
 					VenderDolares vd = new VenderDolares(cuentaActual,
 							cuentaEnPesos);
-					System.out.println("\nÂ¿Cuanto desea vender?");
+					System.out.println("\n¿Cuanto desea vender?");
 					double cantAVender = Double.parseDouble(in.readLine());
 					vd.venderDolares(BigDecimal.valueOf(cantAVender));
 					System.out.println("\nSueldo cuenta actual: "
@@ -483,7 +491,7 @@ public class ATM {
 					break;
 				}
 				case 6: {
-					System.out.println("\nAdios");
+					System.out.println("\nSaliste de cuenta");
 					leerTarjeta();
 					break;
 				}
@@ -542,7 +550,7 @@ public class ATM {
 							System.err.println("No se encontro alias");
 							elejirOpcion();
 						}
-						System.out.println("\nÂ¿Cuanto desea transferir?");
+						System.out.println("\n¿Cuanto desea transferir?");
 						double monto = Double.parseDouble(in.readLine());
 					
 						t.transferencia(BigDecimal.valueOf(monto), cuenta2);
@@ -579,7 +587,7 @@ public class ATM {
 					break;
 				}
 				case 6: {
-					System.out.println("\nAdios");
+					System.out.println("\nSaliste de cuenta");
 					leerTarjeta();
 					break;
 				}
@@ -612,7 +620,7 @@ public class ATM {
 			System.out.println("Retirar Efectivo");
 
 			try {
-				System.out.println("\nÂ¿Cuanto desea retirar?");
+				System.out.println("\n¿Cuanto desea retirar?");
 				int dineroIngresado = Integer.parseInt(in.readLine());
 				Cuenta cuenta = cuentaActual;
 				Transaccion transaccion = new RetirarEfectivo(cuenta);
@@ -650,7 +658,7 @@ public class ATM {
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 			System.out.println("Depositar");
-			System.out.println("\nÂ¿Cuanto desea depositar?");
+			System.out.println("\n¿Cuanto desea depositar?");
 
 			try {
 				int dinero = Integer.parseInt(in.readLine());
@@ -735,7 +743,7 @@ public class ATM {
 	                    }
 	                }
 	            }
-	            //mostrarBilletes();
+	            
 	           
 	            
 	
