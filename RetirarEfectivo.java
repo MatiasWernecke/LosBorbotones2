@@ -1,7 +1,9 @@
 import java.math.BigDecimal;
 
 public class RetirarEfectivo extends Transaccion {
-
+	
+	private boolean extraccionRealizada = false;
+	
 	public RetirarEfectivo(Cuenta cuenta) {
 		super(cuenta);
 	}
@@ -11,6 +13,7 @@ public class RetirarEfectivo extends Transaccion {
 		// A.compareTo(B): este metodo retorna -1 si A < B, 0 si A = B, 1 si
 		// A > B
 		if (haySaldo(montoRetirado)) {
+			extraccionRealizada = true;
 			super.setMonto(montoRetirado.negate());
 			super.getCuenta().descontarEfectivo(montoRetirado);
 			super.generarMovimiento();
@@ -29,5 +32,9 @@ public class RetirarEfectivo extends Transaccion {
 		} else {
 			return getCuenta().getSaldo().compareTo(montoRetirado) >= 0;
 		}
+	}
+	
+	public boolean getAceptacionDeExtraccion() {
+		return extraccionRealizada;
 	}
 }
